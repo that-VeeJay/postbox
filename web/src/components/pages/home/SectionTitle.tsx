@@ -4,7 +4,7 @@ type SectionTitleTypes = {
 
 export default function SectionTitle({ title }: SectionTitleTypes) {
   return (
-    <div className="text-lg md:text-xl font-semibold mt-5 mb-5 lg:mt-25">
+    <div className="mt-5 mb-5 text-lg font-semibold md:text-xl lg:mt-25">
       {title}
     </div>
   );

@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 
 export default function Register() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-neutral-100 dark:bg-neutral-950">
-      <div className="md:bg-white dark:bg-neutral-900 w-[500px] p-12 md:shadow-lg rounded-lg space-y-5 overflow-hidden">
+    <div className="flex min-h-screen items-center justify-center bg-neutral-100 dark:bg-neutral-950">
+      <div className="w-[500px] space-y-5 overflow-hidden rounded-lg p-12 md:bg-white md:shadow-lg dark:bg-neutral-900">
         <div className="z-10">
-          <h1 className="text-2xl font-semibold ">Create a new account</h1>
+          <h1 className="text-2xl font-semibold">Create a new account</h1>
           <p className="text-sm text-neutral-500">
             To use postbox, please enter your details.
           </p>
@@ -18,7 +18,7 @@ export default function Register() {
             type="text"
             id="name"
             placeholder="Your name"
-            className="w-full bg-neutral-100 dark:bg-neutral-800 p-3 rounded-lg mt-1"
+            className="mt-1 w-full rounded-lg bg-neutral-100 p-3 dark:bg-neutral-800"
           />
         </div>
 
@@ -28,7 +28,7 @@ export default function Register() {
             type="text"
             id="username"
             placeholder="@yourusername"
-            className="w-full bg-neutral-100 dark:bg-neutral-800 p-3 rounded-lg mt-1"
+            className="mt-1 w-full rounded-lg bg-neutral-100 p-3 dark:bg-neutral-800"
           />
         </div>
 
@@ -38,7 +38,7 @@ export default function Register() {
             type="text"
             id="email"
             placeholder="name@email.com"
-            className="w-full bg-neutral-100 dark:bg-neutral-800 p-3 rounded-lg mt-1"
+            className="mt-1 w-full rounded-lg bg-neutral-100 p-3 dark:bg-neutral-800"
           />
         </div>
 
@@ -48,7 +48,7 @@ export default function Register() {
             type="password"
             id="password"
             placeholder="••••••••••••"
-            className="w-full bg-neutral-100 dark:bg-neutral-800 p-3 rounded-lg mt-1"
+            className="mt-1 w-full rounded-lg bg-neutral-100 p-3 dark:bg-neutral-800"
           />
         </div>
 
@@ -58,7 +58,7 @@ export default function Register() {
             type="password"
             id="password_confirmation"
             placeholder="••••••••••••"
-            className="w-full bg-neutral-100 dark:bg-neutral-800 p-3 rounded-lg mt-1"
+            className="mt-1 w-full rounded-lg bg-neutral-100 p-3 dark:bg-neutral-800"
           />
         </div>
 

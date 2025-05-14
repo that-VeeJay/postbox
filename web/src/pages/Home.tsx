@@ -6,12 +6,12 @@ import SectionTitle from "@/components/pages/home/SectionTitle";
 export default function Home() {
   return (
     <>
-      <main className="mt-20 md:mt-30 w-full max-w-6xl mx-auto">
+      <main className="mx-auto mt-20 w-full max-w-6xl md:mt-30">
         <Hero />
 
         <SectionTitle title="Recent blog posts" />
 
-        <div className="grid md:grid-cols-2 gap-5">
+        <div className="grid gap-5 md:grid-cols-2">
           <CardOne />
           <div className="flex flex-col gap-3">
             <CardTwo />
@@ -21,7 +21,7 @@ export default function Home() {
 
         <SectionTitle title="All blog posts" />
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           <CardOne />
           <CardOne />
           <CardOne />

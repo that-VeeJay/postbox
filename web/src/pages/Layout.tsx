@@ -17,12 +17,12 @@ export default function Layout() {
   return (
     <>
       <header>
-        <nav className=" p-5 bg-white/50 backdrop-blur-xl fixed w-full top-0 left-0 z-50 dark:bg-neutral-950/50">
-          <div className="container mx-auto flex justify-between items-center">
+        <nav className="fixed top-0 left-0 z-50 w-full bg-white/50 p-5 backdrop-blur-xl dark:bg-neutral-950/50">
+          <div className="container mx-auto flex items-center justify-between">
             <Link to="/">
               <h1 className="text-2xl font-semibold">POSTBOX</h1>
             </Link>
-            <div className="hidden gap-8 md:flex font-medium">
+            <div className="hidden gap-8 font-medium md:flex">
               <Link to="">Home</Link>
               <Link to="">Followed</Link>
               <Link to="">People</Link>

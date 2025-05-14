@@ -9,7 +9,7 @@ export default function CardOne() {
   return (
     <div className="space-y-3">
       <img src={image1} alt="" className="aspect-[16/7] object-cover" />
-      <div className="p-3 space-y-3">
+      <div className="space-y-3 p-3">
         <Badge>Nature</Badge>
         <div className="flex justify-between">
           <h2 className="text-lg font-semibold">UX Review Presentation</h2>
