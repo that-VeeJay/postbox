@@ -1,7 +1,15 @@
 import { Link, Outlet } from "react-router-dom";
-
+import { ProfileIcon } from "@/components/icons/ProfileIcon";
+import { LogOutIcon } from "lucide-react";
 import { ModeToggle } from "@/components/mode-toggle";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 import profile1 from "../assets/posts/profile1.jpg";
 
@@ -14,11 +22,11 @@ export default function Layout() {
             <Link to="/">
               <h1 className="text-2xl font-semibold">POSTBOX</h1>
             </Link>
-            <div className="hidden gap-8 md:flex">
+            <div className="hidden gap-8 md:flex font-medium">
               <Link to="">Home</Link>
-              <Link to="">Blog</Link>
-              <Link to="">Contact</Link>
-              <Link to="">About</Link>
+              <Link to="">Followed</Link>
+              <Link to="">People</Link>
+              <Link to="">Saved</Link>
             </div>
             <div className="space-x-3">
               {/* <input
@@ -26,11 +34,25 @@ export default function Layout() {
                 className="bg-gray-100 rounded-xl p-1 dark:bg-zinc-900"
               /> */}
               <div className="flex gap-3">
+                <Button>Create</Button>
                 <ModeToggle />
-                <Avatar>
-                  <AvatarImage src={profile1} />
-                  <AvatarFallback>CN</AvatarFallback>
-                </Avatar>
+                <DropdownMenu>
+                  <DropdownMenuTrigger>
+                    <Avatar>
+                      <AvatarImage src={profile1} />
+                      <AvatarFallback>CN</AvatarFallback>
+                    </Avatar>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    <DropdownMenuItem>
+                      <ProfileIcon /> Profile
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <LogOutIcon />
+                      Logout
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </div>
             </div>
           </div>
