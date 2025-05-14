@@ -17,7 +17,7 @@ export default function Hero() {
           />
         </div>
         {/* Content */}
-        <div className="p-6 lg:p-10 space-y-5 bg-white dark:bg-neutral-950 lg:shadow-md dark:shadow-none rounded-md lg:absolute lg:bottom-0 lg:left-0 lg:translate-x-15 lg:translate-y-15 lg:w-1/2">
+        <div className="p-6 lg:p-10 space-y-5 bg-white dark:bg-neutral-950 lg:dark:bg-neutral-900 lg:shadow-md dark:shadow-none rounded-md lg:absolute lg:bottom-0 lg:left-0 lg:translate-x-15 lg:translate-y-15 lg:w-1/2">
           <Badge>Technology</Badge>
           <h1 className="text-xl lg:text-2xl font-semibold line-clamp-3">
             The Impact of Technology on the Workplace: How Technology is
