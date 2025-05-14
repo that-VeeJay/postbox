@@ -5,6 +5,20 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@theme {
+  --color-brand-50: #f0fde8;
+  --color-brand-100: #ddfacd;
+  --color-brand-200: #bdf5a1;
+  --color-brand-300: #93ec6a;
+  --color-brand-400: #6ddf3c;
+  --color-brand-500: #4dc51d;
+  --color-brand-600: #389d13;
+  --color-brand-700: #2e7b14;
+  --color-brand-800: #285f15;
+  --color-brand-900: #245017;
+  --color-brand-950: #0e2c07;
+}
+
 @theme inline {
   --font-poppins: "Poppins";
   --radius-sm: calc(var(--radius) - 4px);
