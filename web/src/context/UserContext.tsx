@@ -4,19 +4,21 @@ type UserContextType = {
   token: string | null;
   setToken: React.Dispatch<React.SetStateAction<string | null>>;
   user: any;
+  setUser: React.Dispatch<React.SetStateAction<string | null>>;
 };
 
 export const UserContext = createContext<UserContextType>({
   token: null,
   setToken: () => {},
   user: {},
+  setUser: () => {},
 });
 
 export default function UserProvider({ children }: { children: ReactNode }) {
   const [token, setToken] = useState<string | null>(
     localStorage.getItem("token"),
   );
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<string | null>(null);
 
   // get authenticated and authorized user
   const getUser = async () => {
@@ -39,7 +41,7 @@ export default function UserProvider({ children }: { children: ReactNode }) {
   }, [token]);
 
   return (
-    <UserContext.Provider value={{ token, setToken, user }}>
+    <UserContext.Provider value={{ token, setToken, user, setUser }}>
       {children}
     </UserContext.Provider>
   );

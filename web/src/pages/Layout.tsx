@@ -1,9 +1,11 @@
-import { Link, Outlet } from "react-router-dom";
-import { ProfileIcon } from "@/components/icons/ProfileIcon";
+import { useContext } from "react";
 import { LogOutIcon } from "lucide-react";
-import { ModeToggle } from "@/components/mode-toggle";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { UserContext } from "@/context/UserContext";
+import { ModeToggle } from "@/components/mode-toggle";
+import { ProfileIcon } from "@/components/icons/ProfileIcon";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,6 +16,27 @@ import {
 import profile1 from "../assets/posts/profile1.jpg";
 
 export default function Layout() {
+  const navigate = useNavigate();
+  const { user, token, setUser, setToken } = useContext(UserContext);
+
+  const handleLogout = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const response = await fetch("/api/logout", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (response.ok) {
+      setUser(null);
+      setToken(null);
+      localStorage.removeItem("token");
+      navigate("/login");
+    }
+  };
+
   return (
     <>
       <header>
@@ -29,30 +52,39 @@ export default function Layout() {
               <Link to="">Saved</Link>
             </div>
             <div className="space-x-3">
-              {/* <input
-                type="search"
-                className="bg-gray-100 rounded-xl p-1 dark:bg-zinc-900"
-              /> */}
-              <div className="flex gap-3">
-                <Button>Create</Button>
+              <div className="flex items-center gap-3">
                 <ModeToggle />
-                <DropdownMenu>
-                  <DropdownMenuTrigger>
-                    <Avatar>
-                      <AvatarImage src={profile1} />
-                      <AvatarFallback>CN</AvatarFallback>
-                    </Avatar>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent>
-                    <DropdownMenuItem>
-                      <ProfileIcon /> Profile
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      <LogOutIcon />
-                      Logout
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
+                {user ? (
+                  <>
+                    <Button>Create</Button>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger>
+                        <Avatar>
+                          <AvatarImage src={profile1} />
+                          <AvatarFallback>CN</AvatarFallback>
+                        </Avatar>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent>
+                        <DropdownMenuItem>
+                          <ProfileIcon /> Profile
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
+                          <LogOutIcon />
+                          <form onSubmit={handleLogout}>
+                            <button>Logout</button>
+                          </form>
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </>
+                ) : (
+                  <div className="flex items-center gap-3">
+                    <Link to="/login">Login</Link>
+                    <Button>
+                      <Link to="/register">Create account</Link>
+                    </Button>
+                  </div>
+                )}
               </div>
             </div>
           </div>
