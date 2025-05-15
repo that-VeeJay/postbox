@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { useLocation } from "react-router-dom";
 import { Link, useNavigate } from "react-router-dom";
@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import Spinner from "@/components/icons/Spinner";
 import FormInput from "@/components/shared/FormInput";
 import InputFieldError from "@/components/shared/InputFieldError";
+import { UserContext } from "@/context/UserContext";
 
 type FormField = "email" | "password";
 
@@ -29,6 +30,8 @@ export default function Login() {
   const [errors, setErrors] = useState<ErrorMEssagesType>({});
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
+  const { setToken } = useContext(UserContext);
+
   // handle form submission
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -47,6 +50,7 @@ export default function Login() {
         return;
       } else {
         localStorage.setItem("token", data.token);
+        setToken(data.token);
         setFormData(initialValues);
         setErrors({});
         navigate("/");
