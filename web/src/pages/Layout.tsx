@@ -68,7 +68,9 @@ export default function Layout() {
                       </DropdownMenuTrigger>
                       <DropdownMenuContent>
                         <DropdownMenuItem>
-                          <ProfileIcon /> Profile
+                          <Link to="/profile" className="flex gap-2">
+                            <ProfileIcon /> Profile
+                          </Link>
                         </DropdownMenuItem>
                         <DropdownMenuItem>
                           <LogOutIcon />
@@ -93,7 +95,7 @@ export default function Layout() {
         </nav>
       </header>
 
-      <main>
+      <main className="pt-18">
         <Outlet />
       </main>
     </>

@@ -3,6 +3,7 @@ import Hero from "@/components/pages/home/Hero";
 import CardOne from "@/components/pages/home/CardOne";
 import CardTwo from "@/components/pages/home/CardTwo";
 import SectionTitle from "@/components/pages/home/SectionTitle";
+import { Button } from "@/components/ui/button";
 
 export type PostsType = {
   id: number;
@@ -37,7 +38,7 @@ export default function Home() {
   console.log(posts);
   return (
     <>
-      <main className="mx-auto mt-20 w-full max-w-6xl md:mt-30">
+      <main className="mx-auto w-full max-w-6xl">
         {/* <Hero /> */}
 
         {/* <SectionTitle title="Recent blog posts" /> */}
@@ -56,11 +57,14 @@ export default function Home() {
             <div className="mb-10 w-full text-center">No posts available</div>
           ) : (
             <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-              {posts.map((post) => (
+              {posts.slice(0, 9).map((post) => (
                 <CardOne key={post.id} post={post} />
               ))}
             </div>
           )}
+        </div>
+        <div className="mt-8 text-center">
+          <Button variant="outline">View all posts</Button>
         </div>
       </main>
     </>

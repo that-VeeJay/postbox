@@ -8,7 +8,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import profile1 from "../../../assets/posts/profile1.jpg";
 
 export default function CardOne({ post }: { post: PostsType }) {
-  console.log(post);
+
   return (
     <div className="space-y-3">
       <img

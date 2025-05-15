@@ -7,8 +7,10 @@ use App\Models\Post;
 
 class PostController extends Controller
 {
+    private const POST_LIMIT = 9;
+
     public function index()
     {
-        return Post::with('user')->latest()->get();
+        return Post::with('user')->latest()->take(self::POST_LIMIT)->get();
     }
 }

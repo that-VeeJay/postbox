@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import Create from "./pages/posts/Create";
+import Profile from "./pages/Profile";
 
 let router = createBrowserRouter([
   {
@@ -17,6 +18,10 @@ let router = createBrowserRouter([
       {
         path: "/create",
         element: <Create />,
+      },
+      {
+        path: "/profile",
+        element: <Profile />,
       },
     ],
   },
