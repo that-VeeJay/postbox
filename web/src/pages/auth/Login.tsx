@@ -1,7 +1,78 @@
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
+import { useLocation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import Spinner from "@/components/icons/Spinner";
+import FormInput from "@/components/shared/FormInput";
+import InputFieldError from "@/components/shared/InputFieldError";
+
+type FormField = "email" | "password";
+
+type LoginFormType = {
+  [key in FormField]: string;
+};
+
+type ErrorMEssagesType = {
+  [key in FormField]?: string;
+};
+
+const initialValues = {
+  email: "",
+  password: "",
+};
 
 export default function Login() {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [formData, setFormData] = useState<LoginFormType>(initialValues);
+  const [errors, setErrors] = useState<ErrorMEssagesType>({});
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  // handle form submission
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    try {
+      const response = await fetch("/api/login", {
+        method: "POST",
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (data.errors) {
+        setErrors(data.errors);
+        return;
+      } else {
+        localStorage.setItem("token", data.token);
+        setFormData(initialValues);
+        setErrors({});
+        navigate("/");
+      }
+    } catch (error) {
+      console.error("Registration failed: ", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // handle input change
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = e.target;
+    setFormData((prev) => ({ ...prev, [id]: value }));
+  };
+
+  // display sonner success message only when registration is successful
+  useEffect(() => {
+    if (location.state && "success" in location.state) {
+      toast.success(location.state.success, {
+        position: "top-center",
+      });
+    }
+  }, [location.state]);
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-neutral-100 dark:bg-neutral-950">
       <div className="w-[500px] space-y-5 rounded-lg p-12 md:bg-white md:shadow-lg dark:bg-neutral-900">
@@ -12,27 +83,35 @@ export default function Login() {
           </p>
         </div>
 
-        <div>
-          <label htmlFor="email">Email</label>
-          <input
-            type="text"
-            id="email"
-            placeholder="name@email.com"
-            className="mt-1 w-full rounded-lg bg-neutral-100 p-3 dark:bg-neutral-800"
-          />
-        </div>
+        <form onSubmit={handleSubmit} className="space-y-5">
+          <div>
+            <FormInput
+              label="Email"
+              type="text"
+              id="email"
+              placeholder="name@gmail.com"
+              value={formData.email}
+              onChange={handleChange}
+            />
+            {errors.email && <InputFieldError error={errors.email[0]} />}
+          </div>
 
-        <div>
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            placeholder="••••••••••••"
-            className="mt-1 w-full rounded-lg bg-neutral-100 p-3 dark:bg-neutral-800"
-          />
-        </div>
+          <div>
+            <FormInput
+              label="Password"
+              type="password"
+              id="password"
+              placeholder="••••••••••••"
+              value={formData.password}
+              onChange={handleChange}
+            />
+            {errors.password && <InputFieldError error={errors.password[0]} />}
+          </div>
+          <Button className="w-full py-6" disabled={isLoading}>
+            {isLoading ? <Spinner /> : "Login"}
+          </Button>
+        </form>
 
-        <Button className="w-full py-6">Login</Button>
         <div className="text-center">
           <p>
             Don't have an account?{" "}

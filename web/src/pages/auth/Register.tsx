@@ -1,7 +1,75 @@
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import Spinner from "@/components/icons/Spinner";
+import FormInput from "@/components/shared/FormInput";
+import InputFieldError from "@/components/shared/InputFieldError";
+
+type FormField =
+  | "name"
+  | "username"
+  | "email"
+  | "password"
+  | "password_confirmation";
+
+type RegisterFormType = {
+  [key in FormField]: string;
+};
+
+type ErrorMessagesType = {
+  [key in FormField]?: string;
+};
+
+const initialValues: RegisterFormType = {
+  name: "",
+  username: "",
+  email: "",
+  password: "",
+  password_confirmation: "",
+};
 
 export default function Register() {
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState<RegisterFormType>(initialValues);
+  const [errors, setErrors] = useState<ErrorMessagesType>({});
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  // handle form submission
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    try {
+      const response = await fetch("/api/register", {
+        method: "POST",
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (data.errors) {
+        setErrors(data.errors);
+        return;
+      } else {
+        setFormData(initialValues);
+        setErrors({});
+        navigate("/login", {
+          state: { success: "Account created successfully!" },
+        });
+      }
+    } catch (error) {
+      console.error("Registration failed: ", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // handle input change
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = e.target;
+    setFormData((prev) => ({ ...prev, [id]: value }));
+  };
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-neutral-100 dark:bg-neutral-950">
       <div className="w-[500px] space-y-5 overflow-hidden rounded-lg p-12 md:bg-white md:shadow-lg dark:bg-neutral-900">
@@ -11,58 +79,70 @@ export default function Register() {
             To use postbox, please enter your details.
           </p>
         </div>
+        <form onSubmit={handleSubmit} className="space-y-5">
+          <div>
+            <FormInput
+              label="Name"
+              type="text"
+              id="name"
+              placeholder="Your name"
+              value={formData.name}
+              onChange={handleChange}
+            />
+            {errors.name && <InputFieldError error={errors.name[0]} />}
+          </div>
 
-        <div>
-          <label htmlFor="name">Name</label>
-          <input
-            type="text"
-            id="name"
-            placeholder="Your name"
-            className="mt-1 w-full rounded-lg bg-neutral-100 p-3 dark:bg-neutral-800"
-          />
-        </div>
+          <div>
+            <FormInput
+              label="Username"
+              type="text"
+              id="username"
+              placeholder="@your_username"
+              value={formData.username}
+              onChange={handleChange}
+            />
+            {errors.username && <InputFieldError error={errors.username[0]} />}
+          </div>
 
-        <div>
-          <label htmlFor="username">Username</label>
-          <input
-            type="text"
-            id="username"
-            placeholder="@yourusername"
-            className="mt-1 w-full rounded-lg bg-neutral-100 p-3 dark:bg-neutral-800"
-          />
-        </div>
+          <div>
+            <FormInput
+              label="Email"
+              type="text"
+              id="email"
+              placeholder="name@company.com"
+              value={formData.email}
+              onChange={handleChange}
+            />
+            {errors.email && <InputFieldError error={errors.email[0]} />}
+          </div>
 
-        <div>
-          <label htmlFor="email">Email</label>
-          <input
-            type="text"
-            id="email"
-            placeholder="name@email.com"
-            className="mt-1 w-full rounded-lg bg-neutral-100 p-3 dark:bg-neutral-800"
-          />
-        </div>
+          <div>
+            <FormInput
+              label="Password"
+              type="password"
+              id="password"
+              placeholder="••••••••••••"
+              value={formData.password}
+              onChange={handleChange}
+            />
+            {errors.password && <InputFieldError error={errors.password[0]} />}
+          </div>
 
-        <div>
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            placeholder="••••••••••••"
-            className="mt-1 w-full rounded-lg bg-neutral-100 p-3 dark:bg-neutral-800"
-          />
-        </div>
+          <div>
+            <FormInput
+              label="Confirm Password"
+              type="password"
+              id="password_confirmation"
+              placeholder="••••••••••••"
+              value={formData.password_confirmation}
+              onChange={handleChange}
+            />
+          </div>
 
-        <div>
-          <label htmlFor="password_confirmation">Confirm Password</label>
-          <input
-            type="password"
-            id="password_confirmation"
-            placeholder="••••••••••••"
-            className="mt-1 w-full rounded-lg bg-neutral-100 p-3 dark:bg-neutral-800"
-          />
-        </div>
-
-        <Button className="w-full py-6">Create account</Button>
+          <Button className="w-full py-6" disabled={isLoading}>
+            {isLoading ? <Spinner /> : "Create account"}
+          </Button>
+        </form>
         <div className="text-center">
           <p>
             Already have an account?{" "}
