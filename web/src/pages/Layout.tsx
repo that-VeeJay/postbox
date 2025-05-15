@@ -56,7 +56,9 @@ export default function Layout() {
                 <ModeToggle />
                 {user ? (
                   <>
-                    <Button>Create</Button>
+                    <Button>
+                      <Link to="/create">Create</Link>
+                    </Button>
                     <DropdownMenu>
                       <DropdownMenuTrigger>
                         <Avatar>
