@@ -99,8 +99,7 @@ export default function Create() {
         {
           method: "POST",
           headers: {
-            Authorization:
-              "Bearer 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",
+            Authorization: `Bearer ${import.meta.env.VITE_GROQ_API_KEY}`,
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
