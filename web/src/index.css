@@ -136,3 +136,12 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Custom Classes */
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+.scrollbar-hidden {
+  -ms-overflow-style: none; /* IE & Edge */
+  scrollbar-width: none; /* Firefox */
+}

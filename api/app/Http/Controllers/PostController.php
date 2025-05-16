@@ -13,4 +13,17 @@ class PostController extends Controller
     {
         return Post::with('user')->latest()->take(self::POST_LIMIT)->get();
     }
+
+    public function store(Request $request)
+    {
+        $validatedFields = $request->validate([
+            'title' => ['required'],
+            'body' => ['required'],
+            'category' => ['required'],
+            'image' => ['required'],
+        ]);
+
+        return $validatedFields;
+
+    }
 }

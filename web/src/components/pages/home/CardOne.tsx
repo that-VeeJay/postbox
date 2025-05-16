@@ -3,12 +3,11 @@ import type { PostsType } from "@/pages/Home";
 import { formatDate } from "@/helpers/formatDate";
 import { truncateText } from "@/helpers/truncateText";
 import { UpperRightArrow } from "@/components/icons/UpperRightArrow";
-import { capitalizeFirstLetter } from "@/helpers/CapitalizeFirstLetter";
+import { capitalizeFirstLetter } from "@/helpers/capitalizeFirstLetter";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import profile1 from "../../../assets/posts/profile1.jpg";
 
 export default function CardOne({ post }: { post: PostsType }) {
-
   return (
     <div className="space-y-3">
       <img

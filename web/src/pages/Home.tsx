@@ -25,7 +25,6 @@ export default function Home() {
     const response = await fetch("/api/posts");
     const data = await response.json();
 
-    console.log(data);
     if (response.ok) {
       setPosts(data);
     }
@@ -35,7 +34,6 @@ export default function Home() {
     fetchPost();
   }, []);
 
-  console.log(posts);
   return (
     <>
       <main className="mx-auto w-full max-w-6xl">
