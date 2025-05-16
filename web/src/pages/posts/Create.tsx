@@ -55,14 +55,42 @@ const frameworks = [
 
 export default function Create() {
   const [text, setText] = useState<string>("");
-
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
+  const [dragging, setDragging] = useState<boolean>(false);
+  const [image, setImage] = useState<string | null>(null);
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    setDragging(false);
+
+    const files = Array.from(e.dataTransfer.files);
+    if (files.length > 0) {
+      const file = files[0];
+      const url = URL.createObjectURL(file);
+      setImage(url);
+    }
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    setDragging(true);
+  };
+
+  const handleDragLeave = () => setDragging(false);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const url = URL.createObjectURL(file);
+      setImage(url);
+    }
+  };
 
   return (
     <form>
-      <div className="mx-auto w-full max-w-6xl pt-5">
-        <div className="grid grid-cols-5 gap-5">
+      <div className="mx-auto w-full max-w-6xl p-5 pt-5">
+        <div className="grid gap-5 md:grid-cols-5">
           {/* Left Side */}
           <div className="col-span-3">
             <div className="space-y-5">
@@ -119,12 +147,20 @@ export default function Create() {
               </div>
             </div>
           </div>
+
           {/* Right Side */}
-          <div className="col-span-2 space-y-5">
+          <div className="col-span-3 space-y-5 md:col-span-2">
             {/* Image Upload */}
             <label
+              onDrop={handleDrop}
+              onDragOver={handleDragOver}
+              onDragLeave={handleDragLeave}
               htmlFor="dropzone"
-              className="dark:border-gray block h-32 rounded-lg border-2 border-dashed border-neutral-300 bg-neutral-100 p-5 dark:border-neutral-700 dark:bg-neutral-900"
+              className={`flex h-40 w-full items-center justify-center rounded-lg border-2 border-dashed bg-white transition dark:border-neutral-700 dark:bg-neutral-900 ${
+                dragging
+                  ? "!border-neutral-300 !bg-neutral-200 dark:!border-neutral-500 dark:!bg-neutral-950"
+                  : "border-neutral-300"
+              }`}
             >
               <div className="flex h-full items-center justify-center">
                 <div className="text-center">
@@ -132,18 +168,36 @@ export default function Create() {
                   <p className="text-xs">PNG, JPG or JPEG</p>
                 </div>
               </div>
-              <input id="dropzone" type="file" className="hidden" />
+              <input
+                id="dropzone"
+                type="file"
+                className="hidden"
+                accept="image/*"
+                onChange={handleFileChange}
+              />
             </label>
 
             {/* Image Preview */}
-            <div className="dark:border-gray block h-60 rounded-lg border border-neutral-300 bg-neutral-100 p-5 dark:border-neutral-700 dark:bg-neutral-900">
-              <div className="flex h-full items-center justify-center">
-                <div className="text-center">
-                  <p className="text-xs">Image preview</p>
-                </div>
+            <div className="dark:border-gray block h-60 rounded-lg border border-neutral-300 bg-neutral-100 dark:border-neutral-700 dark:bg-neutral-900">
+              <div className="relative flex h-full items-center justify-center rounded-lg">
+                {image && (
+                  <div className="absolute bottom-0 left-0 z-20 block w-full bg-black/50 px-2 py-1 text-xs text-white">
+                    Note: Preview only — final ratio may vary.
+                  </div>
+                )}
+                {image ? (
+                  <img
+                    src={image}
+                    alt="Preview"
+                    className="z-10 h-full w-full rounded-lg object-cover"
+                  />
+                ) : (
+                  <div className="flex h-full w-full items-center justify-center text-center">
+                    <p className="text-xs">Image preview</p>
+                  </div>
+                )}
               </div>
             </div>
-
             {/* Category Select */}
             <Popover open={open} onOpenChange={setOpen}>
               <PopoverTrigger asChild>
