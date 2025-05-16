@@ -6,12 +6,13 @@ import { UpperRightArrow } from "@/components/icons/UpperRightArrow";
 import { capitalizeFirstLetter } from "@/helpers/capitalizeFirstLetter";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import profile1 from "../../../assets/posts/profile1.jpg";
+import { getImageUrl } from "@/helpers/getImageUrl";
 
 export default function CardOne({ post }: { post: PostsType }) {
   return (
     <div className="space-y-3">
       <img
-        src={post.image}
+        src={getImageUrl(post.image)}
         alt={post.title}
         className="aspect-[16/7] object-cover"
       />

@@ -9,7 +9,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import {
   Command,
   CommandEmpty,
@@ -29,11 +29,16 @@ import InfoIcon from "@/components/icons/InfoIcon";
 import { categories } from "@/helpers/categories";
 import InputFieldError from "@/components/shared/InputFieldError";
 import Spinner from "@/components/icons/Spinner";
+import { UserContext } from "@/context/UserContext";
+import { useNavigate } from "react-router-dom";
 
 type FormField = "title" | "body" | "category" | "image";
 
 type FormDataType = {
-  [key in FormField]: string;
+  title: string;
+  body: string;
+  category: string;
+  image: File | null;
 };
 
 type ErrorsType = {
@@ -47,10 +52,13 @@ const initialValues: FormDataType = {
   title: "",
   body: "",
   category: "",
-  image: "",
+  image: null,
 };
 
 export default function Create() {
+  const { token } = useContext(UserContext);
+  const navigate = useNavigate();
+
   const [text, setText] = useState<string>("");
   const [open, setOpen] = useState<boolean>(false);
   const [value, setValue] = useState<string>("");
@@ -60,8 +68,9 @@ export default function Create() {
   const [refinements, setRefinements] = useState({ text: "" });
   const [aiLoading, setAiLoading] = useState<boolean>(false);
 
-  const [formData, setFormData] = useState<FormDataType>(initialValues);
+  const [postData, setPostData] = useState<FormDataType>(initialValues);
   const [errors, setErrors] = useState<ErrorsType>({});
+  const [isPublishLoading, setIsPublishLoading] = useState<boolean>(false);
 
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
@@ -87,10 +96,11 @@ export default function Create() {
     if (file) {
       const url = URL.createObjectURL(file);
       setImage(url);
-      setFormData({ ...formData, image: file?.name });
+      setPostData((prev) => ({ ...prev, image: file }));
     }
   };
 
+  // handle AI content generation
   const handleAIGenerate = async () => {
     setAiLoading(true);
     try {
@@ -107,7 +117,7 @@ export default function Create() {
             messages: [
               {
                 role: "user",
-                content: `Write a well-structured blog post based on the title: "${formData.title}". Use the following context to guide the content and add depth where appropriate: "${refinements.text}". Avoid using Markdown formatting. Return plain text only. Instead of *, use • if you want to create a list`,
+                content: `Write a well-structured blog post based on the title: "${postData.title}". Use the following context to guide the content and add depth where appropriate: "${refinements.text}". Avoid using Markdown formatting. Return plain text only. Instead of *, use • if you want to create a list`,
               },
             ],
           }),
@@ -117,7 +127,7 @@ export default function Create() {
       const data = await response.json();
       const aiContent =
         data.choices?.[0]?.message?.content || "No content generated.";
-      setFormData({ ...formData, body: aiContent });
+      setPostData({ ...postData, body: aiContent });
     } catch (error) {
       console.error("There is an error: " + error);
     } finally {
@@ -125,26 +135,45 @@ export default function Create() {
     }
   };
 
+  // handle form submission
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsPublishLoading(true);
 
-    // Add bearer authorization
-    const response = await fetch("/api/posts", {
-      method: "POST",
-      body: JSON.stringify(formData),
-    });
+    try {
+      const formData = new FormData();
 
-    const data = await response.json();
+      formData.append("title", postData.title);
+      formData.append("body", postData.body);
+      formData.append("category", postData.category);
+      postData.image && formData.append("image", postData.image);
 
-    if (data.errors) {
-      setErrors(data.errors);
-    } else {
-      console.log("success");
-      // do something...
+      const response = await fetch("/api/posts", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      if (data.errors) {
+        setErrors(data.errors);
+        return;
+      } else {
+        setPostData(initialValues);
+        setImage(null);
+        navigate("/", {
+          state: { publish_success: "Great job! Your blog post is now live. 🎉" },
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsPublishLoading(false);
     }
   };
-
-  console.log(refinements);
 
   return (
     <form onSubmit={handleSubmit}>
@@ -157,9 +186,9 @@ export default function Create() {
                 <Input
                   placeholder="Title"
                   className="p-5"
-                  value={formData.title}
+                  value={postData.title}
                   onChange={(e) =>
-                    setFormData({ ...formData, title: e.target.value })
+                    setPostData({ ...postData, title: e.target.value })
                   }
                 />
                 {errors.title && <InputFieldError error={errors.title} />}
@@ -169,9 +198,9 @@ export default function Create() {
                 <Textarea
                   placeholder="Share your story..."
                   className="scrollbar-hidden h-170 resize-none"
-                  value={formData.body}
+                  value={postData.body}
                   onChange={(e) =>
-                    setFormData({ ...formData, body: e.target.value })
+                    setPostData({ ...postData, body: e.target.value })
                   }
                 />
                 {errors.body && <InputFieldError error={errors.body} />}
@@ -182,7 +211,7 @@ export default function Create() {
                   <Button
                     type="button"
                     disabled={
-                      formData.title.length > MAX_TITLE_LENGTH ? false : true
+                      postData.title.length > MAX_TITLE_LENGTH ? false : true
                     }
                     onClick={handleAIGenerate}
                   >
@@ -269,6 +298,7 @@ export default function Create() {
                 </div>
                 <input
                   id="dropzone"
+                  name="image"
                   type="file"
                   className="hidden"
                   accept="image/*"
@@ -277,7 +307,6 @@ export default function Create() {
               </label>
               {errors.image && <InputFieldError error={errors.image} />}
             </div>
-
             {/* Image Preview */}
             <div className="dark:border-gray block h-60 rounded-lg border border-neutral-300 bg-neutral-100 dark:border-neutral-700 dark:bg-neutral-900">
               <div className="relative flex h-full items-center justify-center rounded-lg">
@@ -299,7 +328,6 @@ export default function Create() {
                 )}
               </div>
             </div>
-
             {/* Category Select */}
             <div>
               <Popover open={open} onOpenChange={setOpen}>
@@ -332,8 +360,8 @@ export default function Create() {
                                 currentValue === value ? "" : currentValue,
                               );
                               setOpen(false);
-                              setFormData({
-                                ...formData,
+                              setPostData({
+                                ...postData,
                                 category: currentValue,
                               });
                             }}
@@ -357,8 +385,19 @@ export default function Create() {
               {errors.category && <InputFieldError error={errors.category} />}
             </div>
             {/* Submit Button */}
-            <Button type="submit" className="w-full">
-              Publish
+            <Button
+              type="submit"
+              className="w-full"
+              disabled={isPublishLoading}
+            >
+              {isPublishLoading ? (
+                <div className="flex items-center gap-1">
+                  <Spinner />
+                  <p>Please wait...</p>
+                </div>
+              ) : (
+                "Publish"
+              )}
             </Button>
           </div>
         </div>
