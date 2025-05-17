@@ -12,7 +12,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
 import profile1 from "../assets/posts/profile1.jpg";
 
 export default function Layout() {
@@ -67,7 +66,7 @@ export default function Layout() {
                         </Avatar>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent>
-                        <DropdownMenuItem>
+                        <DropdownMenuItem asChild>
                           <Link to="/profile" className="flex gap-2">
                             <ProfileIcon /> Profile
                           </Link>
