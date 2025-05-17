@@ -18,11 +18,15 @@ export default function CardOne({ post }: { post: PostsType }) {
       />
       <div className="space-y-3 p-3">
         <Badge>{capitalizeFirstLetter(post.category)}</Badge>
-        <div className="flex justify-between">
-          <h2 className="h-[3.8rem] text-lg font-semibold">{post.title}</h2>
-          <UpperRightArrow size={20} />
+        <div className="flex items-start justify-between gap-2">
+          <h2 className="line-clamp-2 h-[3.8rem] flex-1 text-lg font-semibold break-words">
+            {post.title}
+          </h2>
+          <div className="flex flex-shrink-0 items-center pl-2">
+            <UpperRightArrow size={20} />
+          </div>
         </div>
-        <p className="line-clamp-2 text-sm">{post.body}</p>
+        <p className="line-clamp-2 h-[2.5rem] text-sm">{post.body}</p>
         <div className="flex items-center justify-between gap-5">
           <div className="flex items-center gap-3">
             <Avatar>

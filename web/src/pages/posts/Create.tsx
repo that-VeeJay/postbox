@@ -81,6 +81,7 @@ export default function Create() {
       const file = files[0];
       const url = URL.createObjectURL(file);
       setImage(url);
+      setPostData((prev) => ({ ...prev, image: file }));
     }
   };
 
@@ -165,7 +166,9 @@ export default function Create() {
         setPostData(initialValues);
         setImage(null);
         navigate("/", {
-          state: { publish_success: "Great job! Your blog post is now live. 🎉" },
+          state: {
+            publish_success: "Great job! Your blog post is now live. 🎉",
+          },
         });
       }
     } catch (error) {
