@@ -1,15 +1,20 @@
 import { createRoot } from "react-dom/client";
-import "./index.css";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import App from "./App.tsx";
-import { ThemeProvider } from "./components/theme-provider.tsx";
 import UserProvider from "./context/UserContext.tsx";
 import { Toaster } from "./components/ui/sonner.tsx";
+import { ThemeProvider } from "./components/theme-provider.tsx";
+import "./index.css";
+
+const client = new QueryClient();
 
 createRoot(document.getElementById("root")!).render(
   <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
     <UserProvider>
-      <App />
-      <Toaster />
+      <QueryClientProvider client={client}>
+        <App />
+        <Toaster />
+      </QueryClientProvider>
     </UserProvider>
   </ThemeProvider>,
 );

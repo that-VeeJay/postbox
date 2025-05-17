@@ -1,13 +1,11 @@
-import { useState, useEffect } from "react";
-import Hero from "@/components/pages/home/Hero";
-import CardOne from "@/components/pages/home/CardOne";
-import CardTwo from "@/components/pages/home/CardTwo";
+import { useEffect } from "react";
 import SectionTitle from "@/components/pages/home/SectionTitle";
 import { Button } from "@/components/ui/button";
 import { useLocation } from "react-router-dom";
 import { toast } from "sonner";
-import { Skeleton } from "@/components/ui/skeleton";
 import CardOneSkeleton from "@/components/skeletons/CardOneSkeleton";
+import CardOne from "@/components/pages/home/CardOne";
+import { useQuery } from "@tanstack/react-query";
 
 export type PostsType = {
   id: number;
@@ -24,9 +22,6 @@ export type PostsType = {
 
 export default function Home() {
   const location = useLocation();
-  const [posts, setPosts] = useState<PostsType[]>([]);
-
-  const [isLoading, setIsLoading] = useState(true);
 
   // display sonner success message blog is posted
   useEffect(() => {
@@ -34,54 +29,55 @@ export default function Home() {
       toast.success(location.state.publish_success, {
         position: "bottom-right",
       });
+      window.history.replaceState({}, document.title);
     }
   }, [location.state]);
 
   // fetch all posts
-  const fetchPost = async () => {
+  const fetchPosts = async () => {
     const response = await fetch("/api/posts");
-    const data = await response.json();
-
-    if (response.ok) {
-      setPosts(data);
-    }
+    if (!response.ok) throw new Error("Error fetching the data");
+    return response.json();
   };
 
-  useEffect(() => {
-    fetchPost();
-  }, []);
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["posts"],
+    queryFn: fetchPosts,
+    staleTime: 10000,
+  });
+
+  // all blog post
+  const renderContent = () => {
+    if (isLoading) {
+      return Array.from({ length: 3 }).map((_, index) => (
+        <CardOneSkeleton key={index} />
+      ));
+    }
+
+    if (error) {
+      return (
+        <div className="col-span-full text-center text-red-500">
+          Failed to load posts. Please try again later.
+        </div>
+      );
+    }
+
+    if (Array.isArray(data) && data.length > 0) {
+      return data
+        .slice(0, 9)
+        .map((post: PostsType) => <CardOne key={post.id} post={post} />);
+    }
+  };
 
   return (
     <>
       <main className="mx-auto w-full max-w-6xl">
-        {/* <Hero /> */}
-
-        {/* <SectionTitle title="Recent blog posts" /> */}
-
-        {/* <div className="grid gap-5 md:grid-cols-2">
-          <CardOne />
-          <div className="flex flex-col gap-3">
-            <CardTwo />
-            <CardTwo />
-          </div>
-        </div> */}
-
         <SectionTitle title="All blog posts" />
-
         <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {posts.length === 0 ? (
-            <>
-              <CardOneSkeleton />
-              <CardOneSkeleton />
-              <CardOneSkeleton />
-            </>
-          ) : (
-            posts
-              .slice(0, 9)
-              .map((post) => <CardOne key={post.id} post={post} />)
-          )}
+          {renderContent()}
         </div>
 
+        {/* View all posts button */}
         <div className="mt-8 text-center">
           <Button variant="outline">View all posts</Button>
         </div>

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import Spinner from "@/components/icons/Spinner";
+import { useMutation } from "@tanstack/react-query";
 import FormInput from "@/components/shared/FormInput";
 import InputFieldError from "@/components/shared/InputFieldError";
 
@@ -12,13 +13,8 @@ type FormField =
   | "password"
   | "password_confirmation";
 
-type RegisterFormType = {
-  [key in FormField]: string;
-};
-
-type ErrorMessagesType = {
-  [key in FormField]?: string;
-};
+type RegisterFormType = Record<FormField, string>;
+type ErrorMessagesType = Partial<Record<FormField, string[]>>;
 
 const initialValues: RegisterFormType = {
   name: "",
@@ -32,46 +28,45 @@ export default function Register() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState<RegisterFormType>(initialValues);
   const [errors, setErrors] = useState<ErrorMessagesType>({});
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  // handle form submission
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setIsLoading(true);
-
-    try {
-      const response = await fetch("/api/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await response.json();
-
-      if (data.errors) {
-        setErrors(data.errors);
-        return;
-      } else {
-        setFormData(initialValues);
-        setErrors({});
-        navigate("/login", {
-          state: { success: "Account created successfully!" },
-        });
-      }
-    } catch (error) {
-      console.error("Registration failed: ", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   // handle input change
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
     setFormData((prev) => ({ ...prev, [id]: value }));
   };
+
+  const registerUser = async (newUser: RegisterFormType) => {
+    const response = await fetch("/api/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newUser),
+    });
+    if (!response.ok) {
+      const data = await response.json();
+      throw data.errors || new Error("Registration failed");
+    }
+    return response.json();
+  };
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: registerUser,
+    onError: (error: ErrorMessagesType) => setErrors(error),
+    onSuccess: () => {
+      setFormData(initialValues);
+      navigate("/login", {
+        state: {
+          success: "Account created successfully!",
+        },
+      });
+    },
+  });
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    mutate(formData);
+  };
+
+  console.log("rendered");
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-neutral-100 dark:bg-neutral-950">
@@ -141,9 +136,15 @@ export default function Register() {
               onChange={handleChange}
             />
           </div>
-
-          <Button className="w-full py-6" disabled={isLoading}>
-            {isLoading ? <Spinner /> : "Create account"}
+          <Button className="w-full py-6" disabled={isPending}>
+            {isPending ? (
+              <div className="flex items-center gap-2">
+                <Spinner />
+                Creating account...
+              </div>
+            ) : (
+              "Create account"
+            )}
           </Button>
         </form>
         <div className="text-center">
