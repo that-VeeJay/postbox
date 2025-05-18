@@ -101,7 +101,6 @@ export default function Login() {
               label="Email"
               type="text"
               id="email"
-              placeholder="name@gmail.com"
               value={formData.email}
               onChange={handleChange}
             />
@@ -113,7 +112,7 @@ export default function Login() {
               label="Password"
               type="password"
               id="password"
-              placeholder="••••••••••••"
+
               value={formData.password}
               onChange={handleChange}
             />

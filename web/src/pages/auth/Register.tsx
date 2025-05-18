@@ -83,7 +83,7 @@ export default function Register() {
               label="Name"
               type="text"
               id="name"
-              placeholder="Your name"
+              placeholder="John Doe"
               value={formData.name}
               onChange={handleChange}
             />
@@ -95,9 +95,10 @@ export default function Register() {
               label="Username"
               type="text"
               id="username"
-              placeholder="@your_username"
+              placeholder="your_username"
               value={formData.username}
               onChange={handleChange}
+              prefix="@"
             />
             {errors.username && <InputFieldError error={errors.username[0]} />}
           </div>
@@ -107,7 +108,7 @@ export default function Register() {
               label="Email"
               type="text"
               id="email"
-              placeholder="name@company.com"
+              placeholder="name@example.com"
               value={formData.email}
               onChange={handleChange}
             />
@@ -119,7 +120,7 @@ export default function Register() {
               label="Password"
               type="password"
               id="password"
-              placeholder="••••••••••••"
+              placeholder="••••••••••••••••••••"
               value={formData.password}
               onChange={handleChange}
             />
@@ -131,7 +132,7 @@ export default function Register() {
               label="Confirm Password"
               type="password"
               id="password_confirmation"
-              placeholder="••••••••••••"
+              placeholder="••••••••••••••••••••"
               value={formData.password_confirmation}
               onChange={handleChange}
             />

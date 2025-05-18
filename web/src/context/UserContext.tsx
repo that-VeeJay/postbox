@@ -1,4 +1,5 @@
-import { createContext, useEffect, useState, type ReactNode } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { createContext, useState, useEffect, type ReactNode } from "react";
 
 type UserContextType = {
   token: string | null;
@@ -21,24 +22,25 @@ export default function UserProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<string | null>(null);
 
   // get authenticated and authorized user
-  const getUser = async () => {
+  const fetchUser = async () => {
     const response = await fetch("/api/user", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-
-    const data = await response.json();
-
-    setUser(data);
+    if (!response.ok) throw new Error("Error fetching the data");
+    return response.json();
   };
 
-  // run if token state changes
+  const { data } = useQuery({
+    queryKey: ["user"],
+    queryFn: fetchUser,
+    enabled: !!token,
+  });
+
   useEffect(() => {
-    if (token) {
-      getUser();
-    }
-  }, [token]);
+    if (data) setUser(data);
+  }, [data]);
 
   return (
     <UserContext.Provider value={{ token, setToken, user, setUser }}>
