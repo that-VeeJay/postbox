@@ -47,7 +47,7 @@ export default function EditProfile({
 
   return (
     <Sheet>
-      <SheetTrigger>
+      <SheetTrigger asChild>
         <Button variant="outline">Edit Profile</Button>
       </SheetTrigger>
       <SheetContent>
