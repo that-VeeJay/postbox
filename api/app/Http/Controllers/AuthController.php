@@ -17,7 +17,7 @@ class AuthController extends Controller
     {
         $validatedFields = $request->validate([
             'name' => ['required', 'string'],
-            'username' => ['required', 'string', 'max:20', 'unique:users,username', 'regex:/^@[a-zA-Z0-9_]+$/', 'starts_with:@'],
+            'username' => ['required', 'string', 'max:20', 'unique:users,username'],
             'email' => ['required', 'email', 'string', 'max:255', 'unique:users,email'],
             'password' => ['required', 'confirmed', 'min:3'],
         ]);
