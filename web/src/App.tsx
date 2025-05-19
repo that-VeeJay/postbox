@@ -1,10 +1,10 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Layout from "./Layout";
-import Home from "./Home";
-import Login from "./auth/Login";
-import Register from "./auth/Register";
-import Create from "./posts/Create";
-import Show from "./profile/Show";
+import Home from "./pages/Home/Index";
+import Layout from "./pages/Layout/Navbar";
+import Login from "./pages/Auth/Login";
+import Register from "./pages/Auth/Register";
+import Create from "./pages/Posts/Create";
+import Profile from "./pages/Profile/Index";
 
 let router = createBrowserRouter([
   {
@@ -21,7 +21,7 @@ let router = createBrowserRouter([
       },
       {
         path: "/profile",
-        element: <Show />,
+        element: <Profile />,
       },
     ],
   },

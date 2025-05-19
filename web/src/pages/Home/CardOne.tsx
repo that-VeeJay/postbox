@@ -1,12 +1,12 @@
 import { Badge } from "@/components/ui/badge";
-import type { PostsType } from "@/pages/Home";
-import { formatDate } from "@/helpers/formatDate";
-import { truncateText } from "@/helpers/truncateText";
+import type { PostsType } from "@/pages/Home/Index";
+import { formatDate } from "@/utils/formatDate";
+import { truncateText } from "@/utils/truncateText";
 import { UpperRightArrow } from "@/components/icons/UpperRightArrow";
-import { capitalizeFirstLetter } from "@/helpers/capitalizeFirstLetter";
+import { capitalizeFirstLetter } from "@/utils/capitalizeFirstLetter";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import profile1 from "../../../assets/posts/profile1.jpg";
-import { getImageUrl } from "@/helpers/getImageUrl";
+import profile1 from "../../assets/posts/profile1.jpg";
+import { getImageUrl } from "@/utils/getImageUrl";
 
 export default function CardOne({ post }: { post: PostsType }) {
   return (

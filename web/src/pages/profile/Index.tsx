@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "@/context/UserContext";
-import { getImageUrl } from "@/helpers/getImageUrl";
+import { getImageUrl } from "@/utils/getImageUrl";
 import LocationPin from "@/components/icons/LocationPin";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { capitalizeFirstLetter } from "@/helpers/capitalizeFirstLetter";
+import { capitalizeFirstLetter } from "@/utils/capitalizeFirstLetter";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import SavedTab from "./SavedTab";
 import UploadsTab from "./UploadsTab";
@@ -117,7 +117,7 @@ export default function Profile() {
                 </div>
               </div>
 
-              <div className="flex justify-center gap-3">
+              <div className="flex items-center gap-3">
                 <AccountSettings handleSubmit={handleSubmit} />
 
                 <EditProfile
@@ -134,7 +134,6 @@ export default function Profile() {
             </div>
           </div>
         </div>
-
         {/* Bottom Section */}
         <Tabs defaultValue="uploads" className="w-full">
           <TabsList>

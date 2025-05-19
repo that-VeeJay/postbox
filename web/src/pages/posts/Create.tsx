@@ -26,7 +26,7 @@ import {
 import { Check, ChevronsUpDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import InfoIcon from "@/components/icons/InfoIcon";
-import { categories } from "@/helpers/categories";
+import { categories } from "@/data/categories";
 import InputFieldError from "@/components/shared/InputFieldError";
 import Spinner from "@/components/icons/Spinner";
 import { UserContext } from "@/context/UserContext";

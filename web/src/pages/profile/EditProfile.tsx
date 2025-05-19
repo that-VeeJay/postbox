@@ -12,7 +12,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { useState } from "react";
-import type { FormDataType } from "./Show";
+import type { FormDataType } from "./Index";
 
 type Props = {
   setProfileData: React.Dispatch<React.SetStateAction<FormDataType>>;

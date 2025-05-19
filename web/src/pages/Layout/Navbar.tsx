@@ -12,7 +12,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import profile1 from "../assets/posts/profile1.jpg";
+import { getImageUrl } from "@/utils/getImageUrl";
+import { getFirstLetter } from "@/utils/getFirstLetter";
 
 export default function Layout() {
   const navigate = useNavigate();
@@ -61,8 +62,12 @@ export default function Layout() {
                     <DropdownMenu>
                       <DropdownMenuTrigger>
                         <Avatar>
-                          <AvatarImage src={profile1} />
-                          <AvatarFallback>CN</AvatarFallback>
+                          <AvatarImage
+                            src={getImageUrl(user?.profile_picture)}
+                          />
+                          <AvatarFallback>
+                            {getFirstLetter(user?.name)}
+                          </AvatarFallback>
                         </Avatar>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent>

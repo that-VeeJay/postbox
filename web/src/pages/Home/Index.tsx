@@ -1,11 +1,9 @@
-import { useEffect } from "react";
-import SectionTitle from "@/components/pages/home/SectionTitle";
+import SectionTitle from "@/pages/Home/SectionTitle";
 import { Button } from "@/components/ui/button";
-import { useLocation } from "react-router-dom";
-import { toast } from "sonner";
 import CardOneSkeleton from "@/components/skeletons/CardOneSkeleton";
-import CardOne from "@/components/pages/home/CardOne";
+import CardOne from "@/pages/Home/CardOne";
 import { useQuery } from "@tanstack/react-query";
+import useToast from "@/hooks/useToast";
 
 export type PostsType = {
   id: number;
@@ -21,17 +19,7 @@ export type PostsType = {
 };
 
 export default function Home() {
-  const location = useLocation();
-
-  // display sonner success message blog is posted
-  useEffect(() => {
-    if (location.state && "publish_success" in location.state) {
-      toast.success(location.state.publish_success, {
-        position: "bottom-right",
-      });
-      window.history.replaceState({}, document.title);
-    }
-  }, [location.state]);
+  useToast("publish_success");
 
   // fetch all posts
   const fetchPosts = async () => {

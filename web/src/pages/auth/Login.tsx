@@ -1,6 +1,4 @@
-import { useContext, useEffect, useState } from "react";
-import { toast } from "sonner";
-import { useLocation } from "react-router-dom";
+import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import Spinner from "@/components/icons/Spinner";
@@ -8,6 +6,7 @@ import { UserContext } from "@/context/UserContext";
 import FormInput from "@/components/shared/FormInput";
 import InputFieldError from "@/components/shared/InputFieldError";
 import { useMutation } from "@tanstack/react-query";
+import useToast from "@/hooks/useToast";
 
 type LoginFormType = Record<"email" | "password", string>;
 type ErrorMessageType = Partial<Record<keyof LoginFormType, string[]>>;
@@ -33,7 +32,6 @@ const loginUser = async (user: LoginFormType) => {
 
 export default function Login() {
   const navigate = useNavigate();
-  const location = useLocation();
   const { setToken } = useContext(UserContext);
   const [formData, setFormData] = useState<LoginFormType>(initialValues);
   const [errors, setErrors] = useState<ErrorMessageType | null>(null);
@@ -45,14 +43,7 @@ export default function Login() {
     setFormData((prev) => ({ ...prev, [id]: value }));
   };
 
-  // display sonner success message only when registration is successful
-  useEffect(() => {
-    if (location.state && "success" in location.state) {
-      toast.success(location.state.success, {
-        position: "bottom-right",
-      });
-    }
-  }, [location.state]);
+  useToast("success");
 
   const { mutate: login, isPending } = useMutation({
     mutationFn: loginUser,
@@ -112,7 +103,6 @@ export default function Login() {
               label="Password"
               type="password"
               id="password"
-
               value={formData.password}
               onChange={handleChange}
             />
