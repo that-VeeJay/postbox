@@ -12,7 +12,7 @@ class UserController extends Controller
         $user = Auth::user();
 
         $validatedFields = $request->validate([
-            'name' => ['string'],
+            'name' => ['required', 'regex:/^[A-Za-z\s.-]+$/'],
             'location' => ['nullable', 'string'],
             'bio' => ['nullable', 'string'],
             'profile_picture' => ['image','mimes:png,jpg,jpeg'],

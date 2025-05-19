@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 
 import { getImageUrl } from "@/utils/getImageUrl";
 import { UserContext } from "@/context/UserContext";
@@ -9,30 +9,10 @@ import EditProfile from "./EditProfile";
 import AccountSettings from "./AccountSettings";
 import defaultProfile from "../../assets/default_profile.png";
 
-export type ProfileDataType = Partial<{
-  name: string;
-  location: string;
-  bio: string;
-  profile_picture: File | null;
-}>;
-
-const initialValues = { name: "", location: "", bio: "" };
+console.log("RENDERED-SECONDARY");
 
 export default function ProfileInfo({ bioLength }: { bioLength: number }) {
   const { user, token } = useContext(UserContext);
-  const [profileData, setProfileData] =
-    useState<ProfileDataType>(initialValues);
-
-  // Set form data when user is loaded
-  useEffect(() => {
-    if (user) {
-      setProfileData({
-        name: user.name || "",
-        location: user.location || "",
-        bio: user.bio || "",
-      });
-    }
-  }, [user]);
 
   return (
     <div className="flex flex-col items-center gap-5 md:flex-row">
@@ -69,12 +49,7 @@ export default function ProfileInfo({ bioLength }: { bioLength: number }) {
           <div className="flex items-center gap-3">
             <AccountSettings />
 
-            <EditProfile
-              token={token}
-              setProfileData={setProfileData}
-              profileData={profileData}
-              maxBioLength={bioLength}
-            />
+            <EditProfile token={token} maxBioLength={bioLength} user={user} />
           </div>
         </div>
 

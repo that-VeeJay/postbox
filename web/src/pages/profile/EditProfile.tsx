@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import InputFieldError from "@/components/shared/InputFieldError";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   Sheet,
@@ -13,23 +14,40 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import type { ProfileDataType } from "./ProfileInfo";
 
 type Props = {
-  setProfileData: React.Dispatch<React.SetStateAction<ProfileDataType>>;
-  profileData: ProfileDataType;
   maxBioLength: number;
   token: string | null;
+  user: any;
 };
 
-export default function EditProfile({
-  setProfileData,
-  profileData,
-  maxBioLength,
-  token,
-}: Props) {
+export type ProfileDataType = Partial<{
+  name: string;
+  location: string;
+  bio: string;
+  profile_picture: File | null;
+}>;
+
+const initialValues = { name: "", location: "", bio: "" };
+
+export default function EditProfile({ maxBioLength, token, user }: Props) {
   const queryClient = useQueryClient();
   const [bioLength, setBioLength] = useState("");
+  const [nameFieldError, setNameFieldError] = useState("");
+  const [updateSuccessMessage, setUpdateSuccessMessage] = useState("");
+  const [profileData, setProfileData] =
+    useState<ProfileDataType>(initialValues);
+
+  // Set form data when user is loaded
+  useEffect(() => {
+    if (user) {
+      setProfileData({
+        name: user.name || "",
+        location: user.location || "",
+        bio: user.bio || "",
+      });
+    }
+  }, [user]);
 
   // handle image upload
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -73,8 +91,12 @@ export default function EditProfile({
       return data;
     },
     onSuccess: (data) => {
-      // do something...
-      console.log(data);
+      if (data.errors) {
+        setNameFieldError(data.errors.name[0]);
+        return;
+      }
+      setUpdateSuccessMessage("Profile updated successfully.");
+      setNameFieldError("");
       queryClient.invalidateQueries({ queryKey: ["user"] });
     },
   });
@@ -99,6 +121,11 @@ export default function EditProfile({
         </SheetHeader>
         <form onSubmit={handleSubmit}>
           <div className="space-y-5 px-5">
+            {updateSuccessMessage && (
+              <div className="rounded-lg border-2 border-green-600 bg-green-500/75 p-3 text-white dark:border-green-900 dark:bg-green-600/20">
+                {updateSuccessMessage}
+              </div>
+            )}
             <div className="space-y-2">
               <Label htmlFor="">Name</Label>
               <Input
@@ -106,6 +133,7 @@ export default function EditProfile({
                 value={profileData.name}
                 onChange={handleChange}
               />
+              <InputFieldError error={nameFieldError} />
             </div>
             <div className="space-y-2">
               <Label htmlFor="">Location</Label>
@@ -140,11 +168,29 @@ export default function EditProfile({
                 onChange={handleFileChange}
               />
             </div>
-            <SheetClose asChild>
-              <Button type="submit" className="w-full">
+            <div className="flex gap-3">
+              <SheetClose asChild>
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    setProfileData({
+                      name: user.name || "",
+                      location: user.location || "",
+                      bio: user.bio || "",
+                    });
+                    setUpdateSuccessMessage("");
+                  }}
+                  className="flex-1"
+                >
+                  Close
+                </Button>
+              </SheetClose>
+              {/* <SheetClose asChild> */}
+              <Button type="submit" className="flex-2">
                 Save Changes
               </Button>
-            </SheetClose>
+              {/* </SheetClose> */}
+            </div>
           </div>
         </form>
       </SheetContent>

@@ -6,6 +6,7 @@ import { useMutation } from "@tanstack/react-query";
 import FormInput from "@/components/shared/FormInput";
 import InputFieldError from "@/components/shared/InputFieldError";
 
+
 type FormField =
   | "name"
   | "username"
@@ -35,21 +36,19 @@ export default function Register() {
     setFormData((prev) => ({ ...prev, [id]: value }));
   };
 
-  const registerUser = async (newUser: RegisterFormType) => {
-    const response = await fetch("/api/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newUser),
-    });
-    if (!response.ok) {
-      const data = await response.json();
-      throw data.errors || new Error("Registration failed");
-    }
-    return response.json();
-  };
-
   const { mutate, isPending } = useMutation({
-    mutationFn: registerUser,
+    mutationFn: async (newUser: RegisterFormType) => {
+      const response = await fetch("/api/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newUser),
+      });
+      if (!response.ok) {
+        const data = await response.json();
+        throw data.errors || new Error("Registration failed");
+      }
+      return response.json();
+    },
     onError: (error: ErrorMessagesType) => setErrors(error),
     onSuccess: () => {
       setFormData(initialValues);
@@ -65,8 +64,6 @@ export default function Register() {
     e.preventDefault();
     mutate(formData);
   };
-
-  console.log("rendered");
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-neutral-100 dark:bg-neutral-950">
