@@ -14,6 +14,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import CustomToast from "@/components/shared/CustomToast";
 
 type Props = {
   maxBioLength: number;
@@ -122,9 +123,7 @@ export default function EditProfile({ maxBioLength, token, user }: Props) {
         <form onSubmit={handleSubmit}>
           <div className="space-y-5 px-5">
             {updateSuccessMessage && (
-              <div className="rounded-lg border-2 border-green-600 bg-green-500/75 p-3 text-white dark:border-green-900 dark:bg-green-600/20">
-                {updateSuccessMessage}
-              </div>
+              <CustomToast message={updateSuccessMessage} type="success" />
             )}
             <div className="space-y-2">
               <Label htmlFor="">Name</Label>
