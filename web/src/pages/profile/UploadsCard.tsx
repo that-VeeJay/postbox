@@ -5,7 +5,7 @@ export default function UploadsCard() {
     <div className="group relative aspect-square w-full overflow-hidden">
       <div className="absolute bottom-0 z-20 bg-black/50 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
         <span className="line-clamp-3 p-1 text-sm text-white">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente,
+          Lorema ipsum dolor sit amet consectetur adipisicing elit. Sapiente,
           deleniti. Lorem ipsum dolor sit amet consectetur adipisicing elit.
           Sapiente, deleniti.
         </span>

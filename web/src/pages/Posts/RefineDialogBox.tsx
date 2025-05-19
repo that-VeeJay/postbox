@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -10,20 +11,17 @@ import {
 } from "@/components/ui/dialog";
 
 interface RefineDialogBoxProps {
-  text: string;
-  setText: React.Dispatch<React.SetStateAction<string>>;
   refinements: { text: string };
   setRefinements: React.Dispatch<React.SetStateAction<{ text: string }>>;
   MAX_REFINE_LENGTH: number;
 }
 
 export default function RefineDialogBox({
-  text,
-  setText,
   refinements,
   setRefinements,
   MAX_REFINE_LENGTH,
 }: RefineDialogBoxProps) {
+  const [text, setText] = useState<string>("");
   return (
     <Dialog>
       <DialogTrigger className="text-sm" asChild>

@@ -1,5 +1,6 @@
 import InputFieldError from "@/components/shared/InputFieldError";
 import type { FormDataType } from "./Index";
+import { useState } from "react";
 
 type ErrorsType = {
   title?: string;
@@ -12,17 +13,15 @@ interface ImageUploadProps {
   setPostData: React.Dispatch<React.SetStateAction<FormDataType>>;
   setImage: React.Dispatch<React.SetStateAction<string | null>>;
   errors: ErrorsType;
-  dragging: boolean;
-  setDragging: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function ImageUpload({
   setPostData,
   setImage,
   errors,
-  dragging,
-  setDragging,
 }: ImageUploadProps) {
+  const [dragging, setDragging] = useState<boolean>(false);
+
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
     setDragging(false);

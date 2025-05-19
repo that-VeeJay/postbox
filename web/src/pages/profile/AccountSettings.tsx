@@ -22,11 +22,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-type Props = {
-  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
-};
-
-export default function AccountSettings({ handleSubmit }: Props) {
+export default function AccountSettings() {
   return (
     <Sheet>
       <SheetTrigger>
@@ -40,7 +36,7 @@ export default function AccountSettings({ handleSubmit }: Props) {
             when you're finished.
           </SheetDescription>
         </SheetHeader>
-        <form onSubmit={handleSubmit}>
+        <form>
           <div className="space-y-5 px-5">
             <Separator />
             <div className="space-y-2">

@@ -39,8 +39,6 @@ const initialValues: FormDataType = {
 export default function Index() {
   const { token } = useContext(UserContext);
   const navigate = useNavigate();
-  const [text, setText] = useState<string>("");
-  const [dragging, setDragging] = useState<boolean>(false);
   const [image, setImage] = useState<string | null>(null);
   const [refinements, setRefinements] = useState({ text: "" });
   const [postData, setPostData] = useState<FormDataType>(initialValues);
@@ -175,8 +173,6 @@ export default function Index() {
                   <GenerateNote />
                 </div>
                 <RefineDialogBox
-                  text={text}
-                  setText={setText}
                   refinements={refinements}
                   setRefinements={setRefinements}
                   MAX_REFINE_LENGTH={MAX_REFINE_LENGTH}
@@ -191,8 +187,6 @@ export default function Index() {
               setPostData={setPostData}
               setImage={setImage}
               errors={errors}
-              dragging={dragging}
-              setDragging={setDragging}
             />
 
             <ImagePreview image={image} />
