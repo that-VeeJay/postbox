@@ -18,7 +18,7 @@ export type PostsType = {
   };
 };
 
-export default function Home() {
+export default function Index() {
   useToast("publish_success");
 
   // fetch all posts

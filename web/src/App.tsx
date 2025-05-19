@@ -3,7 +3,7 @@ import Home from "./pages/Home/Index";
 import Layout from "./pages/Layout/Navbar";
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
-import Create from "./pages/Posts/Create";
+import Create from "./pages/Posts/Index";
 import Profile from "./pages/Profile/Index";
 
 let router = createBrowserRouter([
