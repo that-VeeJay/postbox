@@ -15,6 +15,8 @@ Route::patch("/profile/update", [UserController::class, 'update'])->middleware('
 Route::get('/posts', [PostController::class, 'index']);
 Route::post('/posts', [PostController::class, 'store'])->middleware('auth:sanctum');
 
+Route::get('/users/{id}/posts', [PostController::class, 'getPosts'])->middleware('auth:sanctum');
+
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);

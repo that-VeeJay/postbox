@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
+use Illuminate\Foundation\Auth\User;
 
 class PostController extends Controller
 {
@@ -41,7 +42,11 @@ class PostController extends Controller
         $post = $request->user()->posts()->create($validatedFields);
 
         return ['post' => $post, 'user' => $post->user];
+    }
 
-
+    public function getPosts($id)
+    {
+         $posts = Post::where('user_id', $id)->select('title', 'image')->latest()->get();
+         return $posts;
     }
 }
