@@ -64,7 +64,7 @@ export default function ImageUpload({
         }`}
       >
         <div className="flex h-full items-center justify-center">
-          <div className="text-center">
+          <div className="text-center select-none">
             <p>Click to upload or drag and drop</p>
             <p className="text-xs">PNG, JPG or JPEG</p>
           </div>

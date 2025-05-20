@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-import { formatDate } from "@/utils/formatDate";
+import timeAgo from "@/utils/timeAgo";
 import { getImageUrl } from "@/utils/getImageUrl";
 import { truncateText } from "@/utils/truncateText";
 import { getFirstLetter } from "@/utils/getFirstLetter";
@@ -22,6 +22,7 @@ export default function CardOne({
   created_at,
   user: { profile_picture, name },
 }: Post) {
+  console.log(created_at);
   return (
     <div className="space-y-3">
       {/* Post Image */}
@@ -61,7 +62,9 @@ export default function CardOne({
             </Avatar>
             <span className="line-clamp-1">{truncateText(name, 20)}</span>
           </div>
-          <time className="text-sm">{formatDate(created_at)}</time>
+          <time className="font-base text-sm text-neutral-600 dark:text-neutral-400">
+            {timeAgo(created_at)}
+          </time>
         </div>
       </div>
     </div>
