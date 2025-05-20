@@ -48,7 +48,7 @@ export default function Layout() {
             <div className="hidden gap-8 font-medium md:flex">
               <Link to="">Home</Link>
               <Link to="">Followed</Link>
-              <Link to="">People</Link>
+              <Link to="/people">People</Link>
               <Link to="">Saved</Link>
             </div>
             <div className="space-x-3">

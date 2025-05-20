@@ -1,9 +1,9 @@
-import SectionTitle from "@/pages/Home/SectionTitle";
-import { Button } from "@/components/ui/button";
-import CardOneSkeleton from "@/components/skeletons/CardOneSkeleton";
-import CardOne from "@/pages/Home/CardOne";
-import { useQuery } from "@tanstack/react-query";
 import useToast from "@/hooks/useToast";
+import CardOne from "@/pages/Home/CardOne";
+import { Button } from "@/components/ui/button";
+import { useQuery } from "@tanstack/react-query";
+import SectionTitle from "@/pages/Home/SectionTitle";
+import CardOneSkeleton from "@/components/skeletons/CardOneSkeleton";
 
 export type PostsType = {
   id: number;
@@ -15,6 +15,7 @@ export type PostsType = {
   created_at: string;
   user: {
     name: string;
+    profile_picture: string;
   };
 };
 
@@ -31,7 +32,7 @@ export default function Index() {
   const { data, isLoading, error } = useQuery({
     queryKey: ["posts"],
     queryFn: fetchPosts,
-    staleTime: 10000,
+    staleTime: 30000,
   });
 
   // all blog post

@@ -166,6 +166,10 @@ export default function EditProfile({ maxBioLength, token, user }: Props) {
                 name="profile_picture"
                 onChange={handleFileChange}
               />
+              <SheetDescription>
+                Note: Please allow a few seconds for your updated profile
+                picture to be visible throughout the site.
+              </SheetDescription>
             </div>
             <div className="flex gap-3">
               <SheetClose asChild>

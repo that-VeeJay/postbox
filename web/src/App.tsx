@@ -1,37 +1,52 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Home from "./pages/Home/Index";
-import Layout from "./pages/Layout/Navbar";
-import Login from "./pages/Auth/Login";
-import Register from "./pages/Auth/Register";
-import Create from "./pages/Posts/Index";
-import Profile from "./pages/Profile/Index";
+import { lazy, Suspense } from "react";
 
-let router = createBrowserRouter([
+const Layout = lazy(() => import("./pages/Layout/Navbar"));
+const Home = lazy(() => import("./pages/Home/Index"));
+const Create = lazy(() => import("./pages/Posts/Index"));
+const Profile = lazy(() => import("./pages/Profile/Index"));
+const People = lazy(() => import("./pages/People/Index"));
+const Login = lazy(() => import("./pages/Auth/Login"));
+const Register = lazy(() => import("./pages/Auth/Register"));
+const ViewSingle = lazy(() => import("./pages/Home/ViewSingle"));
+
+const Loading = () => <div>Loading...</div>;
+
+const LayoutWithSuspense = () => (<Layout />);
+
+// const LayoutWithSuspense = () => (
+//   <Suspense fallback={<Loading />}>
+//     <Layout />
+//   </Suspense>
+// );
+
+const router = createBrowserRouter([
   {
     path: "/",
-    element: <Layout />,
+    element: <LayoutWithSuspense />,
     children: [
-      {
-        path: "",
-        element: <Home />,
-      },
-      {
-        path: "/create",
-        element: <Create />,
-      },
-      {
-        path: "/profile",
-        element: <Profile />,
-      },
+      { path: "", element: <Home /> },
+      { path: "create", element: <Create /> },
+      { path: "profile", element: <Profile /> },
+      { path: "people", element: <People /> },
+      { path: "posts/:id", element: <ViewSingle /> },
     ],
   },
   {
-    path: "/register",
-    element: <Register />,
+    path: "/login",
+    element: (
+      <Suspense fallback={<Loading />}>
+        <Login />
+      </Suspense>
+    ),
   },
   {
-    path: "/login",
-    element: <Login />,
+    path: "/register",
+    element: (
+      <Suspense fallback={<Loading />}>
+        <Register />
+      </Suspense>
+    ),
   },
 ]);
 

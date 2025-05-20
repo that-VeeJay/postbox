@@ -12,6 +12,7 @@ import ImagePreview from "./ImagePreview";
 import ImageUpload from "./ImageUpload";
 import GenerateNote from "./GenerateNote";
 import RefineDialogBox from "./RefineDialogBox";
+import { useQueryClient } from "@tanstack/react-query";
 
 type FormField = "title" | "body" | "category" | "image";
 
@@ -39,6 +40,7 @@ const initialValues: FormDataType = {
 export default function Index() {
   const { token } = useContext(UserContext);
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const [image, setImage] = useState<string | null>(null);
   const [refinements, setRefinements] = useState({ text: "" });
   const [postData, setPostData] = useState<FormDataType>(initialValues);
@@ -60,7 +62,7 @@ export default function Index() {
             messages: [
               {
                 role: "user",
-                content: `Write a well-structured blog post based on the title: "${postData.title}". Use the following context to guide the content and add depth where appropriate: "${refinements.text}". Avoid using Markdown formatting. Return plain text only. Instead of *, use • if you want to create a list`,
+                content: `Write a clear and well-structured blog post based on the title: "${postData.title}". Use the following context to add insight and depth: "${refinements.text}". Do not repeat the title in the content. Avoid Markdown—return plain text only. Use • for lists instead of *.`,
               },
             ],
           }),
@@ -101,6 +103,7 @@ export default function Index() {
         setErrors(data.errors);
         return;
       }
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
       setPostData(initialValues);
       setImage(null);
       navigate("/", {

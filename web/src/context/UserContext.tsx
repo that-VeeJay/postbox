@@ -22,19 +22,17 @@ export default function UserProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<string | null>(null);
 
   // get authenticated and authorized user
-  const fetchUser = async () => {
-    const response = await fetch("/api/user", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    if (!response.ok) throw new Error("Error fetching the data");
-    return response.json();
-  };
-
   const { data } = useQuery({
-    queryKey: ["user"],
-    queryFn: fetchUser,
+    queryKey: ["user", token],
+    queryFn: async () => {
+      const response = await fetch("/api/user", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (!response.ok) throw new Error("Error fetching user");
+      return response.json();
+    },
     enabled: !!token,
   });
 
