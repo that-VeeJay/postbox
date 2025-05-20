@@ -64,6 +64,7 @@ export default function Layout() {
                         <Avatar>
                           <AvatarImage
                             src={getImageUrl(user?.profile_picture)}
+                            className="object-cover"
                           />
                           <AvatarFallback>
                             {getFirstLetter(user?.name)}
