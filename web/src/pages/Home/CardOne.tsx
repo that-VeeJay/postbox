@@ -1,34 +1,48 @@
-import { Badge } from "@/components/ui/badge";
-import type { Post } from "@/pages/Home/Index";
-import { formatDate } from "@/utils/formatDate";
-import { truncateText } from "@/utils/truncateText";
-import { UpperRightArrow } from "@/components/icons/UpperRightArrow";
-import { capitalizeFirstLetter } from "@/utils/capitalizeFirstLetter";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { getImageUrl } from "@/utils/getImageUrl";
 import { Link } from "react-router-dom";
-import { getFirstLetter } from "@/utils/getFirstLetter";
 
-export default function CardOne({ post }: { post: Post }) {
+import { formatDate } from "@/utils/formatDate";
+import { getImageUrl } from "@/utils/getImageUrl";
+import { truncateText } from "@/utils/truncateText";
+import { getFirstLetter } from "@/utils/getFirstLetter";
+import { capitalizeFirstLetter } from "@/utils/capitalizeFirstLetter";
+
+import { Badge } from "@/components/ui/badge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { UpperRightArrow } from "@/components/icons/UpperRightArrow";
+
+import type { Post } from "@/pages/Home/Index";
+
+export default function CardOne({
+  id,
+  image,
+  title,
+  category,
+  body,
+  created_at,
+  user: { profile_picture, name },
+}: Post) {
   return (
     <div className="space-y-3">
-      <Link to={`/posts/${post.id}`}>
+      {/* Post Image */}
+      <Link to={`/posts/${id}`}>
         <img
-          src={getImageUrl(post.image)}
-          alt={post.title}
+          src={getImageUrl(image)}
+          alt={`Featured image for the blog post "${title}"`}
           draggable="false"
           className="aspect-[16/7] object-cover"
         />
       </Link>
       <div className="space-y-3 p-3">
-        <Badge>{capitalizeFirstLetter(post.category)}</Badge>
+        {/* Pot Category */}
+        <Badge>{capitalizeFirstLetter(category)}</Badge>
 
+        {/* Pot Title */}
         <Link
-          to={`/posts/${post.id}`}
+          to={`/posts/${id}`}
           className="flex items-start justify-between gap-2"
         >
           <h2 className="line-clamp-2 h-[3.8rem] flex-1 text-lg font-semibold break-words transition duration-200 hover:text-neutral-600 dark:hover:text-neutral-300">
-            {post.title}
+            {title}
           </h2>
 
           <div className="flex flex-shrink-0 items-center pl-2">
@@ -36,19 +50,17 @@ export default function CardOne({ post }: { post: Post }) {
           </div>
         </Link>
 
-        <p className="line-clamp-2 h-[2.5rem] text-sm">{post.body}</p>
+        <p className="line-clamp-2 h-[2.5rem] text-sm">{body}</p>
         <div className="flex items-center justify-between gap-5">
+          {/* User Info */}
           <div className="flex items-center gap-3">
             <Avatar>
-              {/* <AvatarImage src={profile1} /> */}
-              <AvatarImage src={getImageUrl(post.user.profile_picture)} />
-              <AvatarFallback>{getFirstLetter(post.user.name)}</AvatarFallback>
+              <AvatarImage src={getImageUrl(profile_picture)} />
+              <AvatarFallback>{getFirstLetter(name)}</AvatarFallback>
             </Avatar>
-            <span className="line-clamp-1">
-              {truncateText(post.user.name, 20)}
-            </span>
+            <span className="line-clamp-1">{truncateText(name, 20)}</span>
           </div>
-          <span className="text-sm">{formatDate(post.created_at)}</span>
+          <time className="text-sm">{formatDate(created_at)}</time>
         </div>
       </div>
     </div>

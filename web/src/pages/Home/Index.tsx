@@ -55,7 +55,7 @@ export default function Index() {
     if (Array.isArray(data) && data.length > 0) {
       return data
         .slice(0, 9)
-        .map((post: Post) => <CardOne key={post.id} post={post} />);
+        .map((post: Post) => <CardOne key={post.id} {...post} />);
     }
   };
 
