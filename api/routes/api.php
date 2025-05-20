@@ -14,7 +14,11 @@ Route::patch("/profile/update", [UserController::class, 'update'])->middleware('
 
 Route::get('/posts', [PostController::class, 'index']);
 Route::get('/posts/{post}', [PostController::class, 'show']);
+
+Route::delete('/posts/{post}', [PostController::class, 'destroy'])->middleware('auth:sanctum');
 Route::post('/posts', [PostController::class, 'store'])->middleware('auth:sanctum');
+
+
 
 Route::get('/users/{id}/posts', [PostController::class, 'getPosts'])->middleware('auth:sanctum');
 

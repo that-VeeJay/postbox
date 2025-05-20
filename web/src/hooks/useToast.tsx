@@ -7,7 +7,7 @@ export default function useToast(keyName: string) {
 
   useEffect(() => {
     if (location.state && keyName in location.state) {
-      toast.success(location.state[keyName], {
+      toast(location.state[keyName], {
         position: "bottom-right",
       });
       window.history.replaceState({}, document.title);

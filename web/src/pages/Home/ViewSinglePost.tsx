@@ -17,7 +17,7 @@ import ActionsButton from "./ActionsButton";
 
 export default function ViewSinglePost() {
   const { id } = useParams();
-  const { user } = useContext(UserContext);
+  const { user, token } = useContext(UserContext);
 
   // fetch single post data w/ user info
   const { data, isLoading, error } = useQuery({
@@ -55,7 +55,7 @@ export default function ViewSinglePost() {
             <div className="flex justify-between gap-3">
               <p className="text-2xl font-semibold">{data.post.title}</p>
               {user && user.id === data.user.id && (
-                <ActionsButton />
+                <ActionsButton id={id} token={token} />
               )}
             </div>
           </div>

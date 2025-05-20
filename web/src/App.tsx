@@ -9,6 +9,7 @@ const People = lazy(() => import("./pages/People/Index"));
 const Login = lazy(() => import("./pages/Auth/Login"));
 const Register = lazy(() => import("./pages/Auth/Register"));
 const ViewSingle = lazy(() => import("./pages/Home/ViewSinglePost"));
+const EditPost = lazy(() => import("./pages/Home/EditPost"));
 
 const Loading = () => <div>Loading...</div>;
 
@@ -30,6 +31,7 @@ const router = createBrowserRouter([
       { path: "profile", element: <Profile /> },
       { path: "people", element: <People /> },
       { path: "posts/:id", element: <ViewSingle /> },
+      { path: "posts/:id/edit", element: <EditPost /> },
     ],
   },
   {

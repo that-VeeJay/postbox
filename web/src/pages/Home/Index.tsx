@@ -22,6 +22,7 @@ export type Post = {
 
 export default function Index() {
   useToast("publish_success");
+  useToast("delete_success");
 
   // fetch all posts
   const { data, isLoading, error } = useQuery({
