@@ -4,7 +4,6 @@ import { useQuery } from "@tanstack/react-query";
 import { UserContext } from "@/context/UserContext";
 
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 import { getImageUrl } from "@/utils/getImageUrl";
@@ -14,7 +13,7 @@ import { capitalizeFirstLetter } from "@/utils/capitalizeFirstLetter";
 import SingePostSkeleton from "@/components/skeletons/SinglePostSkeleton";
 import CustomToast from "@/components/shared/CustomToast";
 
-import { FaEdit } from "react-icons/fa";
+import ActionsButton from "./ActionsButton";
 
 export default function ViewSinglePost() {
   const { id } = useParams();
@@ -56,9 +55,7 @@ export default function ViewSinglePost() {
             <div className="flex justify-between gap-3">
               <p className="text-2xl font-semibold">{data.post.title}</p>
               {user && user.id === data.user.id && (
-                <Button variant="outline">
-                  <FaEdit />
-                </Button>
+                <ActionsButton />
               )}
             </div>
           </div>

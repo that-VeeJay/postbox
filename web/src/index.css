@@ -135,13 +135,16 @@
   body {
     @apply bg-background text-foreground;
   }
+  html {
+    scrollbar-width: thin;
+  }
 }
 
-/* Custom Classes */
-.scrollbar-hidden::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera */
+/* prevent ui shifting due to scrollbar */
+html {
+  overflow-x: hidden;
 }
-.scrollbar-hidden {
-  -ms-overflow-style: none; /* IE & Edge */
-  scrollbar-width: none; /* Firefox */
+
+body {
+  width: calc(100vw - 5px);
 }
