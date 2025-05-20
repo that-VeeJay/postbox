@@ -1,5 +1,5 @@
 import { Badge } from "@/components/ui/badge";
-import type { PostsType } from "@/pages/Home/Index";
+import type { Post } from "@/pages/Home/Index";
 import { formatDate } from "@/utils/formatDate";
 import { truncateText } from "@/utils/truncateText";
 import { UpperRightArrow } from "@/components/icons/UpperRightArrow";
@@ -9,7 +9,7 @@ import { getImageUrl } from "@/utils/getImageUrl";
 import { Link } from "react-router-dom";
 import { getFirstLetter } from "@/utils/getFirstLetter";
 
-export default function CardOne({ post }: { post: PostsType }) {
+export default function CardOne({ post }: { post: Post }) {
   return (
     <div className="space-y-3">
       <Link to={`/posts/${post.id}`}>

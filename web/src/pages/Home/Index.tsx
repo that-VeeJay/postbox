@@ -4,8 +4,9 @@ import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import SectionTitle from "@/pages/Home/SectionTitle";
 import CardOneSkeleton from "@/components/skeletons/CardOneSkeleton";
+import CustomToast from "@/components/shared/CustomToast";
 
-export type PostsType = {
+export type Post = {
   id: number;
   user_id: number;
   category: string;
@@ -23,19 +24,16 @@ export default function Index() {
   useToast("publish_success");
 
   // fetch all posts
-  const fetchPosts = async () => {
-    const response = await fetch("/api/posts");
-    if (!response.ok) throw new Error("Error fetching the data");
-    return response.json();
-  };
-
   const { data, isLoading, error } = useQuery({
     queryKey: ["posts"],
-    queryFn: fetchPosts,
+    queryFn: async () => {
+      const response = await fetch("/api/posts");
+      if (!response.ok) throw new Error("Error fetching the data");
+      return response.json();
+    },
     staleTime: 30000,
   });
 
-  // all blog post
   const renderContent = () => {
     if (isLoading) {
       return Array.from({ length: 3 }).map((_, index) => (
@@ -45,8 +43,11 @@ export default function Index() {
 
     if (error) {
       return (
-        <div className="col-span-full text-center text-red-500">
-          Failed to load posts. Please try again later.
+        <div className="col-span-full text-center">
+          <CustomToast
+            message="Failed to load posts. Please try again later."
+            type="error"
+          />
         </div>
       );
     }
@@ -54,7 +55,7 @@ export default function Index() {
     if (Array.isArray(data) && data.length > 0) {
       return data
         .slice(0, 9)
-        .map((post: PostsType) => <CardOne key={post.id} post={post} />);
+        .map((post: Post) => <CardOne key={post.id} post={post} />);
     }
   };
 

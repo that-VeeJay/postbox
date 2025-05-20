@@ -8,7 +8,7 @@ const Profile = lazy(() => import("./pages/Profile/Index"));
 const People = lazy(() => import("./pages/People/Index"));
 const Login = lazy(() => import("./pages/Auth/Login"));
 const Register = lazy(() => import("./pages/Auth/Register"));
-const ViewSingle = lazy(() => import("./pages/Home/ViewSingle"));
+const ViewSingle = lazy(() => import("./pages/Home/ViewSinglePost"));
 
 const Loading = () => <div>Loading...</div>;
 
