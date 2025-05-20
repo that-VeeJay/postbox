@@ -2,16 +2,15 @@ import { useContext } from "react";
 
 import { getImageUrl } from "@/utils/getImageUrl";
 import { UserContext } from "@/context/UserContext";
-import LocationPin from "@/components/icons/LocationPin";
 import { capitalizeFirstLetter } from "@/utils/capitalizeFirstLetter";
 
 import EditProfile from "./EditProfile";
 import AccountSettings from "./AccountSettings";
 import defaultProfile from "../../assets/default_profile.png";
 
-console.log("RENDERED-SECONDARY");
+import { FaLocationDot } from "react-icons/fa6";
 
-export default function ProfileInfo({ bioLength }: { bioLength: number }) {
+export default function ProfileInfo() {
   const { user, token } = useContext(UserContext);
 
   return (
@@ -39,7 +38,7 @@ export default function ProfileInfo({ bioLength }: { bioLength: number }) {
             <div className="flex justify-center gap-1 md:justify-start">
               {user?.location && (
                 <div className="flex gap-2">
-                  <LocationPin />
+                  <FaLocationDot />
                   <small>{user.location}</small>
                 </div>
               )}
@@ -49,7 +48,7 @@ export default function ProfileInfo({ bioLength }: { bioLength: number }) {
           <div className="flex items-center gap-3">
             <AccountSettings />
 
-            <EditProfile token={token} maxBioLength={bioLength} user={user} />
+            <EditProfile token={token} maxBioLength={150} user={user} />
           </div>
         </div>
 

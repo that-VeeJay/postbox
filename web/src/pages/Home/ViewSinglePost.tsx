@@ -14,6 +14,8 @@ import { capitalizeFirstLetter } from "@/utils/capitalizeFirstLetter";
 import SingePostSkeleton from "@/components/skeletons/SinglePostSkeleton";
 import CustomToast from "@/components/shared/CustomToast";
 
+import { FaEdit } from "react-icons/fa";
+
 export default function ViewSinglePost() {
   const { id } = useParams();
   const { user } = useContext(UserContext);
@@ -54,7 +56,9 @@ export default function ViewSinglePost() {
             <div className="flex justify-between gap-3">
               <p className="text-2xl font-semibold">{data.post.title}</p>
               {user && user.id === data.user.id && (
-                <Button variant="outline">Actions</Button>
+                <Button variant="outline">
+                  <FaEdit />
+                </Button>
               )}
             </div>
           </div>

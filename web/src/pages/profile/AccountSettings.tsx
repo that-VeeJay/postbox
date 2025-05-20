@@ -2,7 +2,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import SettingsIcon from "@/components/icons/SettingsIcon";
+
+import { IoSettingsSharp } from "react-icons/io5";
 import {
   Sheet,
   SheetClose,
@@ -22,11 +23,15 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
+import { MdDelete } from "react-icons/md";
+import { AiFillLike } from "react-icons/ai";
+import { IoSave } from "react-icons/io5";
+
 export default function AccountSettings() {
   return (
     <Sheet>
       <SheetTrigger>
-        <SettingsIcon />
+        <IoSettingsSharp />
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>
@@ -73,6 +78,7 @@ export default function AccountSettings() {
 
             <SheetClose asChild>
               <Button type="submit" className="w-full">
+                <IoSave />
                 Update Account
               </Button>
             </SheetClose>
@@ -85,6 +91,7 @@ export default function AccountSettings() {
             <Dialog>
               <DialogTrigger asChild>
                 <Button type="button" variant="destructive">
+                  <MdDelete />
                   Delete account
                 </Button>
               </DialogTrigger>
@@ -97,7 +104,10 @@ export default function AccountSettings() {
                   </DialogDescription>
                 </DialogHeader>
                 <DialogFooter>
-                  <Button variant="destructive">Yes, delete account</Button>
+                  <Button variant="destructive">
+                    <AiFillLike />
+                    Yes, delete account
+                  </Button>
                 </DialogFooter>
               </DialogContent>
             </Dialog>

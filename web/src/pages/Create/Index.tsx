@@ -17,6 +17,8 @@ import GenerateNote from "./GenerateNote";
 import CategorySelect from "./CategorySelect";
 import RefineDialogBox from "./RefineDialogBox";
 
+import { FaBrain } from "react-icons/fa6";
+
 import { useGenerateContent } from "@/hooks/useGenerateContent";
 
 type FormField = "title" | "body" | "category" | "image";
@@ -140,6 +142,7 @@ export default function Index() {
                       generateContent();
                     }}
                   >
+                    <FaBrain />
                     {aiPending ? (
                       <div className="flex items-center gap-1">
                         <Spinner />
@@ -183,7 +186,9 @@ export default function Index() {
                   <p>Please wait...</p>
                 </div>
               ) : (
-                "Publish"
+                <div className="flex items-center gap-1">
+                  <p>Publish</p>
+                </div>
               )}
             </Button>
           </div>

@@ -8,7 +8,8 @@ import { capitalizeFirstLetter } from "@/utils/capitalizeFirstLetter";
 
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { UpperRightArrow } from "@/components/icons/UpperRightArrow";
+
+import { MdArrowOutward } from "react-icons/md";
 
 import type { Post } from "@/pages/Home/Index";
 
@@ -46,7 +47,7 @@ export default function CardOne({
           </h2>
 
           <div className="flex flex-shrink-0 items-center pl-2">
-            <UpperRightArrow size={20} />
+            <MdArrowOutward size={25} />
           </div>
         </Link>
 

@@ -4,13 +4,9 @@ import SavedTab from "./SavedTab";
 import UploadsTab from "./UploadsTab";
 import FollowedTab from "./FollowedTab";
 
-type PropsType = {
-  defaultTab: string;
-};
-
-export default function ProfileTabs({ defaultTab }: PropsType) {
+export default function ProfileTabs() {
   return (
-    <Tabs defaultValue={defaultTab} className="w-full">
+    <Tabs defaultValue="uploads" className="w-full">
       <TabsList>
         <TabsTrigger value="uploads">Uploads</TabsTrigger>
         <TabsTrigger value="followed">Followed</TabsTrigger>

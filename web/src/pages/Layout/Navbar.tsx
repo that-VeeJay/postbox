@@ -1,10 +1,9 @@
 import { useContext } from "react";
-import { LogOutIcon } from "lucide-react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { UserContext } from "@/context/UserContext";
 import { ModeToggle } from "@/components/mode-toggle";
-import { ProfileIcon } from "@/components/icons/ProfileIcon";
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -14,6 +13,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { getImageUrl } from "@/utils/getImageUrl";
 import { getFirstLetter } from "@/utils/getFirstLetter";
+
+import { FaUserAlt } from "react-icons/fa";
+import { IoLogOut } from "react-icons/io5";
 
 export default function Layout() {
   const navigate = useNavigate();
@@ -74,11 +76,11 @@ export default function Layout() {
                       <DropdownMenuContent>
                         <DropdownMenuItem asChild>
                           <Link to="/profile" className="flex gap-2">
-                            <ProfileIcon /> Profile
+                            <FaUserAlt /> Profile
                           </Link>
                         </DropdownMenuItem>
                         <DropdownMenuItem>
-                          <LogOutIcon />
+                          <IoLogOut />
                           <form onSubmit={handleLogout}>
                             <button>Logout</button>
                           </form>

@@ -16,6 +16,10 @@ import {
 } from "@/components/ui/sheet";
 import CustomToast from "@/components/shared/CustomToast";
 
+import { MdModeEdit } from "react-icons/md";
+import { IoSave } from "react-icons/io5";
+import { IoMdCloseCircle } from "react-icons/io";
+
 type Props = {
   maxBioLength: number;
   token: string | null;
@@ -110,7 +114,10 @@ export default function EditProfile({ maxBioLength, token, user }: Props) {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="outline">Edit Profile</Button>
+        <Button variant="outline">
+          <MdModeEdit />
+          Edit Profile
+        </Button>
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>
@@ -185,11 +192,13 @@ export default function EditProfile({ maxBioLength, token, user }: Props) {
                   }}
                   className="flex-1"
                 >
+                  <IoMdCloseCircle />
                   Close
                 </Button>
               </SheetClose>
               {/* <SheetClose asChild> */}
               <Button type="submit" className="flex-2">
+                <IoSave />
                 Save Changes
               </Button>
               {/* </SheetClose> */}

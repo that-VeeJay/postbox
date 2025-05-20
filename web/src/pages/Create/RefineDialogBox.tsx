@@ -9,6 +9,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { FaPaintbrush } from "react-icons/fa6";
 
 interface RefineDialogBoxProps {
   refinements: { text: string };
@@ -25,7 +26,10 @@ export default function RefineDialogBox({
   return (
     <Dialog>
       <DialogTrigger className="text-sm" asChild>
-        <Button variant="outline">Refine</Button>
+        <Button variant="outline">
+          <FaPaintbrush />
+          Refine
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

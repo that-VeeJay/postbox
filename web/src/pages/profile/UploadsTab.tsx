@@ -14,7 +14,7 @@ export default function UploadsTab() {
   const { user, token } = useContext(UserContext);
 
   const { data, isLoading } = useQuery({
-    queryKey: ["user_posts", user.id],
+    queryKey: ["user_posts", user?.id],
     queryFn: async () => {
       const response = await fetch(`/api/users/${user.id}/posts`, {
         headers: {

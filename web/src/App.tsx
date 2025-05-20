@@ -12,7 +12,7 @@ const ViewSingle = lazy(() => import("./pages/Home/ViewSinglePost"));
 
 const Loading = () => <div>Loading...</div>;
 
-const LayoutWithSuspense = () => (<Layout />);
+const LayoutWithSuspense = () => <Layout />;
 
 // const LayoutWithSuspense = () => (
 //   <Suspense fallback={<Loading />}>
@@ -34,19 +34,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/login",
-    element: (
-      <Suspense fallback={<Loading />}>
-        <Login />
-      </Suspense>
-    ),
+    element: <Login />,
   },
   {
     path: "/register",
-    element: (
-      <Suspense fallback={<Loading />}>
-        <Register />
-      </Suspense>
-    ),
+    element: <Register />,
   },
 ]);
 
