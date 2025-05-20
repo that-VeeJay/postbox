@@ -1,18 +1,23 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { useContext, useState } from "react";
-import InputFieldError from "@/components/shared/InputFieldError";
-import Spinner from "@/components/icons/Spinner";
-import { UserContext } from "@/context/UserContext";
+
 import { useNavigate } from "react-router-dom";
+
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import Spinner from "@/components/icons/Spinner";
+import { Textarea } from "@/components/ui/textarea";
+import { UserContext } from "@/context/UserContext";
 import { useMutation } from "@tanstack/react-query";
-import CategorySelect from "./CategorySelect";
-import ImagePreview from "./ImagePreview";
-import ImageUpload from "./ImageUpload";
-import GenerateNote from "./GenerateNote";
-import RefineDialogBox from "./RefineDialogBox";
 import { useQueryClient } from "@tanstack/react-query";
+import InputFieldError from "@/components/shared/InputFieldError";
+
+import ImageUpload from "./ImageUpload";
+import ImagePreview from "./ImagePreview";
+import GenerateNote from "./GenerateNote";
+import CategorySelect from "./CategorySelect";
+import RefineDialogBox from "./RefineDialogBox";
+
+import { useGenerateContent } from "@/hooks/useGenerateContent";
 
 type FormField = "title" | "body" | "category" | "image";
 
@@ -23,9 +28,7 @@ export type FormDataType = {
   image: File | null;
 };
 
-type ErrorsType = {
-  [key in FormField]?: string;
-};
+export type ErrorsType = Partial<Record<FormField, string>>;
 
 const MAX_REFINE_LENGTH = 150;
 const MAX_TITLE_LENGTH = 8;
@@ -41,43 +44,18 @@ export default function Index() {
   const { token } = useContext(UserContext);
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+
   const [image, setImage] = useState<string | null>(null);
   const [refinements, setRefinements] = useState({ text: "" });
   const [postData, setPostData] = useState<FormDataType>(initialValues);
   const [errors, setErrors] = useState<ErrorsType>({});
 
   // handle AI content generation
-  const { mutate: generateContent, isPending: aiPending } = useMutation({
-    mutationFn: async () => {
-      const response = await fetch(
-        "https://api.groq.com/openai/v1/chat/completions",
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${import.meta.env.VITE_GROQ_API_KEY}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            model: import.meta.env.VITE_LARGE_LANG_MODEL,
-            messages: [
-              {
-                role: "user",
-                content: `Write a clear and well-structured blog post based on the title: "${postData.title}". Use the following context to add insight and depth: "${refinements.text}". Do not repeat the title in the content. Avoid Markdown—return plain text only. Use • for lists instead of *.`,
-              },
-            ],
-          }),
-        },
-      );
-      return response.json();
-    },
-    onSuccess: (data) => {
-      const aiContent =
-        data.choices?.[0]?.message?.content || "No content generated.";
-      setPostData({ ...postData, body: aiContent });
-    },
-    onError: (error) => {
-      console.error("AI generation failed", error);
-    },
+  const { generateContent, aiPending } = useGenerateContent({
+    title: postData.title,
+    context: refinements.text,
+    onSuccess: (content: string) =>
+      setPostData((prev) => ({ ...prev, body: content })),
   });
 
   // handle form submission
@@ -155,9 +133,7 @@ export default function Index() {
                   <Button
                     type="button"
                     disabled={
-                      postData.title.length > MAX_TITLE_LENGTH
-                        ? false
-                        : true || aiPending
+                      postData.title.length <= MAX_TITLE_LENGTH || aiPending
                     }
                     onClick={(e) => {
                       e.preventDefault();
