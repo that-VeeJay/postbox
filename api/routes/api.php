@@ -13,6 +13,7 @@ Route::get('/user', function (Request $request) {
 Route::patch("/profile/update", [UserController::class, 'update'])->middleware('auth:sanctum');
 
 Route::get('/posts', [PostController::class, 'index']);
+Route::get('/posts/{post}', [PostController::class, 'show']);
 Route::post('/posts', [PostController::class, 'store'])->middleware('auth:sanctum');
 
 Route::get('/users/{id}/posts', [PostController::class, 'getPosts'])->middleware('auth:sanctum');

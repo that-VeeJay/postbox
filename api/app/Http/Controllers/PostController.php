@@ -15,6 +15,11 @@ class PostController extends Controller
         return Post::with('user')->latest()->take(self::POST_LIMIT)->get();
     }
 
+    public function show(Post $post)
+    {
+         return ['post' => $post, 'user' => $post->user];
+    }
+
     public function store(Request $request)
     {
         $validatedFields = $request->validate([
@@ -49,4 +54,6 @@ class PostController extends Controller
          $posts = Post::where('user_id', $id)->select('title', 'image')->latest()->get();
          return $posts;
     }
+
+
 }
