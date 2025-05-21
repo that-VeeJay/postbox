@@ -16,3 +16,21 @@ export type ActionsButtonPropsType = {
   id: string | undefined;
   token: string | null;
 };
+
+export type CreateInputDataProps = {
+  title: string;
+  body: string;
+  category: string;
+  image: File | null;
+};
+
+export type CreateErrorsType = {
+  title?: string;
+  body?: string;
+  category?: string;
+  image?: string;
+};
+
+export type RefineDialogBoxProps = {
+  setRefinements: React.Dispatch<React.SetStateAction<{ text: string }>>;
+};

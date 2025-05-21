@@ -1,19 +1,19 @@
 type Props = {
-  image: string | null;
+  imagePreview: string | null;
 };
 
-export default function ImagePreview({ image }: Props) {
+export default function ImagePreview({ imagePreview }: Props) {
   return (
     <div className="dark:border-gray block h-60 rounded-lg border border-neutral-300 bg-neutral-100 dark:border-neutral-700 dark:bg-neutral-900">
       <div className="relative flex h-full items-center justify-center rounded-lg">
-        {image && (
+        {imagePreview && (
           <div className="absolute bottom-0 left-0 z-20 block w-full bg-black/50 px-2 py-1 text-xs text-white">
             Note: Preview only — final ratio may vary.
           </div>
         )}
-        {image ? (
+        {imagePreview ? (
           <img
-            src={image}
+            src={imagePreview}
             alt="Preview"
             className="z-10 h-full w-full rounded-lg object-cover"
           />

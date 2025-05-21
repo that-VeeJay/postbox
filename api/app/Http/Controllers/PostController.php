@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
-use Illuminate\Foundation\Auth\User;
 
 class PostController extends Controller
 {
@@ -60,5 +59,4 @@ class PostController extends Controller
          $post->delete();
          return ['message' => 'The post was deleted'];
     }
-
 }

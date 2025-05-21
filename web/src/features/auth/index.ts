@@ -1,4 +1,5 @@
-import { default as LoginForm } from "./components/LoginForm";
+import LoginForm from "./components/LoginForm";
+import RegisterForm from "./components/RegisterForm";
 import { useLoginMutation } from "./hooks/useLoginMutation";
 
-export { LoginForm, useLoginMutation };
+export { LoginForm, RegisterForm, useLoginMutation };

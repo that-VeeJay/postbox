@@ -1,23 +1,17 @@
 import InputFieldError from "@/components/shared/InputFieldError";
-import type { FormDataType } from "./Index";
-import { useState } from "react";
 
-type ErrorsType = {
-  title?: string;
-  body?: string;
-  category?: string;
-  image?: string;
-};
+import { useState } from "react";
+import type { CreateErrorsType, CreateInputDataProps } from "../../types";
 
 interface ImageUploadProps {
-  setPostData: React.Dispatch<React.SetStateAction<FormDataType>>;
-  setImage: React.Dispatch<React.SetStateAction<string | null>>;
-  errors: ErrorsType;
+  setInputData: React.Dispatch<React.SetStateAction<CreateInputDataProps>>;
+  setImagePreview: React.Dispatch<React.SetStateAction<string | null>>;
+  errors: CreateErrorsType;
 }
 
 export default function ImageUpload({
-  setPostData,
-  setImage,
+  setInputData,
+  setImagePreview,
   errors,
 }: ImageUploadProps) {
   const [dragging, setDragging] = useState<boolean>(false);
@@ -29,8 +23,8 @@ export default function ImageUpload({
     if (files.length > 0) {
       const file = files[0];
       const url = URL.createObjectURL(file);
-      setImage(url);
-      setPostData((prev) => ({ ...prev, image: file }));
+      setImagePreview(url);
+      setInputData((prev) => ({ ...prev, image: file }));
     }
   };
 
@@ -45,8 +39,8 @@ export default function ImageUpload({
     const file = e.target.files?.[0];
     if (file) {
       const url = URL.createObjectURL(file);
-      setImage(url);
-      setPostData((prev) => ({ ...prev, image: file }));
+      setImagePreview(url);
+      setInputData((prev) => ({ ...prev, image: file }));
     }
   };
 

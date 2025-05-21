@@ -1,6 +1,8 @@
+import { useState } from "react";
+
+import { FaPaintbrush } from "react-icons/fa6";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -9,20 +11,18 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { FaPaintbrush } from "react-icons/fa6";
 
-interface RefineDialogBoxProps {
-  refinements: { text: string };
+type RefineDialogBoxProps = {
   setRefinements: React.Dispatch<React.SetStateAction<{ text: string }>>;
-  MAX_REFINE_LENGTH: number;
-}
+};
+
+const MAX_REFINE_LENGTH = 150;
 
 export default function RefineDialogBox({
-  refinements,
   setRefinements,
-  MAX_REFINE_LENGTH,
 }: RefineDialogBoxProps) {
-  const [text, setText] = useState<string>("");
+  const [inputData, setInputData] = useState({ text: "" });
+
   return (
     <Dialog>
       <DialogTrigger className="text-sm" asChild>
@@ -43,19 +43,16 @@ export default function RefineDialogBox({
           <Textarea
             maxLength={MAX_REFINE_LENGTH}
             onChange={(e) => {
-              setText(e.target.value);
-              setRefinements({
-                ...refinements,
-                text: e.target.value,
-              });
+              setInputData({ text: e.target.value });
+              setRefinements({ text: e.target.value });
             }}
             className="resize-none"
             placeholder="Start writing..."
             id="refinements_form"
-            value={refinements.text}
+            value={inputData.text}
           />
           <p className="text-xs">
-            {text.length}/{MAX_REFINE_LENGTH}
+            {inputData.text.length}/{MAX_REFINE_LENGTH}
           </p>
         </div>
       </DialogContent>

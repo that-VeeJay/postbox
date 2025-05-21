@@ -1,20 +1,17 @@
 import { useContext } from "react";
 import { useParams } from "react-router-dom";
+
 import { UserContext } from "@/context/UserContext";
+import { useViewSinglePost, ActionsButton } from "@/features/posts";
 
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import SingePostSkeleton from "@/components/skeletons/SinglePostSkeleton";
+import CustomToast from "@/components/shared/CustomToast";
 
 import { getImageUrl } from "@/utils/getImageUrl";
 import { getFirstLetter } from "@/utils/getFirstLetter";
 import { capitalizeFirstLetter } from "@/utils/capitalizeFirstLetter";
-
-import SingePostSkeleton from "@/components/skeletons/SinglePostSkeleton";
-import CustomToast from "@/components/shared/CustomToast";
-
-import ActionsButton from "../../features/posts/components/ActionsButton";
-
-import { useViewSinglePost } from "@/features/posts/hooks/useViewSinglePost";
 
 export default function View() {
   const { id } = useParams();

@@ -17,22 +17,22 @@ import { cn } from "@/lib/utils";
 import { categories } from "@/data/categories";
 import InputFieldError from "@/components/shared/InputFieldError";
 import { useState } from "react";
-import type { FormDataType } from "./Index";
-import type { ErrorsType } from "./Index";
+
+import type { CreateInputDataProps, CreateErrorsType } from "../../types";
 
 type Props = {
-  setPostData: React.Dispatch<React.SetStateAction<FormDataType>>;
-  postData: FormDataType;
-  errors: ErrorsType;
+  setInputData: React.Dispatch<React.SetStateAction<CreateInputDataProps>>;
+  inputData: CreateInputDataProps;
+  errors: CreateErrorsType;
 };
 
 export default function CategorySelect({
-  setPostData,
-  postData,
+  setInputData,
+  inputData,
   errors,
 }: Props) {
   const [open, setOpen] = useState<boolean>(false);
-  const [value, setValue] = useState<string>(postData.category || "");
+  const [value, setValue] = useState<string>(inputData.category || "");
   return (
     <div>
       <Popover open={open} onOpenChange={setOpen}>
@@ -62,8 +62,8 @@ export default function CategorySelect({
                     onSelect={(currentValue) => {
                       setValue(currentValue === value ? "" : currentValue);
                       setOpen(false);
-                      setPostData({
-                        ...postData,
+                      setInputData({
+                        ...inputData,
                         category: currentValue,
                       });
                     }}
