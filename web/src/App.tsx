@@ -2,11 +2,9 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { lazy } from "react";
 
 const Layout = lazy(() => import("./layouts/Navbar"));
-// const Home = lazy(() => import("./pages/Home/Index"));
-const Home = lazy(() => import("./pages/Home/HomePage"));
-// const Create = lazy(() => import("./pages/Create/Index"));
+const HomePage = lazy(() => import("./pages/Home/HomePage"));
 const Create = lazy(() => import("./pages/Post/Create"));
-const Profile = lazy(() => import("./pages/Profile/Index"));
+const ProfilePage = lazy(() => import("./pages/Profile/ProfilePage"));
 const People = lazy(() => import("./pages/People/Index"));
 const Login = lazy(() => import("./pages/Auth/Login"));
 const Register = lazy(() => import("./pages/Auth/Register"));
@@ -26,9 +24,9 @@ const router = createBrowserRouter([
     path: "/",
     element: <LayoutWithSuspense />,
     children: [
-      { path: "", element: <Home /> },
+      { path: "", element: <HomePage /> },
       { path: "create", element: <Create /> },
-      { path: "profile", element: <Profile /> },
+      { path: "profile", element: <ProfilePage /> },
       { path: "people", element: <People /> },
       { path: "posts/:id", element: <ViewSingle /> },
       { path: "posts/:id/edit", element: <EditPost /> },

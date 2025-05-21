@@ -1,5 +1,5 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
-import UploadsCard from "./UploadsCard";
+import UploadsCard from "../UploadsCard";
 import { useContext } from "react";
 import { UserContext } from "@/context/UserContext";
 import { useQuery } from "@tanstack/react-query";

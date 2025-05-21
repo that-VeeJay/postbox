@@ -1,11 +1,11 @@
 import { useContext } from "react";
+import { UserContext } from "@/context/UserContext";
 
 import { getImageUrl } from "@/utils/getImageUrl";
-import { UserContext } from "@/context/UserContext";
 import { capitalizeFirstLetter } from "@/utils/capitalizeFirstLetter";
 
-import EditProfile from "./EditProfile";
-import AccountSettings from "./AccountSettings";
+import { EditProfile, AccountSettings } from "@/features/profile";
+
 import defaultProfile from "../../assets/default_profile.png";
 
 import { FaLocationDot } from "react-icons/fa6";
