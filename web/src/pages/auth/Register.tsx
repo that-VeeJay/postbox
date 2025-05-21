@@ -6,7 +6,6 @@ import { useMutation } from "@tanstack/react-query";
 import FormInput from "@/components/shared/FormInput";
 import InputFieldError from "@/components/shared/InputFieldError";
 
-
 type FormField =
   | "name"
   | "username"
