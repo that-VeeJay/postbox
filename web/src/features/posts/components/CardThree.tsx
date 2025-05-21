@@ -27,12 +27,17 @@ export default function CardThree({
     <div className="space-y-3">
       {/* Post Image */}
       <Link to={`/posts/${id}`}>
-        <img
-          src={getImageUrl(image)}
-          alt={`Featured image for the blog post "${title}"`}
-          draggable="false"
-          className="aspect-[16/7] object-cover"
-        />
+        <div className="aspect-[16/7]">
+          <img
+            src={getImageUrl(image)}
+            loading="lazy"
+            alt={`Featured image for the blog post "${title}"`}
+            draggable="false"
+            width={1600} 
+            height={700}
+            className="h-full w-full object-cover"
+          />
+        </div>
       </Link>
       <div className="space-y-3 p-3">
         {/* Pot Category */}

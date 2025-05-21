@@ -5,7 +5,7 @@ export default function SingePostSkeleton() {
     <div className="space-y-3">
       <Skeleton className="h-[500px] w-full"></Skeleton>
       <Skeleton className="h-[50px] w-[50%]"></Skeleton>
-      <Skeleton className="h-[200px] w-full"></Skeleton>
+      <Skeleton className="h-[500px] w-full"></Skeleton>
     </div>
   );
 }

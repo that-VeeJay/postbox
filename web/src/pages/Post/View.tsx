@@ -32,11 +32,13 @@ export default function View() {
       ) : (
         <div className="space-y-5">
           {/* Post Image */}
-          <img
-            src={getImageUrl(data.post.image)}
-            alt=""
-            className="aspect-[16/9] object-cover"
-          />
+          <div className="aspect-[16/9] overflow-hidden">
+            <img
+              src={getImageUrl(data.post.image)}
+              alt="Cover Image"
+              className="h-full w-full object-cover"
+            />
+          </div>
 
           {/* Post Category and Title */}
           <div className="space-y-2">

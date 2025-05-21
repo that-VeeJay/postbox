@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Services\ImageService;
+
 
 class PostController extends Controller
 {
@@ -11,39 +13,35 @@ class PostController extends Controller
 
     public function index()
     {
-        return Post::with('user')->latest()->take(self::POST_LIMIT)->get();
+        return Post::with('user')
+            ->latest()
+            ->take(self::POST_LIMIT)
+            ->get();
     }
 
     public function show(Post $post)
     {
-         return ['post' => $post, 'user' => $post->user];
+         return [
+            'post' => $post,
+            'user' => $post->user
+        ];
     }
 
-    public function store(Request $request)
+    public function store(Request $request, ImageService $imageService)
     {
-        $validatedFields = $request->validate([
+        $validated = $request->validate([
             'title' => ['required'],
             'body' => ['required'],
             'category' => ['required'],
-            'image' => ['required','image','mimes:png,jpg,jpeg'],
+            'image' => ['required', 'image', 'mimes:png,jpg,jpeg'],
         ]);
 
         if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $image_name = uniqid('post_') . '.' . $image->getClientOriginalExtension();
-            // Save to storage/app/public/images/posts
-            $image->storeAs('public/images/posts', $image_name);
-            // Also save to public/images/posts
-            $public_path = public_path('images/posts');
-            if (!file_exists($public_path)) {
-                mkdir($public_path, 0755, true);
-            }
-            $image->move($public_path, $image_name);
-            // Save the relative path for frontend access
-            $validatedFields['image'] = 'images/posts/' . $image_name;
+            $imagePath = $imageService->compressAndStore($request->file('image'), 'images/posts');
+            $validated['image'] = $imagePath;
         }
 
-        $post = $request->user()->posts()->create($validatedFields);
+        $post = $request->user()->posts()->create($validated);
 
         return ['post' => $post, 'user' => $post->user];
     }
