@@ -1,12 +1,12 @@
 import { useMutation } from "@tanstack/react-query";
-import type { LoginFormDataType, ErrorMessageType } from "../auth";
+import type { LoginFormDataType, LoginErrorMessageType } from "../auth";
 import { useContext } from "react";
 import { UserContext } from "@/context/UserContext";
 import { initialValues } from "../components/LoginForm";
 import { useNavigate } from "react-router-dom";
 
 type Props = {
-  setErrors: React.Dispatch<React.SetStateAction<ErrorMessageType | null>>;
+  setErrors: React.Dispatch<React.SetStateAction<LoginErrorMessageType | null>>;
   setFormData: React.Dispatch<React.SetStateAction<LoginFormDataType>>;
   setNetworkError: React.Dispatch<React.SetStateAction<string>>;
 };

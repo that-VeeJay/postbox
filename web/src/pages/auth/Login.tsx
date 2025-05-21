@@ -11,9 +11,7 @@ export default function Login() {
             Welcome back! Please enter your details.
           </p>
         </div>
-
         <LoginForm />
-
         <div className="text-center">
           <p>
             Don't have an account?{" "}

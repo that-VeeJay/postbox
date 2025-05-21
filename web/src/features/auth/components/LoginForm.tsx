@@ -1,16 +1,19 @@
 import { useState } from "react";
+
 import { Button } from "@/components/ui/button";
-import FormInput from "@/components/shared/FormInput";
-import { useLoginMutation } from "../Index";
-import type { LoginFormDataType, ErrorMessageType } from "../auth";
-import InputFieldError from "@/components/shared/InputFieldError";
 import Spinner from "@/components/icons/Spinner";
+import FormInput from "@/components/shared/FormInput";
+import InputFieldError from "@/components/shared/InputFieldError";
+import CustomToast from "@/components/shared/CustomToast";
+
+import { useLoginMutation } from "../Index";
+import type { LoginErrorMessageType, LoginFormDataType } from "../auth";
 
 export const initialValues: LoginFormDataType = { email: "", password: "" };
 
 export default function LoginForm() {
   const [formData, setFormData] = useState(initialValues);
-  const [errors, setErrors] = useState<ErrorMessageType | null>(null);
+  const [errors, setErrors] = useState<LoginErrorMessageType | null>(null);
   const [networkError, setNetworkError] = useState("");
 
   // handle input change
@@ -32,11 +35,7 @@ export default function LoginForm() {
 
   return (
     <>
-      {networkError && (
-        <div className="border-2 border-red-900 bg-red-900/50 p-3 text-center">
-          {networkError}
-        </div>
-      )}
+      {networkError && <CustomToast message={networkError} type="error" />}
       <form onSubmit={handleSubmit} className="space-y-5">
         <div>
           <FormInput
