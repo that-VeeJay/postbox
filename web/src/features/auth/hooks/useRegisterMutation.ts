@@ -38,7 +38,7 @@ export function useRegisterMutation({
       setFormData(initialValues);
       navigate("/login", {
         state: {
-          success: "Account created successfully!",
+          success: "Account created successfully! 🎉",
         },
       });
     },

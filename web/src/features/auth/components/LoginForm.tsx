@@ -6,12 +6,15 @@ import FormInput from "@/components/shared/FormInput";
 import InputFieldError from "@/components/shared/InputFieldError";
 import CustomToast from "@/components/shared/CustomToast";
 
+import useToast from "@/hooks/useToast";
+
 import { useLoginMutation } from "../Index";
 import type { LoginErrorMessageType, LoginFormDataType } from "../auth";
 
 export const initialValues: LoginFormDataType = { email: "", password: "" };
 
 export default function LoginForm() {
+  useToast("success");
   const [formData, setFormData] = useState(initialValues);
   const [errors, setErrors] = useState<LoginErrorMessageType | null>(null);
   const [networkError, setNetworkError] = useState("");
