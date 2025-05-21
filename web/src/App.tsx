@@ -2,14 +2,15 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { lazy } from "react";
 
 const Layout = lazy(() => import("./layouts/Navbar"));
-const Home = lazy(() => import("./pages/Home/Index"));
+// const Home = lazy(() => import("./pages/Home/Index"));
+const Home = lazy(() => import("./pages/Home/HomePage"));
 const Create = lazy(() => import("./pages/Create/Index"));
 const Profile = lazy(() => import("./pages/Profile/Index"));
 const People = lazy(() => import("./pages/People/Index"));
 const Login = lazy(() => import("./pages/Auth/Login"));
 const Register = lazy(() => import("./pages/Auth/Register"));
-const ViewSingle = lazy(() => import("./pages/Home/ViewSinglePost"));
-const EditPost = lazy(() => import("./pages/Home/EditPost"));
+const ViewSingle = lazy(() => import("./pages/Post/View"));
+const EditPost = lazy(() => import("./pages/Post/Edit"));
 
 const Loading = () => <div>Loading...</div>;
 

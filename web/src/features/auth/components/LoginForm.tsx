@@ -8,8 +8,8 @@ import CustomToast from "@/components/shared/CustomToast";
 
 import useToast from "@/hooks/useToast";
 
-import { useLoginMutation } from "../Index";
-import type { LoginErrorMessageType, LoginFormDataType } from "../auth";
+import { useLoginMutation } from "..";
+import type { LoginErrorMessageType, LoginFormDataType } from "../types";
 
 export const initialValues: LoginFormDataType = { email: "", password: "" };
 

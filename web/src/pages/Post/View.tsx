@@ -1,6 +1,5 @@
 import { useContext } from "react";
 import { useParams } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
 import { UserContext } from "@/context/UserContext";
 
 import { Badge } from "@/components/ui/badge";
@@ -13,22 +12,15 @@ import { capitalizeFirstLetter } from "@/utils/capitalizeFirstLetter";
 import SingePostSkeleton from "@/components/skeletons/SinglePostSkeleton";
 import CustomToast from "@/components/shared/CustomToast";
 
-import ActionsButton from "./ActionsButton";
+import ActionsButton from "../../features/posts/components/ActionsButton";
 
-export default function ViewSinglePost() {
+import { useViewSinglePost } from "@/features/posts/hooks/useViewSinglePost";
+
+export default function View() {
   const { id } = useParams();
   const { user, token } = useContext(UserContext);
 
-  // fetch single post data w/ user info
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["single_post", id],
-    queryFn: async () => {
-      const response = await fetch(`/api/posts/${id}`);
-      return response.json();
-    },
-    enabled: !!id,
-    staleTime: 100000,
-  });
+  const { data, isLoading, error } = useViewSinglePost(id!);
 
   return (
     <div className="mx-auto w-full max-w-5xl p-5 pt-5">

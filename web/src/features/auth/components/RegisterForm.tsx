@@ -7,7 +7,7 @@ import InputFieldError from "@/components/shared/InputFieldError";
 import CustomToast from "@/components/shared/CustomToast";
 
 import { useRegisterMutation } from "../hooks/useRegisterMutation";
-import type { RegisterErrorMessageType, RegisterFormDataType } from "../auth";
+import type { RegisterErrorMessageType, RegisterFormDataType } from "../types";
 
 export const initialValues: RegisterFormDataType = {
   name: "",

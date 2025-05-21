@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 
 import { initialValues } from "../components/RegisterForm";
-import type { RegisterErrorMessageType, RegisterFormDataType } from "../auth";
+import type { RegisterErrorMessageType, RegisterFormDataType } from "../types";
 
 type Props = {
   setErrors: React.Dispatch<

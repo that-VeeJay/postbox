@@ -11,9 +11,9 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 import { MdArrowOutward } from "react-icons/md";
 
-import type { Post } from "@/pages/Home/Index";
+import type { PostType } from "../types";
 
-export default function CardOne({
+export default function CardThree({
   id,
   image,
   title,
@@ -21,7 +21,7 @@ export default function CardOne({
   body,
   created_at,
   user: { profile_picture, name },
-}: Post) {
+}: PostType) {
   console.log(created_at);
   return (
     <div className="space-y-3">

@@ -1,3 +1,9 @@
+import { useNavigate } from "react-router-dom";
+
+import { FaEdit } from "react-icons/fa";
+import { MdEdit } from "react-icons/md";
+import { MdDelete } from "react-icons/md";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -6,46 +12,18 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
 
-import { FaEdit } from "react-icons/fa";
-import { MdEdit } from "react-icons/md";
-import { MdDelete } from "react-icons/md";
+import { useDeletePost } from "../hooks/useDeletePost";
+import type { ActionsButtonPropsType } from "../types";
 
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
-
-type Props = {
-  id: string | undefined;
-  token: string | null;
-};
-
-export default function ActionsButton({ id, token }: Props) {
+export default function ActionsButton({ id, token }: ActionsButtonPropsType) {
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
 
-  const { mutate: deletePost } = useMutation({
-    mutationFn: async () => {
-      const response = await fetch(`/api/posts/${id}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      return response.json();
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["posts"] });
-      navigate("/", {
-        state: {
-          delete_success: "Your post have been deleted. 👉🏻🗑️",
-        },
-      });
-    },
-  });
+  const { deletePost } = useDeletePost();
 
   const handleDelete = () => {
-    deletePost();
+    if (!id || !token) return;
+    deletePost({ id, token });
   };
 
   const handleEdit = () => {

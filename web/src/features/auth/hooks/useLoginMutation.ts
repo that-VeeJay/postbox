@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import type { LoginFormDataType, LoginErrorMessageType } from "../auth";
+import type { LoginFormDataType, LoginErrorMessageType } from "../types";
 import { useContext } from "react";
 import { UserContext } from "@/context/UserContext";
 import { initialValues } from "../components/LoginForm";

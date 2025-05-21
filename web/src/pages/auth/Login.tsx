@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { LoginForm } from "@/features/auth/Index";
+import { LoginForm } from "@/features/auth";
 
 export default function Login() {
   return (
