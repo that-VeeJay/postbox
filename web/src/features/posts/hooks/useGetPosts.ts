@@ -8,7 +8,7 @@ export function useGetPosts() {
       if (!response.ok) throw new Error("Error fetching the data");
       return response.json();
     },
-    staleTime: 30000,
+    staleTime: 5 * 60 * 1000,
   });
   return {
     data: query.data,

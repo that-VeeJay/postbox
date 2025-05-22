@@ -5,11 +5,14 @@ import UserProvider from "./context/UserContext.tsx";
 import { Toaster } from "./components/ui/sonner.tsx";
 import { ThemeProvider } from "./components/theme-provider.tsx";
 import "./index.css";
-import { client } from "./lib/react-query.ts";
+import { QueryClient } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
+// const queryClient = useMemo(() => new QueryClient(), []);
 
 createRoot(document.getElementById("root")!).render(
   <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-    <QueryClientProvider client={client}>
+    <QueryClientProvider client={queryClient}>
       <UserProvider>
         <App />
         <Toaster />

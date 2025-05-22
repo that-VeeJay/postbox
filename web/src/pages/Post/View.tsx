@@ -13,6 +13,8 @@ import { getImageUrl } from "@/utils/getImageUrl";
 import { getFirstLetter } from "@/utils/getFirstLetter";
 import { capitalizeFirstLetter } from "@/utils/capitalizeFirstLetter";
 
+import { Comments } from "@/features/comments";
+
 export default function View() {
   const { id } = useParams();
   const { user, token } = useContext(UserContext);
@@ -67,6 +69,11 @@ export default function View() {
           <p className="text-justify whitespace-pre-line">{data.post.body}</p>
         </div>
       )}
+
+      {/* Comment Section */}
+      <div className="mt-10 space-y-10">
+        <Comments />
+      </div>
     </div>
   );
 }

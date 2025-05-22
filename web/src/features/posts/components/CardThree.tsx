@@ -22,7 +22,6 @@ export default function CardThree({
   created_at,
   user: { profile_picture, name },
 }: PostType) {
-  console.log(created_at);
   return (
     <div className="space-y-3">
       {/* Post Image */}
@@ -33,7 +32,7 @@ export default function CardThree({
             loading="lazy"
             alt={`Featured image for the blog post "${title}"`}
             draggable="false"
-            width={1600} 
+            width={1600}
             height={700}
             className="h-full w-full object-cover"
           />
