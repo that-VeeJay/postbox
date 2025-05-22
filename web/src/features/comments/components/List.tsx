@@ -13,6 +13,10 @@ export default function List() {
     setReplyFieldOpen((prev) => !prev);
   };
 
+  const handleReplyClose = () => {
+    setReplyFieldOpen(false);
+  };
+
   return (
     <div className="flex gap-3">
       <Avatar>
@@ -32,8 +36,11 @@ export default function List() {
           Reprehenderit omnis pariatur autem quibusdam eos inventore voluptate,
           molestiae sequi itaque repellendus.
         </p>
-        <div className="mt-3 flex items-center gap-5">
-          <AiOutlineLike size={20} />
+        <div className="flex items-center gap-5">
+          <div className="flex items-center gap-2">
+            <AiOutlineLike size={20} />
+            <small>20</small>
+          </div>
           <AiOutlineDislike size={20} />
           <Button
             onClick={handleReplyClick}
@@ -52,7 +59,13 @@ export default function List() {
             <div className="w-full space-y-3">
               <Input />
               <div className="flex items-center justify-end gap-3">
-                <p className="text-sm">cancel</p>
+                <Button
+                  variant="ghost"
+                  onClick={handleReplyClose}
+                  className="text-sm"
+                >
+                  cancel
+                </Button>
                 <Button variant="secondary">Comment</Button>
               </div>
             </div>

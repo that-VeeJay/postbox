@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 
 import { UserContext } from "@/context/UserContext";
 import { useViewSinglePost, ActionsButton } from "@/features/posts";
+import { Comments } from "@/features/comments";
 
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -12,8 +13,6 @@ import CustomToast from "@/components/shared/CustomToast";
 import { getImageUrl } from "@/utils/getImageUrl";
 import { getFirstLetter } from "@/utils/getFirstLetter";
 import { capitalizeFirstLetter } from "@/utils/capitalizeFirstLetter";
-
-import { Comments } from "@/features/comments";
 
 export default function View() {
   const { id } = useParams();
@@ -72,7 +71,13 @@ export default function View() {
 
       {/* Comment Section */}
       <div className="mt-10 space-y-10">
-        <Comments />
+        {user ? (
+          <Comments />
+        ) : (
+          <div className="text-center font-semibold">
+            Join the conversation - sign up to comment.
+          </div>
+        )}
       </div>
     </div>
   );

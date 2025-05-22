@@ -1,7 +1,10 @@
+
 import Compose from "./Compose";
 import List from "./List";
 
 export default function Comments() {
+
+
   return (
     <>
       <div className="space-y-5">
