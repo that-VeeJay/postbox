@@ -7,6 +7,17 @@ use App\Models\Comment;
 
 class CommentController extends Controller
 {
+    public function index($postId)
+    {
+    $comments = Comment::where('post_id', $postId)
+            ->whereNull('parent_id')
+            ->with('replies.user', 'user')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+    return response()->json($comments);
+    }
+
     public function store(Request $request)
     {
         $validated = $request->validate([

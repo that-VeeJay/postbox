@@ -31,54 +31,58 @@ export default function View() {
           className="mt-5 text-center"
         />
       ) : (
-        <div className="space-y-5">
-          {/* Post Image */}
-          <div className="aspect-[16/9] overflow-hidden">
-            <img
-              src={getImageUrl(data.post.image)}
-              alt="Cover Image"
-              className="h-full w-full object-cover"
-            />
-          </div>
-
-          {/* Post Category and Title */}
-          <div className="space-y-2">
-            <Badge>{capitalizeFirstLetter(data.post.category)}</Badge>
-            <div className="flex justify-between gap-3">
-              <p className="text-2xl font-semibold">{data.post.title}</p>
-              {user && user.id === data.user.id && (
-                <ActionsButton id={id} token={token} />
-              )}
-            </div>
-          </div>
-
-          {/* Author Info */}
-          <div className="flex items-center gap-3">
-            <Avatar>
-              <AvatarImage
-                src={getImageUrl(data.user.profile_picture)}
-                className="object-"
+        <>
+          <div className="space-y-5">
+            {/* Post Image */}
+            <div className="aspect-[16/9] overflow-hidden">
+              <img
+                src={getImageUrl(data.post.image)}
+                alt="Cover Image"
+                className="h-full w-full object-cover"
               />
-              <AvatarFallback>{getFirstLetter(data.user.name)}</AvatarFallback>
-            </Avatar>
-            <p>{data.user.name}</p>
+            </div>
+
+            {/* Post Category and Title */}
+            <div className="space-y-2">
+              <Badge>{capitalizeFirstLetter(data.post.category)}</Badge>
+              <div className="flex justify-between gap-3">
+                <p className="text-2xl font-semibold">{data.post.title}</p>
+                {user && user.id === data.user.id && (
+                  <ActionsButton id={id} token={token} />
+                )}
+              </div>
+            </div>
+
+            {/* Author Info */}
+            <div className="flex items-center gap-3">
+              <Avatar>
+                <AvatarImage
+                  src={getImageUrl(data.user.profile_picture)}
+                  className="object-"
+                />
+                <AvatarFallback>
+                  {getFirstLetter(data.user.name)}
+                </AvatarFallback>
+              </Avatar>
+              <p>{data.user.name}</p>
+            </div>
+
+            {/* Post Body */}
+            <p className="text-justify whitespace-pre-line">{data.post.body}</p>
           </div>
 
-          {/* Post Body */}
-          <p className="text-justify whitespace-pre-line">{data.post.body}</p>
-        </div>
+          {/* Comment Section */}
+          <div className="mt-10 space-y-10">
+            {user ? (
+              <Comments id={id!} />
+            ) : (
+              <div className="text-center font-semibold">
+                Join the conversation - sign up to comment.
+              </div>
+            )}
+          </div>
+        </>
       )}
-
-      {/* Comment Section */}
-      <div className="mt-10 space-y-10">
-        {user ? (
-          <Comments />
-        ) : (
-          <div className="text-center font-semibold">
-            Join the conversation - sign up to comment.
-          </div>
-        )}
-      </div>
     </div>
   );
 }

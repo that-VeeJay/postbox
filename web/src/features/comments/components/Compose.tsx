@@ -10,12 +10,13 @@ import { Input } from "@/components/ui/input";
 import { getImageUrl } from "@/utils/getImageUrl";
 import { getFirstLetter } from "@/utils/getFirstLetter";
 
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { UserContext } from "@/context/UserContext";
 
 export default function Compose() {
   const { user, token } = useContext(UserContext);
   const { id } = useParams();
+  const queryClient = useQueryClient();
 
   const [comment, setComment] = useState({ body: "" });
 
@@ -39,6 +40,7 @@ export default function Compose() {
     },
     onSuccess: () => {
       setComment({ body: "" });
+      queryClient.invalidateQueries({ queryKey: ["comments"] });
     },
   });
 
@@ -72,7 +74,7 @@ export default function Compose() {
             variant="ghost"
             className="text-sm"
           >
-            cancel
+            clear
           </Button>
           <Button type="submit" disabled={isPending || comment.body.length < 1}>
             {isPending ? (

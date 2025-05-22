@@ -1,5 +1,8 @@
+import CommentItem from "./components/CommentItem";
 import Comments from "./components/Comments";
 import Compose from "./components/Compose";
-import List from "./components/List";
+import ReplyField from "./components/ReplyField";
 
-export { Comments, Compose, List };
+import { useGetComments } from "./hooks/useGetComments";
+
+export { Comments, Compose, CommentItem, useGetComments, ReplyField };

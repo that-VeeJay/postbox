@@ -1,17 +1,72 @@
+// import { useQuery } from "@tanstack/react-query";
+// import { createContext, useState, useEffect, type ReactNode } from "react";
+
+// type UserContextType = {
+//   token: string | null;
+//   setToken: React.Dispatch<React.SetStateAction<string | null>>;
+//   user: any;
+//   setUser: React.Dispatch<React.SetStateAction<string | null>>;
+// };
+
+// export const UserContext = createContext<UserContextType>({
+//   token: null,
+//   setToken: () => {},
+//   user: {},
+//   setUser: () => {},
+// });
+
+// export default function UserProvider({ children }: { children: ReactNode }) {
+//   const [token, setToken] = useState<string | null>(
+//     localStorage.getItem("token"),
+//   );
+//   const [user, setUser] = useState<string | null>(null);
+
+//   // get authenticated and authorized user
+//   const { data } = useQuery({
+//     queryKey: ["user", token],
+//     queryFn: async () => {
+//       const response = await fetch("/api/user", {
+//         headers: {
+//           Authorization: `Bearer ${token}`,
+//         },
+//       });
+//       if (!response.ok) throw new Error("Error fetching user");
+//       return response.json();
+//     },
+//     enabled: !!token,
+//   });
+
+//   useEffect(() => {
+//     if (data) setUser(data);
+//   }, [data]);
+
+//   return (
+//     <UserContext.Provider value={{ token, setToken, user, setUser }}>
+//       {children}
+//     </UserContext.Provider>
+//   );
+// }
+
 import { useQuery } from "@tanstack/react-query";
-import { createContext, useState, useEffect, type ReactNode } from "react";
+import {
+  createContext,
+  useState,
+  useEffect,
+  useMemo,
+  type ReactNode,
+} from "react";
 
 type UserContextType = {
   token: string | null;
   setToken: React.Dispatch<React.SetStateAction<string | null>>;
   user: any;
-  setUser: React.Dispatch<React.SetStateAction<string | null>>;
+  setUser: React.Dispatch<React.SetStateAction<any>>;
 };
 
 export const UserContext = createContext<UserContextType>({
   token: null,
   setToken: () => {},
-  user: {},
+  user: null,
   setUser: () => {},
 });
 
@@ -19,9 +74,8 @@ export default function UserProvider({ children }: { children: ReactNode }) {
   const [token, setToken] = useState<string | null>(
     localStorage.getItem("token"),
   );
-  const [user, setUser] = useState<string | null>(null);
+  const [user, setUser] = useState<any>(null);
 
-  // get authenticated and authorized user
   const { data } = useQuery({
     queryKey: ["user", token],
     queryFn: async () => {
@@ -40,9 +94,13 @@ export default function UserProvider({ children }: { children: ReactNode }) {
     if (data) setUser(data);
   }, [data]);
 
+  // ✅ Memoize the context value to prevent unnecessary re-renders
+  const contextValue = useMemo(
+    () => ({ token, setToken, user, setUser }),
+    [token, user],
+  );
+
   return (
-    <UserContext.Provider value={{ token, setToken, user, setUser }}>
-      {children}
-    </UserContext.Provider>
+    <UserContext.Provider value={contextValue}>{children}</UserContext.Provider>
   );
 }
