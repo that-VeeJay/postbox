@@ -8,6 +8,7 @@ export const usePostReply = () => {
     mutationFn: postReply,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["replies"] });
+      queryClient.invalidateQueries({ queryKey: ["reply_exist"] });
     },
   });
 };
