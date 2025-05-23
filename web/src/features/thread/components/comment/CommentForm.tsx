@@ -62,7 +62,7 @@ export function CommentForm() {
           <Button
             onClick={handleClearInput}
             type="button"
-            variant="secondary"
+            variant="ghost"
             aria-label="Clear comment input"
           >
             clear
@@ -70,7 +70,7 @@ export function CommentForm() {
           <Button
             type="submit"
             aria-label="Submit comment"
-            disabled={isPending}
+            disabled={isPending || !comment}
           >
             {isPending ? (
               <div className="flex items-center gap-2">

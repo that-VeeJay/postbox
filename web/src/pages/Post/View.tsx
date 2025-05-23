@@ -72,7 +72,9 @@ export default function View() {
           </div>
 
           {/* Comment Section */}
-          <CommentSection />
+          <div className="mt-10">
+            <CommentSection />
+          </div>
         </>
       )}
     </div>

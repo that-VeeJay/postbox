@@ -1,0 +1,5 @@
+export const getComments = async (postId: string) => {
+  const response = await fetch(`/api/posts/${postId}/comments`);
+  if (!response.ok) throw new Error("Failed to post comment");
+  return response.json();
+};

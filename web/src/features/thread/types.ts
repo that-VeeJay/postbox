@@ -13,3 +13,12 @@ export type CommentType = {
     profile_picture: string;
   };
 };
+
+export type CommentItemProps = {
+  comment: {
+    id: string;
+    body: string;
+    created_at: string;
+    user: { name: string; username: string; profile_picture: string };
+  };
+};

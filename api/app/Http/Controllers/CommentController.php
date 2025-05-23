@@ -58,7 +58,7 @@ class CommentController extends Controller
 
     public function show_reply($commentId)
     {
-        $replies = Comment::where('parent_id', $commentId)->get();
+        $replies = Comment::where('parent_id', $commentId)->with('user')->latest()->get();
 
         return response()->json($replies);
     }
