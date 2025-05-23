@@ -22,7 +22,11 @@ Route::post('/posts', [PostController::class, 'store'])->middleware('auth:sanctu
 Route::get('/users/{id}/posts', [PostController::class, 'getPosts'])->middleware('auth:sanctum');
 
 Route::get('/posts/{post}/comments', [CommentController::class, 'index']);
-Route::post('/comment', [CommentController::class, 'store'])->middleware('auth:sanctum');
+Route::post('/posts/comments', [CommentController::class, 'store'])->middleware('auth:sanctum');
+
+Route::post('/posts/replies', [CommentController::class, 'store_reply'])->middleware('auth:sanctum');
+
+Route::get('/posts/replies/{reply}', [CommentController::class, 'show_reply']);
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);

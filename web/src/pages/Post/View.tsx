@@ -1,9 +1,9 @@
 import { useContext } from "react";
 import { useParams } from "react-router-dom";
-
 import { UserContext } from "@/context/UserContext";
+
 import { useViewSinglePost, ActionsButton } from "@/features/posts";
-import { Comments } from "@/features/comments";
+import { CommentSection } from "@/features/thread";
 
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -15,10 +15,10 @@ import { getFirstLetter } from "@/utils/getFirstLetter";
 import { capitalizeFirstLetter } from "@/utils/capitalizeFirstLetter";
 
 export default function View() {
-  const { id } = useParams();
+  const { id: postId } = useParams();
   const { user, token } = useContext(UserContext);
 
-  const { data, isLoading, error } = useViewSinglePost(id!);
+  const { data, isLoading, error } = useViewSinglePost(postId!);
 
   return (
     <div className="mx-auto w-full max-w-5xl p-5 pt-5">
@@ -48,7 +48,7 @@ export default function View() {
               <div className="flex justify-between gap-3">
                 <p className="text-2xl font-semibold">{data.post.title}</p>
                 {user && user.id === data.user.id && (
-                  <ActionsButton id={id} token={token} />
+                  <ActionsButton id={postId} token={token} />
                 )}
               </div>
             </div>
@@ -72,15 +72,7 @@ export default function View() {
           </div>
 
           {/* Comment Section */}
-          <div className="mt-10 space-y-10">
-            {user ? (
-              <Comments id={id!} />
-            ) : (
-              <div className="text-center font-semibold">
-                Join the conversation - sign up to comment.
-              </div>
-            )}
-          </div>
+          <CommentSection />
         </>
       )}
     </div>

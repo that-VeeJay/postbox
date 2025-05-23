@@ -36,4 +36,30 @@ class CommentController extends Controller
 
         return ['message' => 'Comment posted!'];
     }
+
+    public function store_reply(Request $request)
+    {
+        $validated = $request->validate([
+            'post_id' => ['required'],
+            'body' => ['required'],
+            'user_id' => ['required'],
+            'parent_id' => ['required'],
+        ]);
+
+        Comment::create([
+            'post_id' => $validated['post_id'],
+            'user_id' =>  $validated['user_id'],
+            'body' => $validated['body'],
+            'parent_id' => $validated['parent_id'],
+        ]);
+
+        return ['message' => 'Comment posted!'];
+    }
+
+    public function show_reply($commentId)
+    {
+        $replies = Comment::where('parent_id', $commentId)->get();
+
+        return response()->json($replies);
+    }
 }
