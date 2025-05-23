@@ -14,7 +14,7 @@ export default function HomePage() {
         <SectionThree />
       </div>
 
-      {/* View all posts button */}
+      {/* View the all-posts button */}
       <div className="mt-8 text-center">
         <Button variant="outline">View all posts</Button>
       </div>

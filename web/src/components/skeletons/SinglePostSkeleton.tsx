@@ -1,6 +1,6 @@
 import { Skeleton } from "../ui/skeleton";
 
-export default function SingePostSkeleton() {
+export default function SinglePostSkeleton() {
   return (
     <div className="space-y-3">
       <Skeleton className="h-[500px] w-full"></Skeleton>
