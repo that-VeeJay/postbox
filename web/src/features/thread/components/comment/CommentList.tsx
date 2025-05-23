@@ -8,6 +8,7 @@ export function CommentList() {
   const { data: comments, isLoading } = useGetComments(postId!);
 
   if (isLoading) return <CommentLoadSkeleton />;
+
   if (!comments || comments.length === 0)
     return (
       <p className="mt-10 text-center text-xl font-semibold">
