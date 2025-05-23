@@ -7,13 +7,15 @@ import { IoMdArrowDropdown } from "react-icons/io";
 import { ReplyForm } from "../reply/ReplyForm";
 import { ReplyList } from "../reply/ReplyList";
 import { useGetReplies } from "../../hooks/useGetReplies";
+import { useCheckRepliesExist } from "../../hooks/useCheckRepliesExist";
 
 export function CommentInteractions({ commentId }: { commentId: string }) {
   const [isReplyFieldOpen, setIsReplyFieldOpen] = useState(false);
   const [isReplyListOpen, setIsReplyListOpen] = useState(false);
 
-  const { data: replies = [] } = useGetReplies(commentId);
-  const hasReplies = replies.length > 0;
+  const {} = useGetReplies(commentId, isReplyListOpen);
+  const { data } = useCheckRepliesExist(commentId);
+  const hasReplies = data?.hasReplies === true;
 
   const toggleReplyField = () => setIsReplyFieldOpen((prev) => !prev);
   const toggleReplyList = () => setIsReplyListOpen((prev) => !prev);
@@ -42,7 +44,7 @@ export function CommentInteractions({ commentId }: { commentId: string }) {
       {hasReplies && (
         <Button onClick={toggleReplyList} type="button" variant="secondary">
           {isReplyListOpen ? <IoMdArrowDropup /> : <IoMdArrowDropdown />}
-          {replies.length} replies
+          replies
         </Button>
       )}
       {isReplyListOpen && <ReplyList commentId={commentId} />}

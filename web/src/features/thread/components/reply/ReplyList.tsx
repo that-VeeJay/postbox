@@ -5,7 +5,7 @@ type PropsType = {
   commentId: string;
 };
 
-export function ReplyList({ commentId }: PropsType) {
+export function ReplyList({ commentId, }: PropsType) {
   const { data: replies = [] } = useGetReplies(commentId!);
 
   return (

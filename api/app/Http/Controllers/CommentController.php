@@ -62,4 +62,11 @@ class CommentController extends Controller
 
         return response()->json($replies);
     }
+
+    public function check_replies_exist($commentId)
+    {
+        $hasReplies = Comment::where('parent_id', $commentId)->exists();
+
+        return response()->json(['hasReplies' => $hasReplies]);
+    }
 }
