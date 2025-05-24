@@ -1,13 +1,9 @@
 import { useContext } from "react";
 import { UserContext } from "@/context/UserContext";
-
 import { getImageUrl } from "@/utils/getImageUrl";
 import { capitalizeFirstLetter } from "@/utils/capitalizeFirstLetter";
-
 import { EditProfile, AccountSettings } from "@/features/profile";
-
 import defaultProfile from "../../assets/default_profile.png";
-
 import { FaLocationDot } from "react-icons/fa6";
 
 export default function ProfileInfo() {
