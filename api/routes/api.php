@@ -36,6 +36,7 @@ Route::prefix('comments')->controller(CommentController::class)->group(function(
     Route::get('/post/{post}', 'index');
     Route::post('/', 'store')->middleware('auth:sanctum');
     Route::delete('/{comment}', 'destroy')->middleware('auth:sanctum');
+    Route::patch("/{comment}", 'update')->middleware('auth:sanctum');
 
     Route::post('/reply', 'storeReply')->middleware('auth:sanctum');
     Route::get('/reply/{reply}', 'showReply');

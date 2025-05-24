@@ -18,6 +18,7 @@ export type CommentItemProps = {
    comment: {
       id: string;
       body: string;
+      is_edited: boolean;
       created_at: string;
       user: { id: string; name: string; username: string; profile_picture: string };
    };

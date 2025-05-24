@@ -13,9 +13,18 @@ import { useDeleteComment } from '../../hooks/useDeleteComment';
 import { useContext } from 'react';
 import { UserContext } from '@/context/UserContext';
 
-export function CommentActions({ commentId }: { commentId: string }) {
+type PropsType = {
+   commentId: string;
+   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+export function CommentActions({ commentId, setIsEditing }: PropsType) {
    const { token } = useContext(UserContext);
    const { mutate } = useDeleteComment();
+
+   const handleCommentEdit = () => {
+      setIsEditing(true);
+   };
 
    const handleCommentDelete = (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
@@ -30,7 +39,7 @@ export function CommentActions({ commentId }: { commentId: string }) {
          <DropdownMenuContent>
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={handleCommentEdit}>
                <MdEdit />
                Edit
             </DropdownMenuItem>

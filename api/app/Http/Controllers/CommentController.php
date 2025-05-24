@@ -13,7 +13,11 @@ class CommentController extends Controller
             ->whereNull('parent_id')
             ->with('replies.user', 'user')
             ->orderBy('created_at', 'desc')
-            ->get();
+            ->get()
+            ->map(function($comment) {
+                $comment->is_edited = $comment->updated_at > $comment->created_at;
+                return $comment;
+            });
 
     return response()->json($comments);
     }
@@ -35,6 +39,20 @@ class CommentController extends Controller
         ]);
 
         return response()->json(['message' => 'Comment posted!']);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'body' => ['required', 'string'],
+        ]);
+
+        $comment = Comment::find($id);
+
+        $comment->body = $validated['body'];
+        $comment->save();
+
+        return response()->json(['message' => 'Comment updated successfully']);
     }
 
     public function destroy(Comment $comment)
