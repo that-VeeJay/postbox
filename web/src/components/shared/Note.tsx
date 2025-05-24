@@ -35,7 +35,7 @@ export function Note({ message, type }: PropsType) {
    const { icon, container } = typeStyles[type];
 
    return (
-      <div className={`rounded-lg border-2 p-4 select-none ${container}`}>
+      <div className={`w-full rounded-lg border-2 p-4 select-none ${container}`}>
          <div className="flex items-center gap-3">
             {icon}
             <p className="text-white">{message}</p>

@@ -21,49 +21,52 @@ class CommentController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'post_id' => ['required','exists:posts,id'],
-            'body' => ['required', 'string'],
-            'user_id' => ['required'],
+            'post_id'   => ['required','exists:posts,id'],
+            'body'      => ['required', 'string'],
+            'user_id'   => ['required'],
             'parent_id' => ['nullable', 'exists:comments,id'],
         ]);
 
         Comment::create([
-            'post_id' => $validated['post_id'],
-            'user_id' =>  $validated['user_id'],
-            'body' => $validated['body'],
+            'post_id'   => $validated['post_id'],
+            'user_id'   =>  $validated['user_id'],
+            'body'      => $validated['body'],
             'parent_id' => $validated['parent_id'] ?? null,
         ]);
 
-        return ['message' => 'Comment posted!'];
+        return response()->json(['message' => 'Comment posted!']);
     }
 
-    public function store_reply(Request $request)
+    public function storeReply(Request $request)
     {
         $validated = $request->validate([
-            'post_id' => ['required'],
-            'body' => ['required'],
-            'user_id' => ['required'],
+            'post_id'   => ['required'],
+            'body'      => ['required'],
+            'user_id'   => ['required'],
             'parent_id' => ['required'],
         ]);
 
         Comment::create([
-            'post_id' => $validated['post_id'],
-            'user_id' =>  $validated['user_id'],
-            'body' => $validated['body'],
+            'post_id'   => $validated['post_id'],
+            'user_id'   =>  $validated['user_id'],
+            'body'      => $validated['body'],
             'parent_id' => $validated['parent_id'],
         ]);
 
-        return ['message' => 'Comment posted!'];
+        return response()->json(['message' => 'Reply posted!']);
     }
 
-    public function show_reply($commentId)
+    public function showReply($commentId)
     {
-        $replies = Comment::where('parent_id', $commentId)->with('user')->latest()->get();
+        $replies = Comment::where('parent_id', $commentId)
+            ->with('user')
+            ->latest()
+            ->get();
 
         return response()->json($replies);
     }
 
-    public function check_replies_exist($commentId)
+    public function checkRepliesExist($commentId)
     {
         $hasReplies = Comment::where('parent_id', $commentId)->exists();
 

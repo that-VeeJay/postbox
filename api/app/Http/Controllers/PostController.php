@@ -46,7 +46,7 @@ class PostController extends Controller
         return ['post' => $post, 'user' => $post->user];
     }
 
-    public function getPosts($id)
+    public function getUserPosts($id)
     {
          $posts = Post::where('user_id', $id)->select('title', 'image')->latest()->get();
          return $posts;

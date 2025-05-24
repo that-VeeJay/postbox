@@ -7,27 +7,35 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 
+// Authenticated User Info
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
+// Auth Routes
+Route::controller(AuthController::class)->group(function() {
+    Route::post('/register', 'register');
+    Route::post('/login', 'login');
+    Route::post('/logout', 'logout')->middleware('auth:sanctum');
+});
+
+// Profile Route
 Route::patch("/profile/update", [UserController::class, 'update'])->middleware('auth:sanctum');
 
-Route::get('/posts', [PostController::class, 'index']);
-Route::get('/posts/{post}', [PostController::class, 'show']);
+// Post Routes
+Route::prefix('posts')->controller(PostController::class)->group(function() {
+    Route::get('/', 'index');
+    Route::get('/{post}','show');
+    Route::post('/', 'store')->middleware('auth:sanctum');
+    Route::delete('/{post}', 'destroy')->middleware('auth:sanctum');
+    Route::get('/user/{user}', 'getUserPosts')->middleware('auth:sanctum');
+});
 
-Route::delete('/posts/{post}', [PostController::class, 'destroy'])->middleware('auth:sanctum');
-Route::post('/posts', [PostController::class, 'store'])->middleware('auth:sanctum');
-
-Route::get('/users/{id}/posts', [PostController::class, 'getPosts'])->middleware('auth:sanctum');
-
-Route::get('/posts/{post}/comments', [CommentController::class, 'index']);
-Route::post('/posts/comments', [CommentController::class, 'store'])->middleware('auth:sanctum');
-Route::post('/posts/replies', [CommentController::class, 'store_reply'])->middleware('auth:sanctum');
-Route::get('/posts/replies/{reply}', [CommentController::class, 'show_reply']);
-
-Route::get('/posts/comments/{reply}/has-replies', [CommentController::class, 'check_replies_exist']);
-
-Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login']);
-Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+// Comment and Reply Routes
+Route::prefix('comments')->controller(CommentController::class)->group(function() {
+    Route::get('/post/{post}', 'index');
+    Route::post('/', 'store')->middleware('auth:sanctum');
+    Route::post('/reply', 'storeReply')->middleware('auth:sanctum');
+    Route::get('/reply/{reply}', 'showReply');
+    Route::get('/reply/{reply}/has-replies', 'checkRepliesExist');
+});
