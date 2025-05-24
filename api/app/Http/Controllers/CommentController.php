@@ -37,6 +37,12 @@ class CommentController extends Controller
         return response()->json(['message' => 'Comment posted!']);
     }
 
+    public function destroy(Comment $comment)
+    {
+        $comment->delete();
+        return ['message' => 'The post was deleted'];
+    }
+
     public function storeReply(Request $request)
     {
         $validated = $request->validate([

@@ -27,13 +27,19 @@ class PostController extends Controller
         ];
     }
 
+    public function destroy(Post $post)
+    {
+         $post->delete();
+         return response()->json(['message' => 'The posted was deleted.']);
+    }
+
     public function store(Request $request, ImageService $imageService)
     {
         $validated = $request->validate([
-            'title' => ['required'],
-            'body' => ['required'],
+            'title'    => ['required'],
+            'body'     => ['required'],
             'category' => ['required'],
-            'image' => ['required', 'image', 'mimes:png,jpg,jpeg'],
+            'image'    => ['required', 'image', 'mimes:png,jpg,jpeg'],
         ]);
 
         if ($request->hasFile('image')) {
@@ -48,13 +54,10 @@ class PostController extends Controller
 
     public function getUserPosts($id)
     {
-         $posts = Post::where('user_id', $id)->select('title', 'image')->latest()->get();
+         $posts = Post::where('user_id', $id)
+            ->select('title', 'image')
+            ->latest()
+            ->get();
          return $posts;
-    }
-
-    public function destroy(Post $post)
-    {
-         $post->delete();
-         return ['message' => 'The post was deleted'];
     }
 }

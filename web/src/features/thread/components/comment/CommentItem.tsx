@@ -3,8 +3,13 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import type { CommentItemProps } from '../../types';
 import { CommentInteractions } from './CommentInteractions';
 import { CommentActions } from './CommentActions';
+import { useContext } from 'react';
+import { UserContext } from '@/context/UserContext';
 
 export function CommentItem({ comment }: CommentItemProps) {
+   const { user } = useContext(UserContext);
+   const authorizedUser = user.id === comment.user.id;
+
    return (
       <div className="flex gap-3">
          <Avatar>
@@ -21,7 +26,7 @@ export function CommentItem({ comment }: CommentItemProps) {
                      {timeAgo(comment.created_at)}
                   </small>
                </div>
-               <CommentActions />
+               {authorizedUser && <CommentActions commentId={comment.id} />}
             </div>
             <p>{comment.body}</p>
             {/* Interactions */}
