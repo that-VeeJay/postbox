@@ -20,6 +20,7 @@ export type CommentItemProps = {
       body: string;
       is_edited: boolean;
       created_at: string;
+      parent_id: number;
       user: { id: string; name: string; username: string; profile_picture: string };
    };
 };

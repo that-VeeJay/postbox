@@ -15,6 +15,7 @@ export const usePostReply = ({ setReply, setIsReplyFieldOpen }: PropsType) => {
          setReply('');
          setIsReplyFieldOpen((prev) => !prev);
          queryClient.invalidateQueries({ queryKey: ['replies'] });
+         queryClient.invalidateQueries({ queryKey: ['comments'] });
          queryClient.invalidateQueries({ queryKey: ['reply_exist'] });
       },
    });

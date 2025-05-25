@@ -48,7 +48,7 @@ export const Card = memo(function Card({ comment }: CommentItemProps) {
                <p>{comment.body}</p>
             )}
             <footer className="space-y-3">
-               <Interactions commentId={comment.id} />
+               <Interactions commentId={comment.id} parentId={comment.parent_id} />
             </footer>
          </div>
       </article>

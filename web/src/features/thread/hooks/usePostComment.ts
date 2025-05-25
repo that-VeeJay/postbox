@@ -12,7 +12,9 @@ export const usePostComment = ({
       mutationFn: postComment,
       onSuccess: () => {
          queryClient.invalidateQueries({ queryKey: ['comments'] });
-         queryClient.invalidateQueries({ queryKey: ['replies'] });
+          queryClient.invalidateQueries({ queryKey: ['replies'] });
+
+
          setComment('');
       },
    });

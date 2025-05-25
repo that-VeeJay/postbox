@@ -7,31 +7,37 @@ import { AiOutlineDislike } from 'react-icons/ai';
 import { IoMdArrowDropdown } from 'react-icons/io';
 
 import { ReplyForm } from '../reply/ReplyForm';
-import { ReplyList } from '../reply/ReplyList';
 import { useGetReplies } from '../../hooks/useGetReplies';
 import { useCheckRepliesExist } from '../../hooks/useCheckRepliesExist';
+import { List } from './List';
 
-export function Interactions({ commentId }: { commentId: string }) {
+export function Interactions({ commentId, parentId }: { commentId: string; parentId: number }) {
    const [isReplyFieldOpen, setIsReplyFieldOpen] = useState(false);
    const [isReplyListOpen, setIsReplyListOpen] = useState(false);
 
-   const {} = useGetReplies(commentId, isReplyListOpen);
+   const { data: comments, isLoading } = useGetReplies(commentId, isReplyListOpen);
    const { data } = useCheckRepliesExist(commentId);
    const hasReplies = data?.hasReplies === true;
 
    const toggleReplyField = () => setIsReplyFieldOpen((prev) => !prev);
    const toggleReplyList = () => setIsReplyListOpen((prev) => !prev);
 
+   const isReply = parentId === null;
+
    return (
       <>
          <div className="flex items-center gap-5">
             <AiOutlineLike />
             <AiOutlineDislike />
-            <Button onClick={toggleReplyField} variant="ghost" type="button" className="text-sm">
-               reply
-            </Button>
+
+            {isReply && (
+               <Button onClick={toggleReplyField} variant="ghost" type="button" className="text-sm">
+                  reply
+               </Button>
+            )}
          </div>
          {isReplyFieldOpen && (
+            // TODO: Fix issue
             <ReplyForm commentId={commentId} setIsReplyFieldOpen={setIsReplyFieldOpen} />
          )}
          {/* List of comments */}
@@ -41,7 +47,7 @@ export function Interactions({ commentId }: { commentId: string }) {
                replies
             </Button>
          )}
-         {isReplyListOpen && <ReplyList commentId={commentId} />}
+         {isReplyListOpen && <List comments={comments} isLoading={isLoading} />}
       </>
    );
 }
