@@ -1,11 +1,11 @@
 import { Link, Outlet } from 'react-router-dom';
+import { memo, useContext } from 'react';
 import { Button } from '@/components/ui/button';
 import { ModeToggle } from '@/components/mode-toggle';
 import { NavigationLinks, ProfileDropdown } from '@/features/navbar';
-import { useContext } from 'react';
 import { UserContext } from '@/context/UserContext';
 
-export default function Layout() {
+export default memo(function Layout() {
    const { user } = useContext(UserContext);
    return (
       <>
@@ -47,4 +47,4 @@ export default function Layout() {
          </main>
       </>
    );
-}
+});
