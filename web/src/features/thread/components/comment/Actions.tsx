@@ -18,7 +18,7 @@ type PropsType = {
    setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export function CommentActions({ commentId, setIsEditing }: PropsType) {
+export function Actions({ commentId, setIsEditing }: PropsType) {
    const { token } = useContext(UserContext);
    const { mutate } = useDeleteComment();
 

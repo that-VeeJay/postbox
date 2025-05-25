@@ -10,7 +10,7 @@ type PropsType = {
    token: string;
 };
 
-export function CommentEditForm({ setIsEditing, comment, token }: PropsType) {
+export function Edit({ setIsEditing, comment, token }: PropsType) {
    const [editedComment, setEditedComment] = useState(comment.body);
 
    const { mutate } = useUpdateComment({ setIsEditing });

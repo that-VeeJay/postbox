@@ -1,13 +1,13 @@
+import { memo, useContext, useState } from 'react';
 import { getFirstLetter, getImageUrl, timeAgo } from '@/utils';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import type { CommentItemProps } from '../../types';
-import { CommentInteractions } from './CommentInteractions';
-import { CommentActions } from './CommentActions';
-import { useContext, useState } from 'react';
+import { Interactions } from './Interactions';
+import { Actions } from './Actions';
 import { UserContext } from '@/context/UserContext';
-import { CommentEditForm } from './CommentEditForm';
+import { Edit } from './Edit';
 
-export function CommentItem({ comment }: CommentItemProps) {
+export const Card = memo(function Card({ comment }: CommentItemProps) {
    const { user, token } = useContext(UserContext);
    const authorizedUser = user.id === comment.user.id;
 
@@ -40,20 +40,17 @@ export function CommentItem({ comment }: CommentItemProps) {
                      </span>
                   )}
                </div>
-               {authorizedUser && (
-                  <CommentActions commentId={comment.id} setIsEditing={setIsEditing} />
-               )}
+               {authorizedUser && <Actions commentId={comment.id} setIsEditing={setIsEditing} />}
             </div>
             {isEditing ? (
-               <CommentEditForm setIsEditing={setIsEditing} comment={comment} token={token!} />
+               <Edit setIsEditing={setIsEditing} comment={comment} token={token!} />
             ) : (
                <p>{comment.body}</p>
             )}
-            {/* Interactions */}
             <footer className="space-y-3">
-               <CommentInteractions commentId={comment.id} />
+               <Interactions commentId={comment.id} />
             </footer>
          </div>
       </article>
    );
-}
+});

@@ -11,7 +11,7 @@ import { getImageUrl, getFirstLetter } from '@/utils';
 
 import { usePostComment } from '../../hooks/usePostComment';
 
-export function CommentForm() {
+export function Form() {
    const { user, token } = useContext(UserContext);
    const { id: postId } = useParams();
    const [comment, setComment] = useState('');

@@ -1,13 +1,14 @@
-import { CommentItem } from './CommentItem';
-import { useGetComments } from '../../hooks/useGetComments';
-import { useParams } from 'react-router-dom';
+import { Card } from './Card';
 import { CommentLoadSkeleton } from '@/components/skeletons/CommentLoadSkeleton';
 import { Note } from '@/components/shared';
+import type { CommentType } from '../../types';
 
-export function CommentList() {
-   const { id: postId } = useParams();
-   const { data: comments, isLoading } = useGetComments(postId!);
+type PropsType = {
+   comments: CommentType[];
+   isLoading: boolean;
+};
 
+export function List({ comments, isLoading }: PropsType) {
    if (isLoading) return <CommentLoadSkeleton />;
 
    if (!comments || comments.length === 0)
@@ -16,7 +17,7 @@ export function CommentList() {
    return (
       <div className="space-y-6">
          {comments.map((comment: any) => (
-            <CommentItem key={comment.id} comment={comment} />
+            <Card key={comment.id} comment={comment} />
          ))}
       </div>
    );
