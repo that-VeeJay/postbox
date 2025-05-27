@@ -4,11 +4,16 @@ import { timeAgo } from '@/utils';
 import { CustomAvatar } from '@/components/shared';
 import type { CommentType } from '../types';
 import { Actions } from './Actions';
+import { Edit } from './Edit';
 
 export function Item({ comment }: { comment: CommentType }) {
+   // rear more, show less
    const [expanded, setExpanded] = useState(false);
    const [isClamped, setIsClamped] = useState(false);
    const textRef = useRef<HTMLParagraphElement>(null);
+
+   // comment editing
+   const [isEditing, setIsEditing] = useState(false);
 
    useEffect(() => {
       const el = textRef.current;
@@ -31,22 +36,35 @@ export function Item({ comment }: { comment: CommentType }) {
                </time>
                {/* <span className="text-xs text-neutral-600 dark:text-neutral-400">(edited)</span> */}
             </div>
-            <Actions />
+            <Actions setIsEditing={setIsEditing} />
          </header>
 
          {/* Comment Content */}
          <section className="ml-12 space-y-2">
-            <p ref={textRef} className={`mr-12 transition-all ${expanded ? '' : 'line-clamp-2'}`}>
-               {comment.body}
-            </p>
-            {isClamped && (
-               <button
-                  type="button"
-                  className="text-neutral-600 hover:underline dark:text-neutral-400"
-                  onClick={() => setExpanded((prev) => !prev)}
-               >
-                  {expanded ? 'Show less' : 'Read more'}
-               </button>
+            {isEditing ? (
+               <Edit
+                  commentBody={comment.body}
+                  commentId={comment.id}
+                  setIsEditing={setIsEditing}
+               />
+            ) : (
+               <>
+                  <p
+                     ref={textRef}
+                     className={`mr-12 transition-all ${expanded ? '' : 'line-clamp-2'}`}
+                  >
+                     {comment.body}
+                  </p>
+                  {isClamped && (
+                     <button
+                        type="button"
+                        className="text-neutral-600 hover:underline dark:text-neutral-400"
+                        onClick={() => setExpanded((prev) => !prev)}
+                     >
+                        {expanded ? 'Show less' : 'Read more'}
+                     </button>
+                  )}
+               </>
             )}
          </section>
 

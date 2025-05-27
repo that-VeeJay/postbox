@@ -37,8 +37,6 @@ export default function Form({ postId }: { postId: string }) {
                aria-label="Add your comment"
                value={input}
                onChange={handleInputChange}
-               minLength={1}
-               maxLength={300}
             />
          </div>
          <div className="flex justify-end gap-3">
