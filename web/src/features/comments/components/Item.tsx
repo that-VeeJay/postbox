@@ -1,10 +1,11 @@
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { useRef, useState } from 'react';
 import { timeAgo } from '@/utils';
 import { CustomAvatar } from '@/components/shared';
 import type { CommentType } from '../types';
 import { Actions } from './Actions';
 import { Edit } from './Edit';
+import { UserContext } from '@/context/UserContext';
 
 export function Item({ comment }: { comment: CommentType }) {
    // rear more, show less
@@ -14,6 +15,11 @@ export function Item({ comment }: { comment: CommentType }) {
 
    // comment editing
    const [isEditing, setIsEditing] = useState(false);
+   const isEdited = comment.created_at !== comment.updated_at;
+
+   // authenticated user
+   const { user } = useContext(UserContext);
+   const isOwner = user.id === comment.user.id;
 
    useEffect(() => {
       const el = textRef.current;
@@ -34,9 +40,11 @@ export function Item({ comment }: { comment: CommentType }) {
                <time className="text-sm text-neutral-600 dark:text-neutral-400">
                   {timeAgo(comment.created_at)}
                </time>
-               {/* <span className="text-xs text-neutral-600 dark:text-neutral-400">(edited)</span> */}
+               {isEdited && (
+                  <span className="text-xs text-neutral-600 dark:text-neutral-400">(edited)</span>
+               )}
             </div>
-            <Actions setIsEditing={setIsEditing} />
+            {isOwner && <Actions setIsEditing={setIsEditing} />}
          </header>
 
          {/* Comment Content */}
