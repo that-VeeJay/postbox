@@ -44,7 +44,7 @@ export function Item({ comment }: { comment: CommentType }) {
                   <span className="text-xs text-neutral-600 dark:text-neutral-400">(edited)</span>
                )}
             </div>
-            {isOwner && <Actions setIsEditing={setIsEditing} />}
+            {isOwner && <Actions setIsEditing={setIsEditing} commentId={comment.id} />}
          </header>
 
          {/* Comment Content */}
