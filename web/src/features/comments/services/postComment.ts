@@ -1,12 +1,12 @@
 type PropsType = {
-   token: string;
-   body: string;
    postId: string;
+   body: string;
    userId: string;
-   parentId?: number | null;
+   parentId: string | null;
+   token: string;
 };
 
-export const postComment = async ({ token, body, postId, userId, parentId }: PropsType) => {
+export const postComment = async ({ postId, body, userId, parentId, token }: PropsType) => {
    const response = await fetch('/api/comments', {
       method: 'POST',
       headers: {
@@ -14,7 +14,7 @@ export const postComment = async ({ token, body, postId, userId, parentId }: Pro
          Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
-         body,
+         body: body,
          post_id: postId,
          user_id: userId,
          parent_id: parentId,

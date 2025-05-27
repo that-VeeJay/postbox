@@ -13,11 +13,7 @@ class CommentController extends Controller
             ->whereNull('parent_id')
             ->with('replies.user', 'user')
             ->orderBy('created_at', 'desc')
-            ->get()
-            ->map(function($comment) {
-                $comment->is_edited = $comment->updated_at > $comment->created_at;
-                return $comment;
-            });
+            ->get();
 
     return response()->json($comments);
     }

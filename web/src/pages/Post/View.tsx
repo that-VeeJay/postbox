@@ -2,14 +2,14 @@ import { useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { Badge } from '@/components/ui/badge';
 import { getImageUrl } from '@/utils/getImageUrl';
-import { CommentSection } from '@/features/thread';
+import { CustomToast } from '@/components/shared';
 import { UserContext } from '@/context/UserContext';
 import { getFirstLetter } from '@/utils/getFirstLetter';
-import { CustomToast, Note } from '@/components/shared';
 import { ActionsButton, useViewSinglePost } from '@/features/posts';
 import { capitalizeFirstLetter } from '@/utils/capitalizeFirstLetter';
 import SinglePostSkeleton from '@/components/skeletons/SinglePostSkeleton';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { CommentSection } from '@/features/comments';
 
 export default function View() {
    const { id: postId } = useParams();
@@ -67,15 +67,7 @@ export default function View() {
                </div>
 
                {/* Comment Section */}
-               {user ? (
-                  <div className="mt-10">
-                     <CommentSection />
-                  </div>
-               ) : (
-                  <div className="my-10">
-                     <Note message="Create an account or log in to leave a comment." type="info" />
-                  </div>
-               )}
+               <CommentSection />
             </>
          )}
       </div>
