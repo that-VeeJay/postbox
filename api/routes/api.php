@@ -41,4 +41,6 @@ Route::prefix('comments')->controller(CommentController::class)->group(function(
     Route::post('/reply', 'storeReply')->middleware('auth:sanctum');
     Route::get('/reply/{reply}', 'showReply');
     Route::get('/reply/{reply}/has-replies', 'checkRepliesExist');
+
+    Route::post('/{comment}/like',  'toggleLike')->middleware('auth:sanctum');
 });

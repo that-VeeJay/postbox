@@ -6,6 +6,7 @@ import type { CommentType } from '../types';
 import { Actions } from './Actions';
 import { Edit } from './Edit';
 import { UserContext } from '@/context/UserContext';
+import { Interactions } from './Interactions';
 
 export function Item({ comment }: { comment: CommentType }) {
    // rear more, show less
@@ -25,6 +26,8 @@ export function Item({ comment }: { comment: CommentType }) {
       const el = textRef.current;
       el && setIsClamped(el.scrollHeight > el.clientHeight);
    }, []);
+
+   console.log(comment);
 
    return (
       <article>
@@ -63,6 +66,7 @@ export function Item({ comment }: { comment: CommentType }) {
                   >
                      {comment.body}
                   </p>
+
                   {isClamped && (
                      <button
                         type="button"
@@ -72,6 +76,7 @@ export function Item({ comment }: { comment: CommentType }) {
                         {expanded ? 'Show less' : 'Read more'}
                      </button>
                   )}
+                  <Interactions />
                </>
             )}
          </section>

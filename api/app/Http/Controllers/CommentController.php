@@ -56,40 +56,4 @@ class CommentController extends Controller
         $comment->delete();
         return ['message' => 'The post was deleted'];
     }
-
-    public function storeReply(Request $request)
-    {
-        $validated = $request->validate([
-            'post_id'   => ['required'],
-            'body'      => ['required'],
-            'user_id'   => ['required'],
-            'parent_id' => ['required'],
-        ]);
-
-        Comment::create([
-            'post_id'   => $validated['post_id'],
-            'user_id'   =>  $validated['user_id'],
-            'body'      => $validated['body'],
-            'parent_id' => $validated['parent_id'],
-        ]);
-
-        return response()->json(['message' => 'Reply posted!']);
-    }
-
-    public function showReply($commentId)
-    {
-        $replies = Comment::where('parent_id', $commentId)
-            ->with('user')
-            ->latest()
-            ->get();
-
-        return response()->json($replies);
-    }
-
-    public function checkRepliesExist($commentId)
-    {
-        $hasReplies = Comment::where('parent_id', $commentId)->exists();
-
-        return response()->json(['hasReplies' => $hasReplies]);
-    }
 }
