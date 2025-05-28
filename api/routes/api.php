@@ -33,7 +33,7 @@ Route::prefix('posts')->controller(PostController::class)->group(function() {
 
 // Comment and Reply Routes
 Route::prefix('comments')->controller(CommentController::class)->group(function() {
-    Route::get('/{postId}', 'index');
+    Route::get('/{post}', 'index');
     Route::post('/', 'store')->middleware('auth:sanctum');
     Route::delete('/{comment}', 'destroy')->middleware('auth:sanctum');
     Route::patch("/{comment}", 'update')->middleware('auth:sanctum');

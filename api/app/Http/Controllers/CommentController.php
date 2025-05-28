@@ -2,20 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Models\Comment;
 
 class CommentController extends Controller
 {
-    public function index($postId)
+    public function index(Post $post)
     {
-    $comments = Comment::where('post_id', $postId)
+    $comments = Comment::where('post_id', $post->id)
             ->whereNull('parent_id')
             ->with('replies.user', 'user')
             ->orderBy('created_at', 'desc')
             ->get();
 
-    return response()->json($comments);
+    return response()->json($comments, 200);
     }
 
     public function store(Request $request)
@@ -27,33 +28,32 @@ class CommentController extends Controller
             'parent_id' => ['nullable', 'exists:comments,id'],
         ]);
 
-        Comment::create([
+        $comment = Comment::create([
             'post_id'   => $validated['post_id'],
-            'user_id'   =>  $validated['user_id'],
+            'user_id'   => $validated['user_id'],
             'body'      => $validated['body'],
             'parent_id' => $validated['parent_id'] ?? null,
         ]);
 
-        return response()->json(['message' => 'Comment posted!']);
+        return response()->json(['id' => $comment->id], 201);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Comment $comment)
     {
         $validated = $request->validate([
             'body' => ['required', 'string'],
         ]);
 
-        $comment = Comment::find($id);
+        $comment->update([
+            'body' => $validated['body'],
+        ]);
 
-        $comment->body = $validated['body'];
-        $comment->save();
-
-        return response()->json(['message' => 'Comment updated successfully']);
+        return response()->json(['success' => true], 200);
     }
 
     public function destroy(Comment $comment)
     {
         $comment->delete();
-        return ['message' => 'The post was deleted'];
+        return response()->json(['success' => true], 200);
     }
 }
