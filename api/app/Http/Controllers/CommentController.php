@@ -10,13 +10,13 @@ class CommentController extends Controller
 {
     public function index(Post $post)
     {
-    $comments = Comment::where('post_id', $post->id)
-            ->whereNull('parent_id')
-            ->with('replies.user', 'user')
-            ->orderBy('created_at', 'desc')
-            ->get();
+        $comments = Comment::where('post_id', $post->id)
+                ->whereNull('parent_id')
+                ->with('replies.user', 'user')
+                ->orderBy('created_at', 'desc')
+                ->get();
 
-    return response()->json($comments, 200);
+        return response()->json($comments, 200);
     }
 
     public function store(Request $request)

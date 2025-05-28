@@ -9,7 +9,6 @@ import { ActionsButton, useViewSinglePost } from '@/features/posts';
 import { capitalizeFirstLetter } from '@/utils/capitalizeFirstLetter';
 import SinglePostSkeleton from '@/components/skeletons/SinglePostSkeleton';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { CommentSection } from '@/features/comments';
 
 export default function View() {
    const { id: postId } = useParams();
@@ -67,7 +66,6 @@ export default function View() {
                </div>
 
                {/* Comment Section */}
-               <CommentSection />
             </>
          )}
       </div>
