@@ -12,18 +12,19 @@ import { stripHtml } from '@/utils/stripHtml';
 import type { PostType } from '../types';
 
 export default function CardThree({
-   id,
    image,
    title,
+   slug,
    category,
    body,
    created_at,
    user: { profile_picture, name },
 }: PostType) {
+   console.log(slug);
    return (
       <div className="space-y-3">
          {/* Post Image */}
-         <Link to={`/posts/${id}`}>
+         <Link to={`/posts/${slug}`}>
             <div className="aspect-[16/7]">
                <img
                   src={getImageUrl(image)}
@@ -41,7 +42,7 @@ export default function CardThree({
             <Badge>{capitalizeFirstLetter(category)}</Badge>
 
             {/* Pot Title */}
-            <Link to={`/posts/${id}`} className="flex items-start justify-between gap-2">
+            <Link to={`/posts/${slug}`} className="flex items-start justify-between gap-2">
                <h2 className="line-clamp-2 h-[3.8rem] flex-1 text-lg font-semibold break-words transition duration-200 hover:text-neutral-600 dark:hover:text-neutral-300">
                   {title}
                </h2>

@@ -11,7 +11,7 @@ import SinglePostSkeleton from '@/components/skeletons/SinglePostSkeleton';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 export default function View() {
-   const { id: postId } = useParams();
+   const { slug: postId } = useParams();
    const { user, token } = useContext(UserContext);
 
    const { data, isLoading, error } = useViewSinglePost(postId!);

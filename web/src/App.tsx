@@ -23,8 +23,8 @@ const router = createBrowserRouter([
          { path: 'create', element: <Create /> },
          { path: 'profile', element: <ProfilePage /> },
          { path: 'people', element: <People /> },
-         { path: 'posts/:id', element: <ViewSingle /> },
-         { path: 'posts/:id/edit', element: <EditPost /> },
+         { path: 'posts/:slug', element: <ViewSingle /> },
+         { path: 'posts/:slug/edit', element: <EditPost /> },
       ],
    },
    {

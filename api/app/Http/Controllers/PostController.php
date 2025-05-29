@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Services\ImageService;
+use App\Services\Slug;
 
 
 class PostController extends Controller
@@ -19,9 +20,10 @@ class PostController extends Controller
             ->get();
     }
 
-    public function show(Post $post)
+    public function show($slug)
     {
-         return [
+        $post = Post::where('slug', $slug)->firstOrFail();
+        return [
             'post' => $post,
             'user' => $post->user
         ];
@@ -33,7 +35,7 @@ class PostController extends Controller
          return response()->json(['message' => 'The posted was deleted.']);
     }
 
-    public function store(Request $request, ImageService $imageService)
+    public function store(Request $request, ImageService $imageService, Slug $slug)
     {
         $validated = $request->validate([
             'title'    => ['required'],
@@ -46,6 +48,8 @@ class PostController extends Controller
             $imagePath = $imageService->compressAndStore($request->file('image'), 'images/posts');
             $validated['image'] = $imagePath;
         }
+
+        $validated['slug'] = $slug->generateUniqueSlug($validated['title']);
 
         $post = $request->user()->posts()->create($validated);
 
