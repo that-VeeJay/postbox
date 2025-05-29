@@ -9,7 +9,7 @@ import { capitalizeFirstLetter } from '@/utils/capitalizeFirstLetter';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
-import { MdArrowOutward } from 'react-icons/md';
+import { ArrowUpRight } from 'lucide-react';
 
 import type { PostType } from '../types';
 
@@ -49,7 +49,7 @@ export default function CardThree({
                </h2>
 
                <div className="flex flex-shrink-0 items-center pl-2">
-                  <MdArrowOutward size={25} />
+                  <ArrowUpRight size={25} />
                </div>
             </Link>
 

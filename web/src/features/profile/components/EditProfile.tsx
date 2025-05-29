@@ -15,9 +15,8 @@ import {
    SheetTrigger,
 } from '@/components/ui/sheet';
 import { Note } from '@/components/shared';
-import { MdModeEdit } from 'react-icons/md';
-import { IoSave } from 'react-icons/io5';
-import { IoMdCloseCircle } from 'react-icons/io';
+
+import { Pen, Save, X } from 'lucide-react';
 
 type Props = {
    maxBioLength: number;
@@ -107,7 +106,7 @@ export default function EditProfile({ maxBioLength, token, user }: Props) {
       <Sheet>
          <SheetTrigger asChild>
             <Button variant="outline">
-               <MdModeEdit />
+               <Pen />
                Edit Profile
             </Button>
          </SheetTrigger>
@@ -176,13 +175,13 @@ export default function EditProfile({ maxBioLength, token, user }: Props) {
                            }}
                            className="flex-1"
                         >
-                           <IoMdCloseCircle />
+                           <X />
                            Close
                         </Button>
                      </SheetClose>
                      {/* <SheetClose asChild> */}
                      <Button type="submit" className="flex-2">
-                        <IoSave />
+                        <Save />
                         Save Changes
                      </Button>
                      {/* </SheetClose> */}

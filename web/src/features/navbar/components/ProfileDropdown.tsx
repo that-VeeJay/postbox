@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 
-import { FaUserAlt } from 'react-icons/fa';
-import { IoLogOut } from 'react-icons/io5';
+import { User, LogOut } from 'lucide-react';
+
 import { getImageUrl } from '@/utils/getImageUrl';
 import { getFirstLetter } from '@/utils/getFirstLetter';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -36,11 +36,11 @@ export function ProfileDropdown() {
          <DropdownMenuContent>
             <DropdownMenuItem asChild>
                <Link to="/profile" className="flex gap-2">
-                  <FaUserAlt /> Profile
+                  <User /> Profile
                </Link>
             </DropdownMenuItem>
             <DropdownMenuItem>
-               <IoLogOut />
+               <LogOut />
                <form onSubmit={handleLogout}>
                   <button>Logout</button>
                </form>
