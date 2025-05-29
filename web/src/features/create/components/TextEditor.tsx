@@ -3,10 +3,16 @@ import StarterKit from '@tiptap/starter-kit';
 import TextAlign from '@tiptap/extension-text-align';
 import { MenuBar } from './MenuBar';
 import Highlight from '@tiptap/extension-highlight';
+import { useEffect } from 'react';
 
-export function TextEditor() {
+type PropsType = {
+   content: string;
+   onChange: (content: string) => void;
+};
+
+export function TextEditor({ content, onChange }: PropsType) {
    const editor = useEditor({
-      content: '',
+      content: content,
       extensions: [
          StarterKit.configure({
             bulletList: {
@@ -41,13 +47,19 @@ export function TextEditor() {
       ],
       editorProps: {
          attributes: {
-            class: 'scrollbar-hidden h-170 resize-none border rounded-md bg-neutral-900 p-3 overflow-y-auto',
+            class: 'scrollbar-hidden h-160 resize-none border rounded-md bg-neutral-900 p-3 overflow-y-auto',
          },
       },
       onUpdate: ({ editor }) => {
-         console.log(editor.getHTML());
+         onChange(editor.getHTML());
       },
    });
+
+   useEffect(() => {
+      if (editor && content !== editor.getHTML()) {
+         editor.commands.setContent(content || '', false);
+      }
+   }, [content, editor]);
 
    return (
       <>

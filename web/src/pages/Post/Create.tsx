@@ -37,7 +37,8 @@ export default function Create() {
    const { generateContent, aiPending } = useGenerateContent({
       title: inputData.title,
       context: refinements.text,
-      onSuccess: (content: string) => setInputData((prev) => ({ ...prev, body: content })),
+      onSuccess: (generatedArticle: string) =>
+         setInputData((prev) => ({ ...prev, body: generatedArticle })),
    });
 
    const { submitForm, isPending } = useSubmitCreate({
@@ -50,6 +51,10 @@ export default function Create() {
    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       submitForm(inputData);
+   };
+
+   const onChange = (content: string) => {
+      setInputData({ ...inputData, body: content });
    };
 
    return (
@@ -68,7 +73,7 @@ export default function Create() {
                         />
                      </div>
 
-                     <TextEditor />
+                     <TextEditor content={inputData.body} onChange={onChange} />
 
                      <div className="flex items-center justify-between gap-5">
                         <div className="flex items-center gap-3">

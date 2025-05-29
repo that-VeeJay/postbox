@@ -62,7 +62,12 @@ export default function View() {
                   </div>
 
                   {/* Post Body */}
-                  <p className="text-justify whitespace-pre-line">{data.post.body}</p>
+                  <div
+                     className="prose max-w-none text-justify"
+                     dangerouslySetInnerHTML={{ __html: data.post.body }}
+                  />
+
+                  {/* <p className="text-justify whitespace-pre-line">{data.post.body}</p> */}
                </div>
 
                {/* Comment Section */}
