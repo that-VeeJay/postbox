@@ -5,12 +5,10 @@ import { getImageUrl } from '@/utils/getImageUrl';
 import { truncateText } from '@/utils/truncateText';
 import { getFirstLetter } from '@/utils/getFirstLetter';
 import { capitalizeFirstLetter } from '@/utils/capitalizeFirstLetter';
-
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-
 import { ArrowUpRight } from 'lucide-react';
-
+import { stripHtml } from '@/utils/stripHtml';
 import type { PostType } from '../types';
 
 export default function CardThree({
@@ -53,7 +51,7 @@ export default function CardThree({
                </div>
             </Link>
 
-            <p className="line-clamp-2 h-[2.5rem] text-sm">{body}</p>
+            <p className="line-clamp-2 h-[2.5rem] text-sm">{stripHtml(body)}</p>
             <div className="flex items-center justify-between gap-5">
                {/* User Info */}
                <div className="flex items-center gap-3">
