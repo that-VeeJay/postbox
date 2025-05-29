@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
-import { FaBrain } from 'react-icons/fa6';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
 import Spinner from '@/components/icons/Spinner';
 import {
    ImageUpload,
@@ -12,11 +12,13 @@ import {
    RefineDialogBox,
 } from '@/features/posts';
 
+import { Send, Paperclip, Bot } from 'lucide-react';
+
 import type { CreateInputDataProps, CreateErrorsType } from '@/features/posts/types';
 import { useGenerateContent } from '@/features/posts/hooks/useGenerateContent';
 import { useSubmitCreate } from '@/features/posts/hooks/useSubmitCreate';
 import { InputFieldError } from '@/components/shared';
-import { TextEditor } from '@/features/create';
+import { TextEditor, PostingGuidelines } from '@/features/create';
 
 const MAX_TITLE_LENGTH = 8;
 
@@ -89,7 +91,7 @@ export default function Create() {
                                  generateContent();
                               }}
                            >
-                              <FaBrain />
+                              <Bot />
                               {aiPending ? (
                                  <div className="flex items-center gap-1">
                                     <Spinner />
@@ -107,7 +109,7 @@ export default function Create() {
                </div>
 
                {/* Right Side */}
-               <div className="col-span-3 space-y-5 md:col-span-2">
+               <div className="col-span-3 flex flex-col space-y-5 md:col-span-2">
                   <ImageUpload
                      setInputData={setInputData}
                      setImagePreview={setImagePreview}
@@ -130,10 +132,26 @@ export default function Create() {
                         </div>
                      ) : (
                         <div className="flex items-center gap-1">
+                           <Send />
                            <p>Publish</p>
                         </div>
                      )}
                   </Button>
+
+                  <div className="flex w-full min-w-0 items-center gap-3 overflow-x-auto">
+                     <Separator className="min-w-[20px] flex-1" />
+                     <span className="px-2 text-sm whitespace-nowrap text-neutral-500">or</span>
+                     <Separator className="min-w-[20px] flex-1" />
+                  </div>
+
+                  <Button type="button" variant="outline" className="w-full">
+                     <Paperclip />
+                     Save as draft
+                  </Button>
+
+                  <div className="mt-auto cursor-pointer text-center text-neutral-400 hover:underline">
+                     <PostingGuidelines />
+                  </div>
                </div>
             </div>
          </div>
