@@ -96,7 +96,7 @@ export function MenuBar({ editor }: { editor: Editor | null }) {
    ];
 
    return (
-      <div className="z-50 mb-1 space-x-2 rounded-md border bg-neutral-900 p-1">
+      <div className="z-50 mb-1 space-x-2 rounded-md border bg-neutral-100 p-1 dark:bg-neutral-900">
          {Options.map((option, index) => (
             <Toggle key={index} pressed={option.pressed} onPressedChange={option.onClick}>
                {option.icon}

@@ -27,7 +27,7 @@ export function TextEditor({ content, onChange }: PropsType) {
             },
             blockquote: {
                HTMLAttributes: {
-                  class: 'border-l-4 border-blue-500 bg-neutral-800 p-4 my-4 italic text-neutral-300',
+                  class: 'border-l-4 border-neutral-700 bg-neutral-200 dark:bg-neutral-900 p-4 my-4 italic ',
                },
             },
             codeBlock: {
@@ -47,7 +47,7 @@ export function TextEditor({ content, onChange }: PropsType) {
       ],
       editorProps: {
          attributes: {
-            class: 'scrollbar-hidden h-160 resize-none border rounded-md bg-neutral-900 p-3 overflow-y-auto',
+            class: 'scrollbar-hidden h-160 resize-none border rounded-md bg-neutral-100 dark:bg-neutral-900 p-3 overflow-y-auto',
          },
       },
       onUpdate: ({ editor }) => {
