@@ -1,7 +1,5 @@
-import { FaRegLightbulb } from 'react-icons/fa';
-import { FaCheck } from 'react-icons/fa';
-import { RiCloseCircleFill } from 'react-icons/ri';
-import { IoIosWarning } from 'react-icons/io';
+
+import { TriangleAlert, Check, Lightbulb, CircleX } from 'lucide-react';
 
 type PropsType = {
    message: string;
@@ -10,22 +8,22 @@ type PropsType = {
 
 const typeStyles = {
    success: {
-      icon: <FaCheck className="text-green-300" />,
+      icon: <Check className="text-green-300" />,
       container:
          'bg-green-500/75 border-green-500 dark:border-green-700 dark:bg-green-900/40 dark:text-green-800',
    },
    info: {
-      icon: <FaRegLightbulb className="text-blue-300" />,
+      icon: <Lightbulb className="text-blue-300" />,
       container:
          'bg-blue-500/75 border-blue-500 dark:border-blue-700 dark:bg-blue-900/40 dark:text-blue-800',
    },
    error: {
-      icon: <RiCloseCircleFill className="text-red-300" />,
+      icon: <CircleX className="text-red-300" />,
       container:
          'bg-red-500/75 border-red-500 dark:border-red-700 dark:bg-red-900/40 dark:text-red-800',
    },
    warning: {
-      icon: <IoIosWarning className="text-yellow-300" />,
+      icon: <TriangleAlert className="text-yellow-300" />,
       container:
          'bg-yellow-500/75 border-yellow-500 dark:border-yellow-700 dark:bg-yellow-900/40 dark:text-yellow-800',
    },

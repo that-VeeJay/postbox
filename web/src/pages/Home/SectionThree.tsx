@@ -1,10 +1,11 @@
-import { CardThree, useGetPosts } from '@/features/posts';
+import { CardThree } from '@/features/posts';
 import CardOneSkeleton from '@/components/skeletons/CardOneSkeleton';
 import type { PostType } from '@/features/posts/types';
 import { Note } from '@/components/shared';
+import { useGetLatestPosts } from '@/features/posts/hooks/useGetLatestPosts';
 
 export default function SectionThree() {
-   const { data, isLoading, error } = useGetPosts();
+   const { data, isLoading, error } = useGetLatestPosts();
 
    const renderContent = () => {
       if (isLoading) {

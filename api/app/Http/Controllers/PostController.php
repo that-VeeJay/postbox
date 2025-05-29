@@ -12,7 +12,19 @@ class PostController extends Controller
 {
     private const POST_LIMIT = 9;
 
-    public function index()
+    public function getAllPosts()
+    {
+        return Post::with('user')
+            ->latest()
+            ->paginate(6);
+    }
+
+    public function getRecentPosts()
+    {
+
+    }
+
+    public function getLatestPosts()
     {
         return Post::with('user')
             ->latest()
@@ -29,8 +41,9 @@ class PostController extends Controller
         ];
     }
 
-    public function destroy(Post $post)
+    public function destroy($slug)
     {
+         $post = Post::where('slug', $slug)->first();
          $post->delete();
          return response()->json(['message' => 'The posted was deleted.']);
     }

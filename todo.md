@@ -18,3 +18,4 @@
 - [x] Use lucide react icons
 - [x] Integrate TIPTAP editor
 - [x] Add posting guidelines in the CREATE PAGE
+- [x] Add post slug in viewing a post

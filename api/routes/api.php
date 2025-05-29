@@ -24,10 +24,13 @@ Route::patch("/profile/update", [UserController::class, 'update'])->middleware('
 
 // Post Routes
 Route::prefix('posts')->controller(PostController::class)->group(function() {
-    Route::get('/', 'index');
+    Route::get('/', 'getAllPosts');
+    Route::get('/recent-posts', 'getRecentPosts');
+    Route::get('/latest-posts', 'getLatestPosts');
+
     Route::get('/{slug}','show');
     Route::post('/', 'store')->middleware('auth:sanctum');
-    Route::delete('/{post}', 'destroy')->middleware('auth:sanctum');
+    Route::delete('/{slug}', 'destroy')->middleware('auth:sanctum');
     Route::get('/user/{user}', 'getUserPosts')->middleware('auth:sanctum');
 });
 
@@ -37,5 +40,4 @@ Route::prefix('comments')->controller(CommentController::class)->group(function(
     Route::post('/', 'store')->middleware('auth:sanctum');
     Route::delete('/{comment}', 'destroy')->middleware('auth:sanctum');
     Route::patch("/{comment}", 'update')->middleware('auth:sanctum');
-
 });

@@ -44,7 +44,7 @@ export default function View() {
                      <div className="flex justify-between gap-3">
                         <p className="text-2xl font-semibold">{data.post.title}</p>
                         {user && user.id === data.user.id && (
-                           <ActionsButton id={postId} token={token} />
+                           <ActionsButton slug={postId} token={token} />
                         )}
                      </div>
                   </div>
@@ -66,8 +66,6 @@ export default function View() {
                      className="prose max-w-none text-justify"
                      dangerouslySetInnerHTML={{ __html: data.post.body }}
                   />
-
-                  {/* <p className="text-justify whitespace-pre-line">{data.post.body}</p> */}
                </div>
 
                {/* Comment Section */}

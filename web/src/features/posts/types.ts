@@ -14,7 +14,8 @@ export type PostType = {
 };
 
 export type ActionsButtonPropsType = {
-   id: string | undefined;
+   slug: string;
+   id?: string | undefined;
    token: string | null;
 };
 

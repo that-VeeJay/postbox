@@ -12,18 +12,18 @@ import {
 import { useDeletePost } from '../hooks/useDeletePost';
 import type { ActionsButtonPropsType } from '../types';
 
-export default function ActionsButton({ id, token }: ActionsButtonPropsType) {
+export default function ActionsButton({ slug, token }: ActionsButtonPropsType) {
    const navigate = useNavigate();
 
    const { deletePost } = useDeletePost();
 
    const handleDelete = () => {
-      if (!id || !token) return;
-      deletePost({ id, token });
+      if (!slug || !token) return;
+      deletePost({ slug, token });
    };
 
    const handleEdit = () => {
-      navigate(`/posts/${id}/edit`);
+      navigate(`/posts/${slug}/edit`);
    };
 
    return (

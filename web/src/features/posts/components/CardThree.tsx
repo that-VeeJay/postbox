@@ -20,7 +20,6 @@ export default function CardThree({
    created_at,
    user: { profile_picture, name },
 }: PostType) {
-   console.log(slug);
    return (
       <div className="space-y-3">
          {/* Post Image */}

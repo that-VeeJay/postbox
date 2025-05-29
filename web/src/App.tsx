@@ -11,6 +11,7 @@ const Login = lazy(() => import('./pages/Auth/Login'));
 const Register = lazy(() => import('./pages/Auth/Register'));
 const ViewSingle = lazy(() => import('./pages/Post/View'));
 const EditPost = lazy(() => import('./pages/Post/Edit'));
+const All = lazy(() => import('./pages/Post/All'));
 
 const LayoutWithSuspense = () => <Layout />;
 
@@ -25,6 +26,7 @@ const router = createBrowserRouter([
          { path: 'people', element: <People /> },
          { path: 'posts/:slug', element: <ViewSingle /> },
          { path: 'posts/:slug/edit', element: <EditPost /> },
+         { path: 'posts', element: <All /> },
       ],
    },
    {

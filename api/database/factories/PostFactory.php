@@ -11,10 +11,11 @@ class PostFactory extends Factory
     {
         return [
             'user_id' => User::factory(),
-            'category' => fake()->randomElement(['nature', 'travel', 'technology']),
             'title' => fake()->sentence(),
-            'body' => fake()->paragraph(),
-            'image' => 'https://placehold.co/600x400',
+            'body' => fake()->paragraphs(10, true),
+            'category' => fake()->randomElement(['nature', 'travel', 'technology']),
+            'image' => 'images/posts/post_683865e427c3b.avif',
+            'slug' => fake()->slug(),
         ];
     }
 }
