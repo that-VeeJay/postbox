@@ -15,7 +15,7 @@ import {
 import type { CreateInputDataProps, CreateErrorsType } from '@/features/posts/types';
 import { useGenerateContent } from '@/features/posts/hooks/useGenerateContent';
 import { useSubmitCreate } from '@/features/posts/hooks/useSubmitCreate';
-
+import { InputFieldError } from '@/components/shared';
 import { TextEditor } from '@/features/create';
 
 const MAX_TITLE_LENGTH = 8;
@@ -71,9 +71,13 @@ export default function Create() {
                            value={inputData.title}
                            onChange={(e) => setInputData({ ...inputData, title: e.target.value })}
                         />
+                        {errors.title && <InputFieldError error={errors.title} />}
                      </div>
 
-                     <TextEditor content={inputData.body} onChange={onChange} />
+                     <div>
+                        <TextEditor content={inputData.body} onChange={onChange} />
+                        {errors.body && <InputFieldError error={errors.body} />}
+                     </div>
 
                      <div className="flex items-center justify-between gap-5">
                         <div className="flex items-center gap-3">

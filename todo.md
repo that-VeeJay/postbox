@@ -6,7 +6,7 @@
 
 ## Web
 
-- [ ] Integrate TIPTAP editor
+- [x] Integrate TIPTAP editor
 - [ ] Change category badge (multicolor)
 - [ ] Add comment section
   - [ ] Like comment
