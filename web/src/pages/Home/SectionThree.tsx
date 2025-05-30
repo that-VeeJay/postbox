@@ -7,6 +7,7 @@ import { useGetLatestPosts } from '@/features/posts/hooks/useGetLatestPosts';
 export default function SectionThree() {
    const { data, isLoading, error } = useGetLatestPosts();
 
+   console.log(data);
    const renderContent = () => {
       if (isLoading) {
          return Array.from({ length: 3 }).map((_, index) => <CardOneSkeleton key={index} />);

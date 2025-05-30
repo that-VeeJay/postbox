@@ -24,14 +24,14 @@ Route::patch("/profile/update", [UserController::class, 'update'])->middleware('
 
 // Post Routes
 Route::prefix('posts')->controller(PostController::class)->group(function() {
-    Route::get('/', 'getAllPosts');
-    Route::get('/recent-posts', 'getRecentPosts');
-    Route::get('/latest-posts', 'getLatestPosts');
+    Route::get('/', 'index');
+    Route::get('/recent', 'recentPosts');
+    Route::get('/latest', 'latestPosts');
 
     Route::get('/{slug}','show');
     Route::post('/', 'store')->middleware('auth:sanctum');
     Route::delete('/{slug}', 'destroy')->middleware('auth:sanctum');
-    Route::get('/user/{user}', 'getUserPosts')->middleware('auth:sanctum');
+    Route::get('/user/{user}', 'userPosts')->middleware('auth:sanctum');
 });
 
 // Comment and Reply Routes
