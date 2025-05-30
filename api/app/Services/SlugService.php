@@ -5,9 +5,9 @@ namespace App\Services;
 use App\Models\Post;
 use Illuminate\Support\Str;
 
-class Slug
+class SlugService
 {
-    public static function generateUniqueSlug($title)
+    public static function generateUniqueSlug(string $title): string
     {
         $slug = Str::slug($title);
         $original = $slug;

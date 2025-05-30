@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Services\ImageService;
-use App\Services\Slug;
+use App\Services\SlugService;
 use Illuminate\Http\JsonResponse;
 
 class PostController extends Controller
@@ -52,7 +52,7 @@ class PostController extends Controller
          return response()->json(['message' => 'The posted was deleted.']);
     }
 
-    public function store(Request $request, ImageService $imageService, Slug $slug): JsonResponse
+    public function store(Request $request, ImageService $imageService, SlugService $slug): JsonResponse
     {
         $validated = $request->validate([
             'title'    => ['required'],

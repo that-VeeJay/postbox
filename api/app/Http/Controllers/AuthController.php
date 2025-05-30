@@ -4,35 +4,30 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    // TODO: Add validation in production
-    // Change password length
-    // Required at least 1 uppercase, 1 lowercase, 1 number, and 1 special characters
-    // 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/'
-
-    public function register(Request $request)
+    public function register(Request $request): JsonResponse
     {
+        $passwordRegex = 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&-])[A-Za-z\d@$!%*?&-]+$/';
+
         $validatedFields = $request->validate([
             'name' => ['required', 'string'],
             'username' => ['required', 'string', 'max:20', 'unique:users,username'],
             'email' => ['required', 'email', 'string', 'max:255', 'unique:users,email'],
-            'password' => ['required', 'confirmed', 'min:3'],
+            'password' => ['required', 'confirmed', 'min:8', $passwordRegex],
         ]);
 
         $user = User::create($validatedFields);
 
         $token = $user->createToken($request->name);
 
-        return [
-            'user' => $user,
-            'token' => $token->plainTextToken
-        ];
+        return response()->json(['user' => $user, 'token' => $token->plainTextToken]);
     }
 
-    public function login(Request $request)
+    public function login(Request $request): JsonResponse
     {
         $request->validate([
             'email' => ['required', 'email'],
@@ -42,29 +37,23 @@ class AuthController extends Controller
         $user = User::where('email', $request->email)->first();
 
         if (!$user || !Hash::check($request->password, $user->password)) {
-            return [
+            return response()->json([
                 'errors' => [
                     'email' => [
                         'The provided credentials are incorrect.'
                     ]
                 ]
-            ];
+            ]);
         }
 
         $token = $user->createToken($user->name);
 
-        return [
-            'user' => $user,
-            'token' => $token->plainTextToken
-        ];
+        return response()->json(['user' => $user, 'token' => $token->plainTextToken]);
     }
 
-    public function logout(Request $request)
+    public function logout(Request $request): JsonResponse
     {
         $request->user()->tokens()->delete();
-
-        return [
-            'message' => 'You are logged out.'
-        ];
+        return response()->json(['message' => 'You are logged out.']);
     }
 }
