@@ -145,9 +145,9 @@ html {
    overflow-x: hidden;
 }
 
-/* body {
+body {
    width: calc(100vw - 5px);
-} */
+}
 
 /* TIPTAP Rich-Text-Editor */
 @layer base {

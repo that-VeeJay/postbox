@@ -8,7 +8,7 @@ export function useDeletePost() {
    const navigate = useNavigate();
    const queryClient = useQueryClient();
 
-   const mutation = useMutation({
+   return useMutation({
       mutationFn: async ({ slug, token }: ActionsButtonPropsType) => {
          const response = await fetch(`/api/posts/${slug}`, {
             method: 'DELETE',
@@ -19,6 +19,7 @@ export function useDeletePost() {
          return response.json();
       },
       onSuccess: () => {
+         queryClient.invalidateQueries({ queryKey: ['latest_posts'] });
          queryClient.invalidateQueries({ queryKey: ['posts'] });
          navigate('/', {
             state: {
@@ -27,7 +28,4 @@ export function useDeletePost() {
          });
       },
    });
-   return {
-      deletePost: mutation.mutate,
-   };
 }

@@ -1,31 +1,34 @@
-import { useGetPosts, CardThree } from '@/features/posts';
+import { useEffect, useState } from 'react';
+
+import { CardThree } from '@/features/posts';
 import CardOneSkeleton from '@/components/skeletons/CardOneSkeleton';
-import { Note } from '@/components/shared';
 import type { PostType } from '@/features/posts/types';
+import { Note } from '@/components/shared';
+import { useGetPosts } from '@/features/posts';
 import {
    Pagination,
    PaginationContent,
-   PaginationEllipsis,
    PaginationItem,
-   PaginationLink,
    PaginationNext,
    PaginationPrevious,
 } from '@/components/ui/pagination';
 import { useSearchParams } from 'react-router-dom';
 
-export default function All() {
+export default function SectionThree() {
    const [searchParams, setSearchParams] = useSearchParams();
-   const currentPage = parseInt(searchParams.get('page') || '1', 10);
-   const { data, isLoading, error } = useGetPosts(currentPage);
+   const currentPage = Number(searchParams.get('page')) || 1;
+   const { data: posts, isLoading, error } = useGetPosts(currentPage);
+   const [totalPages, setTotalPages] = useState<number | undefined>(undefined);
 
-   const totalPages = data?.last_page || currentPage;
-
-   const handlePageChange = (page: number) => {
-      if (page >= 1 && page <= totalPages) {
-         setSearchParams({ page: String(page) });
-         window.scrollTo({ top: 0, behavior: 'smooth' });
+   useEffect(() => {
+      if (posts?.last_page) {
+         setTotalPages(posts.last_page);
       }
-   };
+
+      if (totalPages && (currentPage < 1 || currentPage > totalPages)) {
+         setSearchParams({ page: '1' });
+      }
+   }, [posts?.last_page, currentPage, setSearchParams]);
 
    const renderContent = () => {
       if (isLoading) {
@@ -40,82 +43,54 @@ export default function All() {
          );
       }
 
-      if (Array.isArray(data?.data) && data.data.length > 0) {
-         return data.data.map((post: PostType) => <CardThree key={post.id} {...post} />);
+      if (Array.isArray(posts.data) && posts.data.length > 0) {
+         return posts.data.map((post: PostType) => <CardThree key={post.id} {...post} />);
       }
-
-      return (
-         <div className="col-span-full text-center">
-            <Note message="No posts available." type="info" />
-         </div>
-      );
-   };
-
-   const renderPageLinks = () => {
-      const links = [];
-      const maxVisible = 5;
-      let start = Math.max(1, currentPage - 2);
-      let end = Math.min(totalPages, start + maxVisible - 1);
-
-      if (end - start < maxVisible - 1) {
-         start = Math.max(1, end - maxVisible + 1);
-      }
-
-      for (let i = start; i <= end; i++) {
-         links.push(
-            <PaginationItem key={i}>
-               <PaginationLink
-                  href="#"
-                  isActive={i === currentPage}
-                  onClick={(e) => {
-                     e.preventDefault();
-                     handlePageChange(i);
-                  }}
-               >
-                  {i}
-               </PaginationLink>
-            </PaginationItem>
-         );
-      }
-
-      return links;
    };
 
    return (
-      <main className="mx-auto flex w-full max-w-6xl flex-col justify-between">
-         <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">{renderContent()}</div>
+      <main className="mx-auto w-full max-w-6xl">
+         <h1 className="my-8 inline-block bg-[linear-gradient(145deg,_#42d392,_#647eff,_#8E43AD)] bg-clip-text text-center text-4xl font-bold text-transparent">
+            ALL BLOG POSTS
+         </h1>
 
-         <Pagination className="mt-10">
-            <PaginationContent>
-               <PaginationItem>
-                  <PaginationPrevious
-                     href="#"
-                     onClick={(e) => {
-                        e.preventDefault();
-                        handlePageChange(currentPage - 1);
-                     }}
-                  />
-               </PaginationItem>
-
-               {renderPageLinks()}
-
-               {totalPages > 5 && currentPage < totalPages - 2 && (
+         <div className="mb-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">{renderContent()}</div>
+         <nav aria-label="Pagination">
+            <Pagination className="mb-10">
+               <PaginationContent className="flex w-full justify-between">
                   <PaginationItem>
-                     <PaginationEllipsis />
+                     <PaginationPrevious
+                        aria-label="Previous page"
+                        href={`?page=${currentPage - 1}`}
+                        onClick={(e) => {
+                           e.preventDefault();
+                           if (currentPage > 1) {
+                              setSearchParams({ page: String(Math.max(1, currentPage - 1)) });
+                           }
+                        }}
+                     />
                   </PaginationItem>
-               )}
-
-               <PaginationItem>
-                  <PaginationNext
-                     href="#"
-                     onClick={(e) => {
-                        e.preventDefault();
-                        handlePageChange(currentPage + 1);
-                     }}
-                  />
-               </PaginationItem>
-            </PaginationContent>
-         </Pagination>
+                  <div />
+                  <div className="flex items-center gap-8">
+                     <span className="text-sm">
+                        {currentPage} out of {totalPages} pages
+                     </span>
+                     <PaginationItem>
+                        <PaginationNext
+                           aria-label="Next page"
+                           href={`?page=${currentPage + 1}`}
+                           onClick={(e) => {
+                              e.preventDefault();
+                              if (currentPage < totalPages!) {
+                                 setSearchParams({ page: String(currentPage + 1) });
+                              }
+                           }}
+                        />
+                     </PaginationItem>
+                  </div>
+               </PaginationContent>
+            </Pagination>
+         </nav>
       </main>
    );
 }

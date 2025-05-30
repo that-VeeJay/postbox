@@ -11,13 +11,13 @@ import SinglePostSkeleton from '@/components/skeletons/SinglePostSkeleton';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 export default function View() {
-   const { slug: postId } = useParams();
+   const { slug } = useParams();
    const { user, token } = useContext(UserContext);
 
-   const { data, isLoading, error } = useViewSinglePost(postId!);
+   const { data, isLoading, error } = useViewSinglePost(slug!);
 
    return (
-      <div className="mx-auto w-full max-w-5xl p-5 pt-5">
+      <div className="mx-auto w-full max-w-5xl">
          {isLoading ? (
             <SinglePostSkeleton />
          ) : error ? (
@@ -38,34 +38,36 @@ export default function View() {
                      />
                   </div>
 
-                  {/* Post Category and Title */}
-                  <div className="space-y-2">
-                     <Badge>{capitalizeFirstLetter(data.post.category)}</Badge>
-                     <div className="flex justify-between gap-3">
-                        <p className="text-2xl font-semibold">{data.post.title}</p>
-                        {user && user.id === data.user.id && (
-                           <ActionsButton slug={postId} token={token} />
-                        )}
+                  <div className="space-y-5 px-6">
+                     {/* Post Category and Title */}
+                     <div className="space-y-2">
+                        <Badge>{capitalizeFirstLetter(data.post.category)}</Badge>
+                        <div className="flex justify-between gap-3">
+                           <p className="text-2xl font-semibold">{data.post.title}</p>
+                           {user && user.id === data.user.id && (
+                              <ActionsButton slug={slug!} token={token} />
+                           )}
+                        </div>
                      </div>
-                  </div>
 
-                  {/* Author Info */}
-                  <div className="flex items-center gap-3">
-                     <Avatar>
-                        <AvatarImage
-                           src={getImageUrl(data.user.profile_picture)}
-                           className="object-cover"
-                        />
-                        <AvatarFallback>{getFirstLetter(data.user.name)}</AvatarFallback>
-                     </Avatar>
-                     <p>{data.user.name}</p>
-                  </div>
+                     {/* Author Info */}
+                     <div className="flex items-center gap-3">
+                        <Avatar>
+                           <AvatarImage
+                              src={getImageUrl(data.user.profile_picture)}
+                              className="object-cover"
+                           />
+                           <AvatarFallback>{getFirstLetter(data.user.name)}</AvatarFallback>
+                        </Avatar>
+                        <p>{data.user.name}</p>
+                     </div>
 
-                  {/* Post Body */}
-                  <div
-                     className="prose max-w-none text-justify"
-                     dangerouslySetInnerHTML={{ __html: data.post.body }}
-                  />
+                     {/* Post Body */}
+                     <div
+                        className="prose max-w-none text-justify"
+                        dangerouslySetInnerHTML={{ __html: data.post.body }}
+                     />
+                  </div>
                </div>
 
                {/* Comment Section */}

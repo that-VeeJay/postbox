@@ -1,19 +1,11 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery } from '@tanstack/react-query';
+import { viewSinglePost } from '../services/viewSinglePost';
 
-export function useViewSinglePost(id: string) {
-  const query = useQuery({
-    queryKey: ["single_post", id],
-    queryFn: async ({ queryKey }) => {
-      const [, id] = queryKey;
-      const response = await fetch(`/api/posts/${id}`);
-      return response.json();
-    },
-    enabled: !!id,
-    staleTime: 100000,
-  });
-  return {
-    data: query.data,
-    isLoading: query.isLoading,
-    error: query.error,
-  };
+export function useViewSinglePost(slug: string) {
+   return useQuery({
+      queryKey: ['single_post', slug],
+      queryFn: viewSinglePost,
+      enabled: !!slug,
+      staleTime: 100 * 1000,
+   });
 }

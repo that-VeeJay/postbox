@@ -15,11 +15,11 @@ import type { ActionsButtonPropsType } from '../types';
 export default function ActionsButton({ slug, token }: ActionsButtonPropsType) {
    const navigate = useNavigate();
 
-   const { deletePost } = useDeletePost();
+   const { mutate } = useDeletePost();
 
    const handleDelete = () => {
       if (!slug || !token) return;
-      deletePost({ slug, token });
+      mutate({ slug, token });
    };
 
    const handleEdit = () => {

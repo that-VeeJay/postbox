@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { ModeToggle } from '@/components/mode-toggle';
 import { NavigationLinks, ProfileDropdown } from '@/features/navbar';
 import { UserContext } from '@/context/UserContext';
+import ScrollToTop from '@/utils/ScrollToTop';
 
 export default memo(function Layout() {
    const { user } = useContext(UserContext);
@@ -43,6 +44,7 @@ export default memo(function Layout() {
          </header>
 
          <main className="pt-18">
+            <ScrollToTop />
             <Outlet />
          </main>
       </>
