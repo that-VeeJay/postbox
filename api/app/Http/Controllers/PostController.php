@@ -21,13 +21,17 @@ class PostController extends Controller
 
     public function getRecentPosts()
     {
-
+        return Post::with('user')
+            ->latest()
+            ->take(6)
+            ->get();
     }
 
     public function getLatestPosts()
     {
         return Post::with('user')
             ->latest()
+            ->skip(6)
             ->take(self::POST_LIMIT)
             ->get();
     }

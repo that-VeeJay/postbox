@@ -5,6 +5,6 @@ export const useGetLatestPosts = () => {
    return useQuery({
       queryKey: ['latest_posts'],
       queryFn: getLatestPosts,
-      staleTime: 5 * 60 * 1000,
+      staleTime: 3 * 60 * 1000,
    });
 };

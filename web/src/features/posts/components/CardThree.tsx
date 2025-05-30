@@ -38,7 +38,9 @@ export default function CardThree({
          </Link>
          <div className="space-y-3 p-3">
             {/* Pot Category */}
-            <Badge>{capitalizeFirstLetter(category)}</Badge>
+            <Link to={`/category/${category}`}>
+               <Badge className="mb-3">{capitalizeFirstLetter(category)}</Badge>
+            </Link>
 
             {/* Pot Title */}
             <Link to={`/posts/${slug}`} className="flex items-start justify-between gap-2">
@@ -51,16 +53,21 @@ export default function CardThree({
                </div>
             </Link>
 
-            <p className="line-clamp-2 h-[2.5rem] text-sm">{stripHtml(body)}</p>
+            <p className="line-clamp-2 h-[2.5rem] text-sm text-neutral-600 dark:text-neutral-400">
+               {stripHtml(body)}
+            </p>
             <div className="flex items-center justify-between gap-5">
                {/* User Info */}
-               <div className="flex items-center gap-3">
-                  <Avatar>
-                     <AvatarImage src={getImageUrl(profile_picture)} />
-                     <AvatarFallback>{getFirstLetter(name)}</AvatarFallback>
-                  </Avatar>
-                  <span className="line-clamp-1">{truncateText(name, 20)}</span>
-               </div>
+               <Link to="/user/username">
+                  <div className="flex items-center gap-3">
+                     <Avatar>
+                        <AvatarImage src={getImageUrl(profile_picture)} />
+                        <AvatarFallback>{getFirstLetter(name)}</AvatarFallback>
+                     </Avatar>
+                     <span className="line-clamp-1">{truncateText(name, 20)}</span>
+                  </div>
+               </Link>
+
                <time className="font-base text-sm text-neutral-600 dark:text-neutral-400">
                   {timeAgo(created_at)}
                </time>

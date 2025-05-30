@@ -10,6 +10,7 @@ export type PostType = {
    user: {
       name: string;
       profile_picture: string;
+      username: string;
    };
 };
 
