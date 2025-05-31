@@ -1,26 +1,28 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { PageNotFound } from './pages/404/PageNotFound';
 import { lazy } from 'react';
 
 const Layout = lazy(() => import('./layouts/Navbar'));
+
 const HomePage = lazy(() => import('./pages/Home/HomePage'));
-const Create = lazy(() => import('./pages/Post/Create'));
-const ProfilePage = lazy(() => import('./pages/Profile/ProfilePage'));
 const People = lazy(() => import('./pages/People/Index'));
-const Login = lazy(() => import('./pages/Auth/Login'));
-const Register = lazy(() => import('./pages/Auth/Register'));
+const ProfilePage = lazy(() => import('./pages/Profile/ProfilePage'));
+
+const Create = lazy(() => import('./pages/Post/Create'));
 const ViewSingle = lazy(() => import('./pages/Post/View'));
 const EditPost = lazy(() => import('./pages/Post/Edit'));
 const All = lazy(() => import('./pages/Post/All'));
 
-const LayoutWithSuspense = () => <Layout />;
+const Login = lazy(() => import('./pages/Auth/Login'));
+const Register = lazy(() => import('./pages/Auth/Register'));
+
+const PageNotFound = lazy(() => import('./pages/404/PageNotFound'));
 
 const router = createBrowserRouter([
    {
       path: '/',
-      element: <LayoutWithSuspense />,
+      element: <Layout />,
       children: [
-         { path: '', element: <HomePage /> },
+         { index: true, element: <HomePage /> },
          { path: 'create', element: <Create /> },
          { path: 'profile', element: <ProfilePage /> },
          { path: 'people', element: <People /> },

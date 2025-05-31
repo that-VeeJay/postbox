@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 
-export function PageNotFound() {
+export default function PageNotFound() {
    return (
       <div className="flex min-h-screen items-center justify-center">
          <div className="space-y-1">

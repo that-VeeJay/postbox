@@ -43,12 +43,12 @@ class PostController extends Controller
         return response()->json($latestPosts);
     }
 
-
     public function userPosts(int $id):JsonResponse
     {
         $posts = Post::where('user_id', $id)->select('title', 'image')->latest()->get();
         return response()->json($posts);
     }
+
     public function show(string $slug): JsonResponse
     {
         $post = Post::where('slug', $slug)->firstOrFail();

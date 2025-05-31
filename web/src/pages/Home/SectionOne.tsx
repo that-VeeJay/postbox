@@ -13,6 +13,7 @@ export default function SectionOne() {
                category={featuredPost.category}
                created_at={featuredPost.created_at}
                user={featuredPost.user}
+               slug={featuredPost.slug}
             />
          )}
       </>

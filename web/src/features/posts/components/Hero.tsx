@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
@@ -10,6 +12,7 @@ export default function Hero({
    image,
    category,
    created_at,
+   slug,
    user: { name, profile_picture },
 }: HeroProps) {
    return (
@@ -26,13 +29,17 @@ export default function Hero({
             {/* Content */}
             <div className="space-y-5 rounded-md bg-white p-6 lg:absolute lg:bottom-0 lg:left-0 lg:w-1/2 lg:translate-x-15 lg:translate-y-15 lg:p-10 lg:shadow-md dark:bg-neutral-950 dark:shadow-none lg:dark:bg-neutral-900">
                <Badge>{capitalizeFirstLetter(category)}</Badge>
-               <h1 className="line-clamp-3 text-xl font-semibold lg:text-2xl">{title}</h1>
+               <Link to={`/posts/${slug}`} className="block">
+                  <h1 className="line-clamp-3 text-xl font-semibold lg:text-2xl">{title}</h1>
+               </Link>
+
                <div className="flex items-center gap-5">
                   <div className="flex items-center gap-2">
                      <Avatar>
                         <AvatarImage src={getImageUrl(profile_picture)} />
                         <AvatarFallback>{getFirstLetter(name)}</AvatarFallback>
                      </Avatar>
+
                      <span>{name}</span>
                   </div>
                   <span>{timeAgo(created_at)}</span>

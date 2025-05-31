@@ -19,10 +19,12 @@ export type HeroProps = {
    title: string;
    image: string;
    category: string;
+    slug: string;
    created_at: string | Date;
    user: {
       name: string;
       profile_picture: string;
+      username: string;
    };
 };
 
