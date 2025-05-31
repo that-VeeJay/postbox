@@ -1,12 +1,12 @@
 import { getImageUrl } from '@/utils';
 
-type PropsType = {
+type CardImageProps = {
    styles?: string;
    image: string;
    title: string;
 };
 
-export function CardImage({ styles, image, title }: PropsType) {
+export function CardImage({ styles, image, title }: CardImageProps) {
    return (
       <div className={`aspect-[16/7] overflow-hidden ${styles}`}>
          <img

@@ -10,12 +10,12 @@ export default function HomePage() {
    return (
       <main className="mx-auto w-full max-w-6xl">
          {/* <SectionOne /> */}
-         <div className="mb-5 text-lg font-semibold md:text-xl lg:mt-30">Recent Posts</div>
+         <div className="mt-10 mb-5 text-lg font-semibold md:text-xl">Recent Posts</div>
          <div className="grid lg:grid-cols-2">
             <SectionTwo />
          </div>
 
-         <div className="mb-5 text-lg font-semibold md:text-xl lg:mt-15">All Blog Posts</div>
+         <div className="mt-10 mb-5 text-lg font-semibold md:text-xl">All Blog Posts</div>
          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             <SectionThree />
          </div>
