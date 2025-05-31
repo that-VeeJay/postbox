@@ -1,3 +1,4 @@
+import SectionOne from './SectionOne';
 import SectionTwo from './SectionTwo';
 import SectionThree from './SectionThree';
 import { Button } from '@/components/ui/button';
@@ -9,7 +10,10 @@ export default function HomePage() {
    useToast('publish_success');
    return (
       <main className="mx-auto w-full max-w-6xl">
-         {/* <SectionOne /> */}
+         <div className="mb-25">
+            <SectionOne />
+         </div>
+
          <div className="mt-10 mb-5 text-lg font-semibold md:text-xl">Recent Posts</div>
          <div className="grid lg:grid-cols-2">
             <SectionTwo />

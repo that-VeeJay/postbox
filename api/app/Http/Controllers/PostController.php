@@ -20,8 +20,15 @@ class PostController extends Controller
         return match($request->query('type')) {
             'recent' => $this->recentPosts(),
             'latest' => $this->latestPosts(),
+            'featured' => $this->featuredPost(),
             default => response()->json(Post::with('user')->latest()->paginate(self::PAGINATE)),
         };
+    }
+
+    public function featuredPost()
+    {
+        $featuredPost = Post::with('user')->inRandomOrder()->first();
+        return response()->json($featuredPost);
     }
 
     public function recentPosts(): JsonResponse
@@ -35,6 +42,7 @@ class PostController extends Controller
         $latestPosts = Post::with('user')->latest()->skip(self::SKIP_POSTS)->take(self::LATEST_POSTS)->get();
         return response()->json($latestPosts);
     }
+
 
     public function userPosts(int $id):JsonResponse
     {

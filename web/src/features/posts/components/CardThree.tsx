@@ -49,7 +49,7 @@ export default function CardThree({
             <div className="flex items-center justify-between gap-5">
                {/* User Info */}
                <HoverCard>
-                  <HoverCardTrigger>
+                  <HoverCardTrigger asChild>
                      <Link to="/user/username">
                         <div className="flex items-center gap-3">
                            <Avatar>

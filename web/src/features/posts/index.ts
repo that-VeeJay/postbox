@@ -11,8 +11,10 @@ import GenerateNote from './components/create/GenerateNote';
 import RefineDialogBox from './components/create/RefineDialogBox';
 
 import CardTwo from './components/CardTwo';
+import Hero from './components/Hero';
 
 export {
+   Hero,
    CardTwo,
    CardThree,
    ActionsButton,

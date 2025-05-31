@@ -15,6 +15,17 @@ export type PostType = {
    };
 };
 
+export type HeroProps = {
+   title: string;
+   image: string;
+   category: string;
+   created_at: string | Date;
+   user: {
+      name: string;
+      profile_picture: string;
+   };
+};
+
 export type ActionsButtonPropsType = {
    slug: string;
    id?: string | undefined;
