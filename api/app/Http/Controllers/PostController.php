@@ -10,33 +10,36 @@ use Illuminate\Http\JsonResponse;
 
 class PostController extends Controller
 {
-    private const POST_LIMIT = 9;
+    private const PAGINATE = 6;
+    private const RECENT_POSTS = 6;
+    private const SKIP_POSTS = 6;
+    private const LATEST_POSTS = 9;
 
     public function index(Request $request): JsonResponse
     {
         return match($request->query('type')) {
             'recent' => $this->recentPosts(),
             'latest' => $this->latestPosts(),
-            default => response()->json(Post::with('user')->latest()->paginate(6)),
+            default => response()->json(Post::with('user')->latest()->paginate(self::PAGINATE)),
         };
     }
 
     public function recentPosts(): JsonResponse
     {
-        $recentPosts = Post::with('user')->latest()->take(6)->get();
+        $recentPosts = Post::with('user')->latest()->take(self::RECENT_POSTS)->get();
         return response()->json($recentPosts);
     }
 
     public function latestPosts(): JsonResponse
     {
-        $latestPosts = Post::with('user')->latest()->skip(6)->take(self::POST_LIMIT)->get();
+        $latestPosts = Post::with('user')->latest()->skip(self::SKIP_POSTS)->take(self::LATEST_POSTS)->get();
         return response()->json($latestPosts);
     }
 
     public function userPosts(int $id):JsonResponse
     {
-         $posts = Post::where('user_id', $id)->select('title', 'image')->latest()->get();
-         return response()->json($posts);
+        $posts = Post::where('user_id', $id)->select('title', 'image')->latest()->get();
+        return response()->json($posts);
     }
     public function show(string $slug): JsonResponse
     {

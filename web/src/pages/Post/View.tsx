@@ -35,6 +35,9 @@ export default function View() {
                         src={getImageUrl(data.post.image)}
                         alt="Cover Image"
                         className="h-full w-full object-cover"
+                        width="1600"
+                        height="900"
+                        loading="lazy"
                      />
                   </div>
 

@@ -45,7 +45,7 @@ export function useSubmitCreate({
             return;
          }
          queryClient.invalidateQueries({ queryKey: ['posts'] });
-         queryClient.invalidateQueries({ queryKey: ['latest_posts'] });
+         queryClient.invalidateQueries({ queryKey: ['recent_posts'] });
          setInputData(initialValues);
          setImagePreview(null);
          navigate('/', {
