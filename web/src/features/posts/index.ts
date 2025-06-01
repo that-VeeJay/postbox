@@ -12,8 +12,10 @@ import RefineDialogBox from './components/create/RefineDialogBox';
 
 import CardTwo from './components/CardTwo';
 import Hero from './components/Hero';
+import { LikeButton } from './components/ui/LikeButton';
 
 export {
+   LikeButton,
    Hero,
    CardTwo,
    CardThree,

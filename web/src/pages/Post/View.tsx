@@ -5,19 +5,17 @@ import { getImageUrl } from '@/utils/getImageUrl';
 import { CustomToast } from '@/components/shared';
 import { UserContext } from '@/context/UserContext';
 import { getFirstLetter } from '@/utils/getFirstLetter';
-import { ActionsButton, useViewSinglePost } from '@/features/posts';
+import { ActionsButton, useViewSinglePost, LikeButton } from '@/features/posts';
 import { capitalizeFirstLetter } from '@/utils/capitalizeFirstLetter';
 import SinglePostSkeleton from '@/components/skeletons/SinglePostSkeleton';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Heart, Bookmark } from 'lucide-react';
+import { Bookmark } from 'lucide-react';
 
 export default function View() {
    const { slug } = useParams();
    const { user, token } = useContext(UserContext);
 
-   const { data, isLoading, error } = useViewSinglePost(slug!);
-
-   console.log(data?.post.likesCount);
+   const { data, isLoading, error, refetch } = useViewSinglePost(slug!);
 
    return (
       <div className="mx-auto w-full max-w-5xl">
@@ -51,7 +49,13 @@ export default function View() {
                         <div className="flex justify-between gap-3">
                            <p className="text-2xl font-semibold">{data.post.title}</p>
                            <div className="flex items-center gap-5">
-                              <Heart />
+                              <LikeButton
+                                 postId={data.post.id}
+                                 token={token!}
+                                 likesCount={data.post.likes_count}
+                                 likedByUser={data.liked_by_current_user}
+                                 refetch={refetch}
+                              />
                               <Bookmark />
                               {user && user.id === data.user.id && (
                                  <ActionsButton slug={slug!} token={token} />

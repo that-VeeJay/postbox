@@ -6,6 +6,6 @@ export function useViewSinglePost(slug: string) {
       queryKey: ['single_post', slug],
       queryFn: viewSinglePost,
       enabled: !!slug,
-      staleTime: 100 * 1000,
+      staleTime: 5 * 60 * 1000,
    });
 }

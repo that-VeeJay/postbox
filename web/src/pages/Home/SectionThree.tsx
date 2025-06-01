@@ -5,7 +5,7 @@ import { Note } from '@/components/shared';
 import { useGetLatestPosts } from '@/features/posts/hooks/useGetLatestPosts';
 
 export default function SectionThree() {
-   const { data, isLoading, error } = useGetLatestPosts();
+    const { data, isLoading, error } = useGetLatestPosts();
 
    const renderContent = () => {
       if (isLoading) {

@@ -7,6 +7,7 @@ use App\Models\Post;
 use App\Services\ImageService;
 use App\Services\SlugService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -51,8 +52,16 @@ class PostController extends Controller
 
     public function show(string $slug): JsonResponse
     {
-        $post = Post::where('slug', $slug)->firstOrFail();
-        return response()->json(['post' => $post, 'user' => $post->user]);
+        $user = Auth::user();
+        $post = Post::where('slug', $slug)->withCount('likes')->firstOrFail();
+
+        $liked = false;
+
+        if($user) {
+            $liked = $user->likes()->where('post_id', $post->id)->exists();
+        }
+
+        return response()->json(['post' => $post, 'user' => $post->user, 'liked_by_current_user' => $liked]);
     }
 
     public function destroy(string $slug): JsonResponse
