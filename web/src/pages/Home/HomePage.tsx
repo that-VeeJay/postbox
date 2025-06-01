@@ -4,6 +4,8 @@ import SectionThree from './SectionThree';
 import { Button } from '@/components/ui/button';
 import useToast from '@/hooks/useToast';
 import { Link } from 'react-router-dom';
+import { Footer } from './Footer';
+import { Separator } from '@/components/ui/separator';
 
 export default function HomePage() {
    useToast('delete_success');
@@ -30,6 +32,10 @@ export default function HomePage() {
                <Button variant="outline">View all posts</Button>
             </Link>
          </div>
+         <div className="my-20 md:my-25">
+            <Separator />
+         </div>
+         <Footer />
       </main>
    );
 }

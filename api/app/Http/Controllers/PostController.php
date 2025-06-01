@@ -30,7 +30,7 @@ class PostController extends Controller
         };
     }
 
-    public function featuredPost()
+    public function featuredPost(): JsonResponse
     {
         $featuredPost = Post::with('user')
             ->inRandomOrder()
