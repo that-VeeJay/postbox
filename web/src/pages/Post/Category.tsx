@@ -18,7 +18,7 @@ export default function Category() {
    const { data, isLoading } = useGetPostByCategory(category!, page);
 
    const posts = data?.data ?? [];
-   const categoryExists = categories.find((cat) => cat.value === category);
+   const categoryExists = categories.find((cat) => String(cat.value) === category);
 
    const handleSetPage = (newPage: number) => {
       setSearchParams({ page: newPage.toString() });
@@ -66,13 +66,12 @@ export default function Category() {
                      <div className="space-y-5">
                         <h2>EXPLORE OTHER CATEGORY</h2>
                         <div className="flex flex-wrap gap-3">
-                           {categories.map((category) => (
-                              <Link
-                                 to={`/category/${category.value}`}
-                                 key={category.id}
-                                 className="block"
-                              >
-                                 <CustomBadge text={category.value} />
+                           {categories.map((item) => (
+                              <Link to={`/category/${item.value}`} key={item.id} className="block">
+                                 <CustomBadge
+                                    text={item.value}
+                                    isActive={String(item.value) === category}
+                                 />
                               </Link>
                            ))}
                         </div>
