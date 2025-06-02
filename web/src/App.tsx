@@ -10,6 +10,7 @@ const ProfilePage = lazy(() => import('./pages/Profile/ProfilePage'));
 const Create = lazy(() => import('./pages/Post/Create'));
 const ViewSingle = lazy(() => import('./pages/Post/View'));
 const EditPost = lazy(() => import('./pages/Post/Edit'));
+const Category = lazy(() => import('./pages/Post/Category'));
 const All = lazy(() => import('./pages/Post/All'));
 
 const Login = lazy(() => import('./pages/Auth/Login'));
@@ -29,6 +30,7 @@ const router = createBrowserRouter([
          { path: 'posts/:slug', element: <ViewSingle /> },
          { path: 'posts/:slug/edit', element: <EditPost /> },
          { path: 'posts', element: <All /> },
+         { path: 'category/:category', element: <Category /> },
       ],
    },
    {

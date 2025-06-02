@@ -70,6 +70,16 @@ class PostController extends Controller
         return response()->json($posts);
     }
 
+    public function postsByCategory(string $category): JsonResponse
+    {
+        $posts = Post::with('user')
+            ->where('category', $category)
+            ->latest()
+            ->paginate(8);
+
+        return response()->json($posts);
+    }
+
     public function show(string $slug): JsonResponse
     {
         $user = Auth::user();

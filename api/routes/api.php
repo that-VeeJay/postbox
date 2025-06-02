@@ -30,6 +30,8 @@ Route::prefix('posts')->controller(PostController::class)->group(function() {
     Route::post('/', 'store')->middleware('auth:sanctum');
     Route::delete('/{slug}', 'destroy')->middleware('auth:sanctum');
     Route::get('/user/{user}', 'userPosts')->middleware('auth:sanctum');
+
+    Route::get('category/{category}', 'postsByCategory');
 });
 
 // Comment and Reply Routes

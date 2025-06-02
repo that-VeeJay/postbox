@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { CardThree } from '@/features/posts';
 import CardOneSkeleton from '@/components/skeletons/CardOneSkeleton';
 import type { PostType } from '@/features/posts/types';
-import { Note } from '@/components/shared';
+import { Note, Title } from '@/components/shared';
 import { useGetPosts } from '@/features/posts';
 import {
    Pagination,
@@ -50,9 +50,7 @@ export default function SectionThree() {
 
    return (
       <main className="mx-auto w-full max-w-6xl">
-         <h1 className="my-8 inline-block bg-[linear-gradient(145deg,_#42d392,_#647eff,_#8E43AD)] bg-clip-text text-center text-4xl font-bold text-transparent">
-            ALL BLOG POSTS
-         </h1>
+         <Title title="ALL BLOG POSTS" />
 
          <div className="mb-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">{renderContent()}</div>
          <nav aria-label="Pagination">

@@ -23,7 +23,7 @@ export default function CardThree({
    user: { profile_picture, name, username, bio },
 }: PostType) {
    return (
-      <div className="space-y-3">
+      <div>
          {/* Post Image */}
          <Link to={`/posts/${slug}`}>
             <CardImage image={image} title={title} />
