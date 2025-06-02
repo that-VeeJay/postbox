@@ -16,7 +16,7 @@ type CategoryPaginationButtonsProps = {
    };
 };
 
-export function CategoryPaginationButtons({ setPage, data }: CategoryPaginationButtonsProps) {
+export default function PaginationButtons({ setPage, data }: CategoryPaginationButtonsProps) {
    const handlePrevious = () => {
       if (data.current_page > 1) {
          setPage(data.current_page - 1);

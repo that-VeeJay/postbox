@@ -14,10 +14,17 @@ import CardTwo from './components/CardTwo';
 import Hero from './components/Hero';
 import { LikeButton } from './components/ui/LikeButton';
 
-import { CategoryPaginationButtons } from './components/category/CategoryPaginationButtons';
+import PaginationButtons from './components/category/PaginationButtons';
+import SortButtons from './components/category/SortButtons';
+import Sidebar from './components/category/Sidebar';
+
+import { useCategoryPage } from './hooks/useCategoryPage';
 
 export {
-   CategoryPaginationButtons,
+   useCategoryPage,
+   Sidebar,
+   SortButtons,
+   PaginationButtons,
    LikeButton,
    Hero,
    CardTwo,

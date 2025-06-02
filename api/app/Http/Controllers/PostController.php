@@ -70,15 +70,23 @@ class PostController extends Controller
         return response()->json($posts);
     }
 
-    public function postsByCategory(string $category): JsonResponse
+
+    public function postsByCategory(Request $request, string $category): JsonResponse
     {
+        $sort = $request->query('sort', 'newest');
+
         $posts = Post::with('user')
             ->where('category', $category)
-            ->latest()
+            ->when($sort === 'oldest', function ($query) {
+                $query->oldest();
+            }, function ($query) {
+                $query->latest();
+            })
             ->paginate(8);
 
         return response()->json($posts);
     }
+
 
     public function show(string $slug): JsonResponse
     {

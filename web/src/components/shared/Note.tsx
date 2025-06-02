@@ -1,4 +1,3 @@
-
 import { TriangleAlert, Check, Lightbulb, CircleX } from 'lucide-react';
 
 type PropsType = {
@@ -29,7 +28,7 @@ const typeStyles = {
    },
 };
 
-export function Note({ message, type }: PropsType) {
+export default function Note({ message, type }: PropsType) {
    const { icon, container } = typeStyles[type];
 
    return (
