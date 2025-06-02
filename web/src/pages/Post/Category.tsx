@@ -1,27 +1,28 @@
-import { useParams } from 'react-router-dom';
-import { Title, Note } from '@/components/shared';
+import { useParams, useSearchParams } from 'react-router-dom';
 import { CardThree } from '@/features/posts';
-import type { PostType } from '@/features/posts/types';
-import { useGetPostByCategory } from '@/features/posts/hooks/useGetPostByCategory';
-import {
-   Pagination,
-   PaginationContent,
-   PaginationItem,
-   PaginationNext,
-   PaginationPrevious,
-} from '@/components/ui/pagination';
-import CardOneSkeleton from '@/components/skeletons/CardOneSkeleton';
 import { categories } from '@/data/categories';
+import { Note, Title } from '@/components/shared';
+import type { PostType } from '@/features/posts/types';
+import { CategoryPaginationButtons } from '@/features/posts';
+import CardOneSkeleton from '@/components/skeletons/CardOneSkeleton';
+import { useGetPostByCategory } from '@/features/posts/hooks/useGetPostByCategory';
+import { CustomBadge } from '@/components/shared';
+import { Link } from 'react-router-dom';
 
 export default function Category() {
    const { category } = useParams();
 
-   const { data, isLoading } = useGetPostByCategory(category!);
+   const [searchParams, setSearchParams] = useSearchParams();
+   const page = parseInt(searchParams.get('page') || '1', 10);
+
+   const { data, isLoading } = useGetPostByCategory(category!, page);
 
    const posts = data?.data ?? [];
    const categoryExists = categories.find((cat) => cat.value === category);
 
-   console.log(data);
+   const handleSetPage = (newPage: number) => {
+      setSearchParams({ page: newPage.toString() });
+   };
 
    const renderCards = () => {
       if (isLoading) {
@@ -55,23 +56,30 @@ export default function Category() {
                   <section className="col-span-2 space-y-5">
                      <div className="grid grid-cols-2 gap-3">{renderCards()}</div>
                      {posts.length > 0 && (
-                        <Pagination>
-                           <PaginationContent className="flex w-full justify-between">
-                              <PaginationItem>
-                                 <PaginationPrevious href="#" />
-                              </PaginationItem>
-
-                              <PaginationItem>
-                                 <PaginationNext href="#" />
-                              </PaginationItem>
-                           </PaginationContent>
-                        </Pagination>
+                        <div className="my-10">
+                           <CategoryPaginationButtons setPage={handleSetPage} data={data} />
+                        </div>
                      )}
                   </section>
                   {/* EXPLORE SECTION */}
-                  <section className="s block h-[max-content]">
-                     <h2>EXPLORE OTHER CATEGORY</h2>
-                     <h2>DISCOVER CREATORS</h2>
+                  <section className="s block h-[max-content] space-y-10">
+                     <div className="space-y-5">
+                        <h2>EXPLORE OTHER CATEGORY</h2>
+                        <div className="flex flex-wrap gap-3">
+                           {categories.map((category) => (
+                              <Link
+                                 to={`/category/${category.value}`}
+                                 key={category.id}
+                                 className="block"
+                              >
+                                 <CustomBadge text={category.value} />
+                              </Link>
+                           ))}
+                        </div>
+                     </div>
+                     <div className="space-y-5">
+                        <h2>DISCOVER CREATORS</h2>
+                     </div>
                   </section>
                </div>
             </>

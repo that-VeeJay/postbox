@@ -14,7 +14,10 @@ import CardTwo from './components/CardTwo';
 import Hero from './components/Hero';
 import { LikeButton } from './components/ui/LikeButton';
 
+import { CategoryPaginationButtons } from './components/category/CategoryPaginationButtons';
+
 export {
+   CategoryPaginationButtons,
    LikeButton,
    Hero,
    CardTwo,
