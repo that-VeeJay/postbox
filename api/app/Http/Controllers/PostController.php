@@ -63,7 +63,7 @@ class PostController extends Controller
     public function userPosts(int $id):JsonResponse
     {
         $posts = Post::where('user_id', $id)
-            ->select('title', 'image')
+            ->select('title', 'image', 'id')
             ->latest()
             ->get();
 

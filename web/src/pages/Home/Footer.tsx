@@ -8,10 +8,10 @@ export function Footer() {
             <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
                <section className="place-items-center">
                   <h4 className="text-3xl font-bold">POSTBOX</h4>
-                  <p className="text-sm text-neutral-300">
-                     Stories that spark ideas. Posts that matter.
+                  <p className="text-sm dark:text-neutral-300">
+                     Developed by <span className="font-bold">VEE JAY</span>
                   </p>
-                  <p className="text-xs text-neutral-300">© 2025. All rights reserved</p>
+                  <p className="text-xs dark:text-neutral-300">© 2025. All rights reserved</p>
                </section>
                <div className="md:place-items-center">
                   <nav className="flex flex-col gap-5">
@@ -39,7 +39,7 @@ export function Footer() {
                </nav>
             </div>
             <div className="mt-20 overflow-hidden px-6 lg:mt-0">
-               <h1 className="hidden translate-y-25 text-center text-[12vw] leading-none font-semibold tracking-tight text-white uppercase lg:block">
+               <h1 className="hidden translate-y-25 text-center text-[12vw] leading-none font-semibold tracking-tight uppercase select-none lg:block">
                   POSTBOX
                </h1>
             </div>
