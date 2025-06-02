@@ -48,9 +48,9 @@ export default function Category() {
                   )}
                </div>
                {postExist && (
-                  <div className="my-10">
+                  <nav aria-label="Pagination navigation" className="my-10">
                      <PaginationButtons setPage={handleSetPage} data={data} />
-                  </div>
+                  </nav>
                )}
             </section>
             <Sidebar activeCategory={category!} />

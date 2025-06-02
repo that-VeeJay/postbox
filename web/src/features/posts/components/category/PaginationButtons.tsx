@@ -34,15 +34,17 @@ export default function PaginationButtons({ setPage, data }: CategoryPaginationB
          <PaginationContent className="flex w-full justify-between">
             <PaginationItem>
                <PaginationPrevious
+                  aria-label="Previous page"
                   onClick={handlePrevious}
                   className={data.prev_page_url ? '' : 'pointer-events-none opacity-50'}
                />
             </PaginationItem>
-            <div className="text-sm text-neutral-500">
+            <div role="status" aria-live="polite" className="text-sm text-neutral-500">
                Page {data.current_page} of {data.last_page}
             </div>
             <PaginationItem>
                <PaginationNext
+                  aria-label="Next page"
                   onClick={handleNext}
                   className={data.next_page_url ? '' : 'pointer-events-none opacity-50'}
                />
