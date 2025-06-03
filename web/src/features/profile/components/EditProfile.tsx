@@ -1,22 +1,9 @@
 import { useEffect, useState } from 'react';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
-import { Textarea } from '@/components/ui/textarea';
-import InputFieldError from '@/components/shared/InputFieldError';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import {
-   Sheet,
-   SheetClose,
-   SheetContent,
-   SheetDescription,
-   SheetHeader,
-   SheetTitle,
-   SheetTrigger,
-} from '@/components/ui/sheet';
-import { Note } from '@/components/shared';
-
-import { Pen, Save, X } from 'lucide-react';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { Pen } from 'lucide-react';
+import EditProfileForm from './ui/EditProfileForm';
 
 type Props = {
    maxBioLength: number;
@@ -111,83 +98,20 @@ export default function EditProfile({ maxBioLength, token, user }: Props) {
             </Button>
          </SheetTrigger>
          <SheetContent>
-            <SheetHeader>
-               <SheetTitle>Edit profile</SheetTitle>
-               <SheetDescription>
-                  Make changes to your profile here. Click save changes when you're done.
-               </SheetDescription>
-            </SheetHeader>
-            <form onSubmit={handleSubmit}>
-               <div className="space-y-5 px-5">
-                  {updateSuccessMessage && (
-                     <Note message={updateSuccessMessage} type="success" />
-                     //  <CustomToast message={updateSuccessMessage} type="success" />
-                  )}
-                  <div className="space-y-2">
-                     <Label htmlFor="">Name</Label>
-                     <Input name="name" value={profileData.name} onChange={handleChange} />
-                     <InputFieldError error={nameFieldError} />
-                  </div>
-                  <div className="space-y-2">
-                     <Label htmlFor="">Location</Label>
-                     <Input name="location" value={profileData.location} onChange={handleChange} />
-                  </div>
-                  <div className="space-y-2">
-                     <Label htmlFor="">Bio</Label>
-                     <Textarea
-                        maxLength={maxBioLength}
-                        name="bio"
-                        value={profileData.bio}
-                        className="resize-none"
-                        onChange={(e) => {
-                           setBioLength(e.target.value);
-                           handleChange(e);
-                        }}
-                     />
-                     <p className="text-xs">
-                        {bioLength.length}/{maxBioLength}
-                     </p>
-                  </div>
-                  <div className="space-y-2">
-                     <Label htmlFor="">Profile picture</Label>
-                     <Input
-                        type="file"
-                        accept="image/*"
-                        name="profile_picture"
-                        onChange={handleFileChange}
-                     />
-                     <SheetDescription>
-                        Note: Please allow a few seconds for your updated profile picture to be
-                        visible throughout the site.
-                     </SheetDescription>
-                  </div>
-                  <div className="flex gap-3">
-                     <SheetClose asChild>
-                        <Button
-                           variant="outline"
-                           onClick={() => {
-                              setProfileData({
-                                 name: user.name || '',
-                                 location: user.location || '',
-                                 bio: user.bio || '',
-                              });
-                              setUpdateSuccessMessage('');
-                           }}
-                           className="flex-1"
-                        >
-                           <X />
-                           Close
-                        </Button>
-                     </SheetClose>
-                     {/* <SheetClose asChild> */}
-                     <Button type="submit" className="flex-2">
-                        <Save />
-                        Save Changes
-                     </Button>
-                     {/* </SheetClose> */}
-                  </div>
-               </div>
-            </form>
+            <EditProfileForm
+               user={user}
+               profileData={profileData}
+               bioLength={bioLength}
+               nameFieldError={nameFieldError}
+               maxBioLength={maxBioLength}
+               updateSuccessMessage={updateSuccessMessage}
+               setProfileData={setProfileData}
+               setUpdateSuccessMessage={setUpdateSuccessMessage}
+               setBioLength={setBioLength}
+               handleChange={handleChange}
+               handleFileChange={handleFileChange}
+               handleSubmit={handleSubmit}
+            />
          </SheetContent>
       </Sheet>
    );

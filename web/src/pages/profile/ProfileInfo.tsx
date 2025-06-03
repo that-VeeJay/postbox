@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { UserContext } from '@/context/UserContext';
 import { getImageUrl } from '@/utils/getImageUrl';
 import { capitalizeFirstLetter } from '@/utils/capitalizeFirstLetter';
-import { EditProfile, AccountSettings } from '@/features/profile';
+import { AccountSettings, EditProfile } from '@/features/profile';
 import defaultProfile from '../../assets/default_profile.png';
 import { MapPin } from 'lucide-react';
 

@@ -17,7 +17,7 @@ export default function HomePage() {
          </div>
 
          <div className="mt-10 mb-5 text-lg font-semibold md:text-xl">Recent Posts</div>
-         <div className="grid lg:grid-cols-2">
+         <div className="grid gap-3 lg:grid-cols-2">
             <SectionTwo />
          </div>
 

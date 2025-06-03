@@ -20,7 +20,7 @@ export default function CardTwo({
    user: { name, username, bio },
 }: PostType) {
    return (
-      <div className="grid space-y-3 md:grid-cols-2">
+      <div className="grid md:grid-cols-2">
          <link rel="preload" as="image" href={getImageUrl(image)}></link>
          <Link to={`/posts/${slug}`}>
             <CardImage image={image} title={title} styles="md:h-[210px] md:w-full" />
