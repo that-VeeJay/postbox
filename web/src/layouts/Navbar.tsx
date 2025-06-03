@@ -8,8 +8,9 @@ import ScrollToTop from '@/utils/ScrollToTop';
 
 export default memo(function Layout() {
    const { user } = useContext(UserContext);
+
    return (
-      <>
+       <>
          <header>
             <nav className="fixed top-0 left-0 z-50 w-full bg-white/50 p-5 backdrop-blur-xl dark:bg-neutral-950/50">
                <div className="container mx-auto flex items-center justify-between">

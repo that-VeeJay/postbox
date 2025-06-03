@@ -6,16 +6,9 @@ type LikeButtonPropsType = {
    token: string;
    likesCount: number;
    likedByUser: boolean;
-   refetch: () => void;
 };
 
-export function LikeButton({
-   postId,
-   token,
-   likesCount,
-   likedByUser,
-   refetch,
-}: LikeButtonPropsType) {
+export function LikeButton({ postId, token, likesCount, likedByUser }: LikeButtonPropsType) {
    const [liked, setLiked] = useState(likedByUser);
    const [count, setCount] = useState(likesCount);
 
@@ -28,7 +21,6 @@ export function LikeButton({
       });
       setCount((prev) => prev + 1);
       setLiked(true);
-      refetch();
    };
 
    const handleDislike = async () => {
@@ -40,7 +32,6 @@ export function LikeButton({
       });
       setCount((prev) => prev - 1);
       setLiked(false);
-      refetch();
    };
 
    return (

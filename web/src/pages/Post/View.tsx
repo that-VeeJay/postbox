@@ -15,7 +15,7 @@ export default function View() {
    const { slug } = useParams();
    const { user, token } = useContext(UserContext);
 
-   const { data, isLoading, error, refetch } = useViewSinglePost(slug!);
+   const { data, isLoading, error } = useViewSinglePost(slug!);
 
    return (
       <div className="mx-auto w-full max-w-5xl">
@@ -54,7 +54,7 @@ export default function View() {
                                  token={token!}
                                  likesCount={data.post.likes_count}
                                  likedByUser={data.liked_by_current_user}
-                                 refetch={refetch}
+
                               />
                               <Bookmark />
                               {user && user.id === data.user.id && (
