@@ -1,5 +1,10 @@
-![Logo](https://github.com/that-VeeJay/postbox/blob/main/web/public/postbox-min.png)
-[![Facebook](https://img.shields.io/badge/Facebook-Profile-blue?logo=facebook)](https://www.facebook.com/veejay.omisol.1/)
+<p align="center">
+  <img src="https://github.com/that-VeeJay/postbox/blob/main/web/public/postbox(min).png" alt="Logo" width="200"/>
+  &nbsp;&nbsp;
+  <a href="https://www.facebook.com/veejay.omisol.1/">
+    <img src="https://img.shields.io/badge/Facebook-Profile-blue?logo=facebook" alt="Facebook Badge"/>
+  </a>
+</p>
 
 ## What you can do in Postbox
 - Create blog post
