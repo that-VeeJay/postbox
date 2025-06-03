@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/that-VeeJay/postbox/blob/main/web/public/postbox-min.png" alt="Logo" width="200"/>
+  <img src="https://github.com/that-VeeJay/postbox/blob/main/web/public/postbox-min.png" alt="Logo" width="500"/>
 </p>
 
 <p align="center">
@@ -7,6 +7,7 @@
     <img src="https://img.shields.io/badge/Facebook-Profile-blue?logo=facebook" alt="Facebook Badge"/>
   </a>
 </p>
+
 ## What you can do in Postbox
 - Create blog post
     - [x]  Generate content boilerplate with AI
