@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/that-VeeJay/postbox/blob/main/web/public/postbox-min.png" alt="Logo" width="500"/>
+  <img src="https://github.com/that-VeeJay/postbox/blob/main/web/public/postbox.png" alt="Logo" width="500"/>
 </p>
 
 <p align="center">
