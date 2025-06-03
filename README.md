@@ -1,5 +1,5 @@
 
-![Logo](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/th5xamgrr6se0x5ro4g6.png)
+![Logo](https://github.com/that-VeeJay/postbox/blob/main/web/public/postbox.png?raw=true)
 
 
 [![Facebook](https://img.shields.io/badge/Facebook-Profile-blue?logo=facebook)](https://www.facebook.com/veejay.omisol.1/)
@@ -135,4 +135,3 @@ If you have any feedback, please reach out to us at fake@fake.com
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
-
