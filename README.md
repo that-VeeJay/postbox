@@ -1,11 +1,12 @@
 <p align="center">
-  <img src="https://github.com/that-VeeJay/postbox/blob/main/web/public/postbox(min).png" alt="Logo" width="200"/>
-  &nbsp;&nbsp;
+  <img src="https://github.com/that-VeeJay/postbox/blob/main/web/public/postbox-min.png" alt="Logo" width="200"/>
+</p>
+
+<p align="center">
   <a href="https://www.facebook.com/veejay.omisol.1/">
     <img src="https://img.shields.io/badge/Facebook-Profile-blue?logo=facebook" alt="Facebook Badge"/>
   </a>
 </p>
-
 ## What you can do in Postbox
 - Create blog post
     - [x]  Generate content boilerplate with AI
