@@ -7,13 +7,18 @@ import reactScan from '@react-scan/vite-plugin-react-scan';
 // https://vite.dev/config/
 export default defineConfig({
    plugins: [
-      react(),
+      react({
+         babel: {
+            plugins: [['babel-plugin-react-compiler', { target: '19' }]],
+         },
+      }),
       tailwindcss(),
       reactScan({
-         enable: false,
+         enable: true,
          autoDisplayNames: true,
       }),
-   ],
+    ],
+    base: process.env.VITE_BASE_PATH || "/postbox",
    resolve: {
       alias: {
          '@': path.resolve(__dirname, './src'),
